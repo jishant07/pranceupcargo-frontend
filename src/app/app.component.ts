@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AppService } from './_services/app.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'pranceup';
+  constructor(private appservice:AppService,private router:ActivatedRoute){}
+  navigate(){
+    
+  }
 }
