@@ -1,3 +1,5 @@
+import { LoaderService } from './../_services/loader/loader.service';
+import { AuthService } from './../_services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -8,14 +10,7 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private router:Router) { }
-
-  ngOnInit(): void {
-  }
-
-  navigate(){
-    this.router.navigateByUrl("/login")
-    localStorage.setItem("isAuthenticated","true")
-  }
+  constructor(private router:Router,public loader_service:LoaderService) {}
+  ngOnInit(): void {}
 
 }
