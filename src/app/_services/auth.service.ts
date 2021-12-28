@@ -1,3 +1,4 @@
+import { catchError, retry } from 'rxjs';
 import { LoaderService } from './loader/loader.service';
 import { GlobalService } from './global.service';
 import { HttpClient } from '@angular/common/http';
@@ -51,6 +52,14 @@ export class AuthService {
     this.afAuth.signOut();
     this.global_service.openSnackBar("Logged Out Successfully")
     this.loader_service.isLoading.next(false)
+  }
+
+  isAuthenticated(){
+    if(localStorage.getItem("token") && localStorage.getItem('isAuthenticated') && localStorage.getItem("isAuthenticated") == "true"){
+      return true;
+    }else{
+      return false;
+    }
   }
 
 }
