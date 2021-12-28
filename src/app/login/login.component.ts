@@ -1,3 +1,4 @@
+import { GlobalService } from './../_services/global.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
@@ -10,25 +11,22 @@ import { AuthService } from '../_services/auth.service';
 export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup({
-    userName: new FormControl('',[Validators.required]),
+    email: new FormControl('',[Validators.required]),
     passWord: new FormControl('',[Validators.required]),
   })
 
-  constructor(private auth_service:AuthService) { }
+  constructor(private auth_service:AuthService,private global_service:GlobalService) { }
 
   ngOnInit(): void {}
-
-  signIn(){
-    this.auth_service.signIn("jishanta@gmail.com","abcd@123")
-  }
+  
   signOut(){
     this.auth_service.signOut();
   }
   submitForm(){
     if(this.loginForm.valid){
-      console.log(this.loginForm.value)
+      this.auth_service.signIn(this.loginForm.value.email,this.loginForm.value.passWord)
     }else{
-      console.log("Not Valid")
+      this.global_service.openSnackBar("Fill details properly")
     }
   }
 }

@@ -4,6 +4,7 @@ import { GlobalService } from './global.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/compat/auth"
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthService {
   constructor(private http:HttpClient,
     private global_service:GlobalService,
     private afAuth:AngularFireAuth,
-    public loader_service:LoaderService) {
+    public loader_service:LoaderService,private router:Router) {
     this.afAuth.authState.subscribe((user:any) =>{
       if(user){
         localStorage.setItem("token",user.multiFactor.user.accessToken);
@@ -28,7 +29,9 @@ export class AuthService {
   signIn(email:string,password:string){
     this.loader_service.isLoading.next(true)
     this.afAuth.signInWithEmailAndPassword(email,password).then(user =>{
+      console.log(user)
       this.global_service.openSnackBar("User Logged In successfully")
+      this.router.navigate(['/dashboard']);
       this.loader_service.isLoading.next(false)
     }).catch(err =>{
       this.global_service.openSnackBar(err.message);
@@ -36,10 +39,11 @@ export class AuthService {
     })
   }
 
-  signUp(email:string,password:string){
+  signUp(data:any){
     this.loader_service.isLoading.next(true)
-    this.afAuth.createUserWithEmailAndPassword(email,password).then(user =>{
+    this.afAuth.createUserWithEmailAndPassword(data.email,data.passWord).then(user =>{
       this.global_service.openSnackBar("User Signed Up Successfully");
+      this.router.navigate(['/dashboard']);
       this.loader_service.isLoading.next(false)
     }).catch(err =>{
       this.global_service.openSnackBar(err.message);

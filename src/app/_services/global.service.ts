@@ -24,7 +24,7 @@ export class GlobalService {
 
   openSnackBar(message:string){
     this._snackBar.open(message,"OK",{
-      duration:1000,
+      duration:5000,
       horizontalPosition:"left",
       verticalPosition:"bottom"
     })

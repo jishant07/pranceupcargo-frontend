@@ -3,7 +3,7 @@
 <form [formGroup]="loginForm" (submit)="submitForm()">
     <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="userName" placeholder="abcd@domain.com">
+        <input matInput type="email" formControlName="email" placeholder="abcd@domain.com">
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
@@ -11,4 +11,3 @@
     </mat-form-field>
     <button mat-raised-button>Sign In</button>
 </form>
-<button (click)="signIn()">Test Login</button>
