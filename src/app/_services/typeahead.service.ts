@@ -12,4 +12,12 @@ export class TypeaheadService {
   getCountries(){
     return this.http.get(environment.devURL+"/app/listCountries")
   }
+
+  getPortsByCountry(placeId:string){
+    return this.http.post(environment.devURL+"/app/getPortsByCountry",{placeId})
+  }
+
+  getAirportByCountry(placeId:string){
+    return this.http.post(environment.devURL+"/app/getAirportsByCountry",{placeId})
+  }
 }

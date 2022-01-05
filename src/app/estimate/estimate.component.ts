@@ -15,20 +15,34 @@ export class EstimateComponent implements OnInit {
     modeOfTransport : new FormControl('',[Validators.required]),
     typeOfActivity : new FormControl('',[Validators.required]),
     destCountry : new FormControl(''),
+    destCountryId : new FormControl(''),
     destinationPort: new FormControl(''),
     destinationAirport: new FormControl(''),
     countryOfOrigin: new FormControl(''),
+    countryOfOriginId: new FormControl(''),
     portOfOrigin: new FormControl(''),
     airportOfOrigin: new FormControl(''),
     incoTerms: new FormControl('',[Validators.required]),
     pieces: new FormArray([
       PieceComponent.makePieceItem()
-    ])
+    ]),
+    deliveryType: new FormControl('',[Validators.required])
   })
   isExport:string = ""
   countryList:any = []
+  
   destCountryList:any = []
+  destPortsList:any = []
+  destFilterPortsList:any = []
+  destAirportsList:any = []
+  destFilterAirportsList:any = []
+
   countryOfOriginList:any = []
+  countryOfOriginPortsList:any = []
+  countryOforiginFilterPortsList: any = []
+  countryOfOriginAirportsList:any = []
+  countryOfOriginFilterAirportsList:any = []
+
   chargableWeight:any = 0
   cbmWeight:any = 0
 
@@ -46,8 +60,11 @@ export class EstimateComponent implements OnInit {
     if(event.value == 'Export'){
       this.isExport = "true"
       this.estimateForm.get('countryOfOrigin')?.removeValidators(Validators.required);
+      this.estimateForm.get('countryOfOriginId')?.removeValidators(Validators.required);
       this.estimateForm.get('countryOfOrigin')?.reset();
+      this.estimateForm.get('countryOfOriginId')?.reset();
       this.estimateForm.get('destCountry')?.addValidators(Validators.required)
+      this.estimateForm.get('destCountryId')?.addValidators(Validators.required)
       if(this.estimateForm.value.modeOfTransport == 'SEA'){
         this.estimateForm.get('destinationAirport')?.removeValidators(Validators.required)
         this.estimateForm.get('destinationAirport')?.reset();
@@ -61,8 +78,11 @@ export class EstimateComponent implements OnInit {
     }else{
       this.isExport = "false"
       this.estimateForm.get('destCountry')?.removeValidators(Validators.required);
+      this.estimateForm.get('destCountryId')?.removeValidators(Validators.required)
       this.estimateForm.get('destCountry')?.reset();
+      this.estimateForm.get('destCountryId')?.reset();
       this.estimateForm.get('countryOfOrigin')?.addValidators(Validators.required)
+      this.estimateForm.get('countryOfOriginId')?.addValidators(Validators.required)
       if(this.estimateForm.value.modeOfTransport == 'SEA'){
         this.estimateForm.get('airportOfOrigin')?.removeValidators(Validators.required)
         this.estimateForm.get('airportOfOrigin')?.reset();
@@ -74,11 +94,6 @@ export class EstimateComponent implements OnInit {
       }
       this.estimateForm.updateValueAndValidity();
     }
-  }
-  getFormValidationErrors(form: FormGroup) {
-    Object.keys(form.controls).forEach(key => {
-      console.log("KEY ====> "+ key, form.get(key)?.errors)
-    });
   }
 
   get pieceArray(){
@@ -121,12 +136,82 @@ export class EstimateComponent implements OnInit {
     }
   }
 
+  destinationCountrySelected(event:any){
+    let value = event.option.value
+    this.estimateForm.patchValue({
+      destCountryId: value.id,
+      destCountry: value.countryName
+    })
+    this.typeadhead_service.getAirportByCountry(value.id).subscribe((res:any) =>{
+      this.destAirportsList = res.message
+      this.destFilterAirportsList = res.message
+    })
+    this.typeadhead_service.getPortsByCountry(value.id).subscribe((res:any) =>{
+      this.destPortsList = res.message
+      this.destFilterPortsList = res.message
+    })
+  }
+
+  countryOfOriginSelected(event:any){
+    let value = event.option.value
+    this.estimateForm.patchValue({
+      countryOfOriginId: value.id,
+      countryOfOrigin: value.countryName
+    })
+    this.typeadhead_service.getAirportByCountry(value.id).subscribe((res:any) =>{
+      this.countryOfOriginAirportsList = res.message
+      this.countryOfOriginFilterAirportsList = res.message
+    })
+    this.typeadhead_service.getPortsByCountry(value.id).subscribe((res:any) =>{
+      this.countryOfOriginPortsList = res.message
+      this.countryOforiginFilterPortsList = res.message
+    })
+  }
+
+  destAirportTypeAhead(){
+    let term = this.estimateForm.value.destinationAirport
+    term = term.toLowerCase();
+    this.destFilterAirportsList = this.destAirportsList.filter(function(item:any){
+      console.log(item);
+      return item.airportName.toLowerCase().indexOf(term) == -1 ? false : true
+    })
+  }
+
+  destPortTypeAhead(){
+    let term = this.estimateForm.value.destinationPort
+    term = term.toLowerCase();
+    this.destFilterPortsList = this.destPortsList.filter(function(item:any){
+      console.log(item);
+      return item.portName.toLowerCase().indexOf(term) == -1 ? false : true
+    })
+  }
+
+  countryOfOriginAirportTypeahead(){
+    let term = this.estimateForm.value.airportOfOrigin
+    term = term.toLowerCase();
+    this.countryOfOriginFilterAirportsList = this.countryOfOriginAirportsList.filter((item:any) =>{
+      return item.airportName.toLowerCase().indexOf(term) == -1 ? false : true
+    })
+  }
+
+  countryOfOriginPortTypeahead(){
+    let term = this.estimateForm.value.portOfOrigin
+    term = term.toLowerCase();
+    this.countryOforiginFilterPortsList = this.countryOforiginFilterPortsList.filter((item:any) =>{
+      return item.portName.toLowerCase().indexOf(term) == -1 ? false : true;
+    })
+  }
+
   estimateSubmit(){
     if(this.estimateForm.value.modeOfTransport == 'AIR'){
       this.calculateChargableWeight("AIR");
     }else{
       this.calculateChargableWeight("SEA")
     }
-    console.log(this.estimateForm.value);
+    let temp:any = {}
+    Object.keys(this.estimateForm.value).forEach(key =>{
+      if(this.estimateForm.value[key] != "" && this.estimateForm.value[key] != null)temp[key] = this.estimateForm.value[key];
+    })
+    console.log(temp)
   }
 }

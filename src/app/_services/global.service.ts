@@ -23,6 +23,7 @@ export class GlobalService {
     {id:"CFR", data:"Cost and Freight (insert named port of destination)"},
     {id:"CIF", data:"Cost Insurance and Freight (insert named port of destination)"}
   ]
+  public deliveryTypes:any = ["Express", "Normal"]
   handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
