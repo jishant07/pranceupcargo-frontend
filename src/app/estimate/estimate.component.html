@@ -1,1 +1,71 @@
-<p>estimate works!</p>
+<form [formGroup]="estimateForm">
+    <mat-form-field appearance="fill">
+        <mat-label>Mode Of Transport</mat-label>
+        <mat-select formControlName="modeOfTransport">
+            <mat-option *ngFor="let mode of global_service.modeOfTransport" [value]="mode">{{mode}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Type of Activity</mat-label>
+        <mat-select formControlName="typeOfActivity" (selectionChange)="activitySelected($event)">
+            <mat-option *ngFor="let type of global_service.typeOfActivity" [value]="type">{{type}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div class="export-form" *ngIf="isExport == 'true'">
+        <mat-form-field appearance="fill">
+            <mat-label>Destination Country</mat-label>
+            <input matInput type="text" formControlName="destCountry" (input)="destCountryTypeAhead()" [matAutocomplete]="dest_country_auto">
+        </mat-form-field>
+        <mat-autocomplete #dest_country_auto="matAutocomplete">
+            <mat-option *ngFor="let option of destCountryList" [value]="option.countryName">
+              {{option.countryName}}
+            </mat-option>
+          </mat-autocomplete>
+        <mat-form-field appearance="fill" *ngIf="estimateForm.value.modeOfTransport == 'SEA'">
+            <mat-label>Destination Port</mat-label>
+            <input matInput type="text" formControlName="destinationPort">
+        </mat-form-field>
+        <mat-form-field appearance="fill" *ngIf="estimateForm.value.modeOfTransport == 'AIR'">
+            <mat-label>Destination Airport</mat-label>
+            <input matInput type="text" formControlName="destinationAirport">
+        </mat-form-field>
+    </div>
+    <div class="import-form" *ngIf="isExport == 'false'">
+        <mat-form-field appearance="fill">
+            <mat-label>Country of Origin</mat-label>
+            <input matInput type="text" formControlName="countryOfOrigin" (input)="countryOfOriginTypeahead()" [matAutocomplete]="countryOfOrigin_auto">
+        </mat-form-field>
+        <mat-autocomplete #countryOfOrigin_auto="matAutocomplete">
+            <mat-option *ngFor="let option of countryOfOriginList" [value]="option.countryName">
+              {{option.countryName}}
+            </mat-option>
+          </mat-autocomplete>
+        <mat-form-field appearance="fill" *ngIf="estimateForm.value.modeOfTransport == 'SEA'">
+            <mat-label>Port Of Origin</mat-label>
+            <input matInput type="text" formControlName="portOfOrigin">
+        </mat-form-field>
+        <mat-form-field appearance="fill" *ngIf="estimateForm.value.modeOfTransport == 'AIR'">
+            <mat-label>Airport of Origin</mat-label>
+            <input matInput type="text" formControlName="airportOfOrigin">
+        </mat-form-field>
+    </div>
+    <mat-form-field appearance="fill">
+        <mat-label>Inco Terms</mat-label>
+        <mat-select formControlName="incoTerms">
+            <mat-option *ngFor="let type of global_service.incoTerms" [value]="type.id">{{type.data}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br/>
+    <h4>Cargo Details</h4>
+    <div>
+        <app-piece *ngFor="let pieceItem of pieceArray.controls" [pieceForm]="pieceItem"></app-piece>
+    </div>
+</form>
+<div *ngIf="chargableWeight && chargableWeight != 0">
+    <p>Chargable Weight ==> {{chargableWeight}}</p>
+</div>
+<div *ngIf="cbmWeight && cbmWeight != 0">
+    <p>CBM Weight ==> {{cbmWeight}}</p>
+</div>
+<button (click)="addNewPackageType()" mat-raised-button>Add New Package Type</button>
+<button mat-raised-button (click)="estimateSubmit()">Submit</button>

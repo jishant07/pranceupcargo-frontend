@@ -8,6 +8,21 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class GlobalService {
   constructor(private _snackBar:MatSnackBar) { }
+  public modeOfTransport: any[] = ["AIR", "SEA"]
+  public typeOfActivity: any[] = ["Export", "Import"] 
+  public incoTerms: any[] = [
+    {id:"EXW", data:"Ex Works (insert place of delivery)"},
+    {id:"FCA", data:"Free Carrier (Insert named place of delivery)"},
+    {id:"CPT", data:"Carriage Paid to (insert place of destination)"},
+    {id:"CIP", data:"Carriage and Insurance Paid To (insert place of destination)"},
+    {id:"DAP", data:"Delivered at Place (insert named place of destination)"},
+    {id:"DPU", data:"Delivered at Place Unloaded (insert of place of destination)"},
+    {id:"DDP", data:"Delivered Duty Paid (Insert place of destination)."},
+    {id:"FAS", data:"Free Alongside Ship (insert name of port of loading)"},
+    {id:"FOB", data:"Free on Board (insert named port of loading)"},
+    {id:"CFR", data:"Cost and Freight (insert named port of destination)"},
+    {id:"CIF", data:"Cost Insurance and Freight (insert named port of destination)"}
+  ]
   handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.

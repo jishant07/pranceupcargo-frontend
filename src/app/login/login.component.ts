@@ -1,7 +1,9 @@
+import { Router } from '@angular/router';
 import { GlobalService } from './../_services/global.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
+import { LoaderService } from '../_services/loader/loader.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,10 @@ export class LoginComponent implements OnInit {
     passWord: new FormControl('',[Validators.required]),
   })
 
-  constructor(private auth_service:AuthService,private global_service:GlobalService) { }
+  constructor(private auth_service:AuthService,
+    private global_service:GlobalService,
+    public loader_service:LoaderService,
+    private router:Router) { }
 
   ngOnInit(): void {}
   
@@ -24,7 +29,18 @@ export class LoginComponent implements OnInit {
   }
   submitForm(){
     if(this.loginForm.valid){
-      this.auth_service.signIn(this.loginForm.value.email,this.loginForm.value.passWord)
+      this.loader_service.isLoading.next(true)
+      this.auth_service.signIn(this.loginForm.value.email,this.loginForm.value.passWord).then((user:any) =>{
+        this.loader_service.isLoading.next(false)
+        localStorage.setItem("token",user.user.multiFactor.user.accessToken);
+        this.global_service.openSnackBar("Signin Successful");
+        this.auth_service.passAuthData();
+        this.router.navigate(["/dashboard"])
+      }).catch(err =>{
+        console.log(err);
+        this.loader_service.isLoading.next(false)
+        this.global_service.openSnackBar(err.message);
+      })
     }else{
       this.global_service.openSnackBar("Fill details properly")
     }

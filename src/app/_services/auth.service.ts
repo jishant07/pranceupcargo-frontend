@@ -1,4 +1,4 @@
-import { catchError, retry } from 'rxjs';
+import { BehaviorSubject, catchError, retry } from 'rxjs';
 import { LoaderService } from './loader/loader.service';
 import { GlobalService } from './global.service';
 import { HttpClient } from '@angular/common/http';
@@ -15,55 +15,40 @@ export class AuthService {
     private global_service:GlobalService,
     private afAuth:AngularFireAuth,
     public loader_service:LoaderService,private router:Router) {
-    this.afAuth.authState.subscribe((user:any) =>{
-      if(user){
-        localStorage.setItem("token",user.multiFactor.user.accessToken);
-        localStorage.setItem("isAuthenticated","true")
-      }else{
-        localStorage.removeItem("isAuthenticated");
-        localStorage.removeItem("token")
-      }
-    })
   }
 
+  isLoggedIn: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+
   signIn(email:string,password:string){
-    this.loader_service.isLoading.next(true)
-    this.afAuth.signInWithEmailAndPassword(email,password).then(user =>{
-      console.log(user)
-      this.global_service.openSnackBar("User Logged In successfully")
-      this.router.navigate(['/dashboard']);
-      this.loader_service.isLoading.next(false)
-    }).catch(err =>{
-      this.global_service.openSnackBar(err.message);
-      this.loader_service.isLoading.next(false)
-    })
+    return this.afAuth.signInWithEmailAndPassword(email,password);
   }
 
   signUp(data:any){
-    this.loader_service.isLoading.next(true)
-    this.afAuth.createUserWithEmailAndPassword(data.email,data.passWord).then(user =>{
-      this.global_service.openSnackBar("User Signed Up Successfully");
-      this.router.navigate(['/dashboard']);
-      this.loader_service.isLoading.next(false)
-    }).catch(err =>{
-      this.global_service.openSnackBar(err.message);
-      this.loader_service.isLoading.next(false)
-    })
+    return this.afAuth.createUserWithEmailAndPassword(data.email,data.passWord)
   }
 
   signOut(){
-    this.loader_service.isLoading.next(true)
-    this.afAuth.signOut();
-    this.global_service.openSnackBar("Logged Out Successfully")
-    this.loader_service.isLoading.next(false)
+    return new Promise((resolve,reject) =>{
+      this.loader_service.isLoading.next(true)
+      this.afAuth.signOut().catch(err =>{
+        reject(err);
+      });
+      this.global_service.openSnackBar("Logged Out Successfully")
+      localStorage.removeItem("token")
+      this.loader_service.isLoading.next(false)
+      resolve("Done")
+    })
+  }
+
+  getAuthData(){
+    return this.isLoggedIn.asObservable();
+  }
+  passAuthData(){
+    this.isLoggedIn.next(!!localStorage.getItem('token'))
   }
 
   isAuthenticated(){
-    if(localStorage.getItem("token") && localStorage.getItem('isAuthenticated') && localStorage.getItem("isAuthenticated") == "true"){
-      return true;
-    }else{
-      return false;
-    }
+    return !!localStorage.getItem('token');
   }
 
 }

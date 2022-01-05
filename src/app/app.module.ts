@@ -14,7 +14,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule} from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 /* Self Made Components */
 import { LoginComponent } from './login/login.component';
@@ -25,7 +26,8 @@ import { EstimateComponent } from './estimate/estimate.component';
 import { FooterComponent } from './footer/footer.component';
 import { AuthGuard } from './_services/auth.guard';
 import { InterceptorService } from './_services/loader/interceptor.service';
-import { DashboardComponent } from './dashboard/dashboard.component'
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { PieceComponent } from './piece/piece.component'
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { DashboardComponent } from './dashboard/dashboard.component'
     NavbarComponent,
     EstimateComponent,
     FooterComponent,
-    DashboardComponent
+    DashboardComponent,
+    PieceComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,8 @@ import { DashboardComponent } from './dashboard/dashboard.component'
     MatSnackBarModule,
     MatProgressBarModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ],
   providers: [AuthGuard,{
     provide:HTTP_INTERCEPTORS,
