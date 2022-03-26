@@ -28,7 +28,11 @@ export class EstimateComponent implements OnInit {
     ]),
     deliveryType: new FormControl('',[Validators.required])
   })
-  isExport:string = ""
+  
+  isActivityTypeSelected:boolean = false;
+  isTransportModeSelected:boolean = false;
+  isExport: boolean = false;
+  isTrasnportTypeSea: boolean = false;
   countryList:any = []
   
   destCountryList:any = []
@@ -56,9 +60,10 @@ export class EstimateComponent implements OnInit {
     })
   }
 
-  activitySelected(event:any){
+  activityChanged(event:any){
+    this.isActivityTypeSelected=true;
     if(event.value == 'Export'){
-      this.isExport = "true"
+      this.isExport = true;
       this.estimateForm.get('countryOfOrigin')?.removeValidators(Validators.required);
       this.estimateForm.get('countryOfOriginId')?.removeValidators(Validators.required);
       this.estimateForm.get('countryOfOrigin')?.reset();
@@ -76,7 +81,7 @@ export class EstimateComponent implements OnInit {
       }
       this.estimateForm.updateValueAndValidity();
     }else{
-      this.isExport = "false"
+      this.isExport = false;
       this.estimateForm.get('destCountry')?.removeValidators(Validators.required);
       this.estimateForm.get('destCountryId')?.removeValidators(Validators.required)
       this.estimateForm.get('destCountry')?.reset();
@@ -213,5 +218,15 @@ export class EstimateComponent implements OnInit {
       if(this.estimateForm.value[key] != "" && this.estimateForm.value[key] != null)temp[key] = this.estimateForm.value[key];
     })
     console.log(temp)
+  }
+  
+  transportModeChanged(event:any){
+    this.isTransportModeSelected=true;
+    if(event.value.toLowerCase() =='sea'){
+      this.isTrasnportTypeSea=true;
+    }
+    else{
+      this.isTrasnportTypeSea=false;
+    }
   }
 }

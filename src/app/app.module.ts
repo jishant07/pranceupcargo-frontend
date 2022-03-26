@@ -10,12 +10,7 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 /* Angular Material Components */
-import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatInputModule} from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { MaterialModule } from './material.module';
 
 /* Self Made Components */
 import { LoginComponent } from './login/login.component';
@@ -27,7 +22,13 @@ import { FooterComponent } from './footer/footer.component';
 import { AuthGuard } from './_services/auth.guard';
 import { InterceptorService } from './_services/loader/interceptor.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { PieceComponent } from './piece/piece.component'
+import { PieceComponent } from './piece/piece.component';
+import { DashboardContentComponent } from './dashboard/dashboard-content/dashboard-content.component';
+import { OrdersComponent } from './orders/orders.component';
+import { OngoingOrdersComponent } from './orders/ongoing-orders/ongoing-orders.component';
+import { QuotationComponent } from './quotation/quotation.component';
+import { OnholdQuotationComponent } from './quotation/onhold-quotation/onhold-quotation.component';
+
 
 @NgModule({
   declarations: [
@@ -39,7 +40,12 @@ import { PieceComponent } from './piece/piece.component'
     EstimateComponent,
     FooterComponent,
     DashboardComponent,
-    PieceComponent
+    PieceComponent,
+    DashboardContentComponent,
+    OrdersComponent,
+    OngoingOrdersComponent,
+    QuotationComponent,
+    OnholdQuotationComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,13 +53,8 @@ import { PieceComponent } from './piece/piece.component'
     AngularFireModule.initializeApp(environment.firebaseConfig),
     HttpClientModule,
     BrowserAnimationsModule,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatSnackBarModule,
-    MatProgressBarModule,
     ReactiveFormsModule,
-    MatInputModule,
-    MatSelectModule
+    MaterialModule
   ],
   providers: [AuthGuard,{
     provide:HTTP_INTERCEPTORS,
