@@ -10,13 +10,23 @@ import { OrdersComponent } from './orders/orders.component';
 import { OngoingOrdersComponent } from './orders/ongoing-orders/ongoing-orders.component';
 import { QuotationComponent } from './quotation/quotation.component';
 import { OnholdQuotationComponent } from './quotation/onhold-quotation/onhold-quotation.component';
+import { HomeContentComponent } from './home/home-content/home-content.component';
+import { ContactusComponent } from './contactus/contactus.component';
+import { MoreServicesComponent } from './more-services/more-services.component';
 
 const routes: Routes = [
-  { path:"", component:HomeComponent },
+  //Web
+  { path:"", component:HomeComponent, children:[
+    {path:'', component: HomeContentComponent}] },
+  { path:"contactus", component:HomeComponent, children:[
+      {path:'', component: ContactusComponent}] },
+  { path:"services", component:HomeComponent, children:[
+      {path:'', component: MoreServicesComponent}] },
+      
+  //Client dashbaord
   { path:"login", component:LoginComponent },
   { path:"signup", component:SignupComponent },
   // { path:"dashboard",component:DashboardComponent,canActivate:[AuthGuard] }
-
   { path:"dashboard",component:DashboardComponent,canActivate:[AuthGuard] , children:[
     {path:'', component: DashboardContentComponent}]},
   { path:"completedorders",component:DashboardComponent , children:[

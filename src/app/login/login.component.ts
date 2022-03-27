@@ -1,6 +1,6 @@
+import { Component, OnInit ,ViewEncapsulation} from '@angular/core';
 import { Router } from '@angular/router';
 import { GlobalService } from './../_services/global.service';
-import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../_services/auth.service';
 import { LoaderService } from '../_services/loader/loader.service';
@@ -8,7 +8,16 @@ import { LoaderService } from '../_services/loader/loader.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: [
+    //'./login.component.css'
+    '../../assets/libs/jsvectormap/css/jsvectormap.min.css',
+    '../../assets/libs/swiper/swiper-bundle.min.css',
+    '../../assets/css/bootstrap.min.css',
+    '../../assets/css/icons.min.css',
+    // '../../assets/css/app.min.css',
+    '../../assets/css/custom.min.css'
+  ],  
+  encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent implements OnInit {
 

@@ -28,6 +28,10 @@ import { OrdersComponent } from './orders/orders.component';
 import { OngoingOrdersComponent } from './orders/ongoing-orders/ongoing-orders.component';
 import { QuotationComponent } from './quotation/quotation.component';
 import { OnholdQuotationComponent } from './quotation/onhold-quotation/onhold-quotation.component';
+import { ContactusComponent } from './contactus/contactus.component';
+import { HomeContentComponent } from './home/home-content/home-content.component';
+import { MoreServicesComponent } from './more-services/more-services.component';
+
 
 
 @NgModule({
@@ -46,6 +50,9 @@ import { OnholdQuotationComponent } from './quotation/onhold-quotation/onhold-qu
     OngoingOrdersComponent,
     QuotationComponent,
     OnholdQuotationComponent,
+    ContactusComponent,
+    HomeContentComponent,
+    MoreServicesComponent,
   ],
   imports: [
     BrowserModule,

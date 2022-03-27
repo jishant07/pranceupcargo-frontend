@@ -51,7 +51,10 @@ export class QuotationComponent implements OnInit {
     deliveryType: new FormControl('',[Validators.required])
   });
 
-  constructor(public global_service:GlobalService,private typeadhead_service:TypeaheadService) { }
+  constructor(public global_service:GlobalService,private typeadhead_service:TypeaheadService) {
+    console.log(global_service.typeOfActivity);
+    console.log(global_service.modeOfTransport);
+   }
 
   ngOnInit(): void {
     this.typeadhead_service.getCountries().subscribe((res:any) =>{
