@@ -12,7 +12,7 @@ import { QuotationComponent } from './quotation/quotation.component';
 import { OnholdQuotationComponent } from './quotation/onhold-quotation/onhold-quotation.component';
 import { HomeContentComponent } from './home/home-content/home-content.component';
 import { ContactusComponent } from './contactus/contactus.component';
-import { MoreServicesComponent } from './more-services/more-services.component';
+import { ServicesComponent } from './services/services.component';
 
 const routes: Routes = [
   //Web
@@ -21,7 +21,7 @@ const routes: Routes = [
   { path:"contactus", component:HomeComponent, children:[
       {path:'', component: ContactusComponent}] },
   { path:"services", component:HomeComponent, children:[
-      {path:'', component: MoreServicesComponent}] },
+      {path:'', component: ServicesComponent}] },
       
   //Client dashbaord
   { path:"login", component:LoginComponent },

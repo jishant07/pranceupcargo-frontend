@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-more-services',
-  templateUrl: './more-services.component.html',
-  styleUrls: ['./more-services.component.css']
+  templateUrl: './services.component.html',
+  styleUrls: ['./services.component.css']
 })
-export class MoreServicesComponent implements OnInit {
+export class ServicesComponent implements OnInit {
 
   constructor() { }
 

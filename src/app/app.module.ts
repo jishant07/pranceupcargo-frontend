@@ -30,7 +30,7 @@ import { QuotationComponent } from './quotation/quotation.component';
 import { OnholdQuotationComponent } from './quotation/onhold-quotation/onhold-quotation.component';
 import { ContactusComponent } from './contactus/contactus.component';
 import { HomeContentComponent } from './home/home-content/home-content.component';
-import { MoreServicesComponent } from './more-services/more-services.component';
+import { ServicesComponent } from './services/services.component';
 
 
 
@@ -52,7 +52,7 @@ import { MoreServicesComponent } from './more-services/more-services.component';
     OnholdQuotationComponent,
     ContactusComponent,
     HomeContentComponent,
-    MoreServicesComponent,
+    ServicesComponent
   ],
   imports: [
     BrowserModule,
