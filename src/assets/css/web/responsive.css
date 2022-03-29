@@ -64,13 +64,10 @@
 -----------------------------------*/
 
 @media only screen and (min-width: 1920px) {
-
     .welcome-text h1 {
         font-size: 60px;
     }
-
 }
-
 
 
 /*----------------------------------
@@ -106,7 +103,6 @@
     .single-service-two {
         padding: 20px 20px 20px 100px;
     }
-
 }
 
 
@@ -189,10 +185,10 @@
     .single-blog {
         margin-bottom: 30px;
     }
-    .blog-area .row > div:last-child .single-blog {
+    .blog-area .row>div:last-child .single-blog {
         margin-bottom: 0;
     }
-    .home-two .blog-area .row > div:last-child .single-blog {
+    .home-two .blog-area .row>div:last-child .single-blog {
         margin-top: 0;
     }
     .blog-image img {
@@ -260,7 +256,6 @@
     .quote-form .width-half input {
         width: 48.5%;
     }
-
     .contact-form {
         margin-bottom: 50px;
     }
@@ -270,7 +265,6 @@
     .service-menu {
         margin-top: 50px;
     }
-
 }
 
 
@@ -323,7 +317,7 @@
     ul#nav li a::after {
         display: none;
     }
-    .is-sticky .navbar-brand > img {
+    .is-sticky .navbar-brand>img {
         max-width: 100%;
     }
     .is-sticky .menu-toggle.full {
@@ -349,12 +343,10 @@
     .search-and-language-bar {
         display: none;
     }
-
-
     .single-blog {
         margin-bottom: 30px;
     }
-    .blog-area .row > div:last-child .single-blog {
+    .blog-area .row>div:last-child .single-blog {
         margin-bottom: 0;
     }
     .blog-image img {
@@ -426,7 +418,6 @@
     .quote-form .width-half input {
         width: 48.5%;
     }
-
     .about-content h2 {
         font-size: 26px;
     }
@@ -439,7 +430,7 @@
     .single-promo h3 {
         font-size: 18px;
     }
-    .promo-area .row > div:last-child .single-promo {
+    .promo-area .row>div:last-child .single-promo {
         margin-bottom: 0;
     }
     .promo-bottom-content h2 {
@@ -467,10 +458,9 @@
     .home-two .blog-area .single-blog {
         margin-top: 0;
     }
-    .home-two .blog-area .row > div:first-child .single-blog {
+    .home-two .blog-area .row>div:first-child .single-blog {
         margin-top: 50px;
     }
-
     .contact-form {
         margin-bottom: 50px;
     }
@@ -483,7 +473,6 @@
     .service-menu {
         margin-top: 50px;
     }
-
 }
 
 

@@ -31,6 +31,7 @@ import { OnholdQuotationComponent } from './quotation/onhold-quotation/onhold-qu
 import { ContactusComponent } from './contactus/contactus.component';
 import { HomeContentComponent } from './home/home-content/home-content.component';
 import { ServicesComponent } from './services/services.component';
+import { BlogAreaComponent } from './home/blog-area/blog-area.component';
 
 
 
@@ -52,7 +53,8 @@ import { ServicesComponent } from './services/services.component';
     OnholdQuotationComponent,
     ContactusComponent,
     HomeContentComponent,
-    ServicesComponent
+    ServicesComponent,
+    BlogAreaComponent
   ],
   imports: [
     BrowserModule,

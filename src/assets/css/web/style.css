@@ -35,6 +35,7 @@ Version: 1.0
     23. 404 ERROR PAGE
 ----------------------------------------------------------------------------------------*/
 
+
 /*--------------------
    1. BASE CSS
 ----------------------*/
@@ -340,6 +341,7 @@ input:-webkit-autofill:focus {
     color: #ffffff;
 }
 
+
 /*--------------------------
     2. TOP AREA
 ---------------------------*/
@@ -381,7 +383,6 @@ input:-webkit-autofill:focus {
     position: relative;
     -webkit-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
-
 }
 
 .is-sticky .search-and-language-bar {
@@ -461,6 +462,7 @@ input:-webkit-autofill:focus {
     position: relative;
 }
 
+
 /*---------------------------------
     2.2 MAINMENU AREA
 -----------------------------------*/
@@ -493,12 +495,12 @@ input:-webkit-autofill:focus {
     margin-bottom: 0;
 }
 
-.navbar-brand > img {
+.navbar-brand>img {
     -webkit-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
 }
 
-.is-sticky .navbar-brand > img {
+.is-sticky .navbar-brand>img {
     max-width: 80%;
 }
 
@@ -568,6 +570,7 @@ ul#nav li ul a,
     padding-left: 15px;
 }
 
+
 /*-----------------------------------
     2.3 WELCOME TEXT AREA
 -------------------------------------*/
@@ -631,9 +634,10 @@ ul#nav li ul a,
     color: #ffffff;
 }
 
-.home-mockup > img {
+.home-mockup>img {
     max-width: 50%;
 }
+
 
 /*------------------------------
     2.4 WELCOME SLIDER AREA
@@ -725,7 +729,7 @@ ul#nav li ul a,
     background: url(/assets/images/web/slider/slide_3.jpg) no-repeat scroll center center / cover;
 }
 
-.welcome-slider-area.owl-carousel .owl-nav > div {
+.welcome-slider-area.owl-carousel .owl-nav>div {
     background: #fff none repeat scroll 0 0;
     display: inline-block;
     font-size: 30px;
@@ -744,10 +748,11 @@ ul#nav li ul a,
     right: 8.4%;
 }
 
-.welcome-slider-area.owl-carousel .owl-nav > div:hover {
+.welcome-slider-area.owl-carousel .owl-nav>div:hover {
     background: #f39c12 none repeat scroll 0 0;
     color: #fff;
 }
+
 
 /* ----------------------------
     3. BLOG AREA
@@ -819,6 +824,7 @@ ul#nav li ul a,
     color: #f39c12;
 }
 
+
 /* ----------------------------
     4. ABOUT AREA
 ------------------------------ */
@@ -851,7 +857,6 @@ ul#nav li ul a,
     padding: 10px;
     width: 100%;
 }
-
 
 .quote-form button {
     background: #5d6b82 none repeat scroll 0 0;
@@ -910,6 +915,7 @@ ul#nav li ul a,
     font-size: 24px;
     font-weight: 800;
 }
+
 
 /* -----------------------------
     5. SERVICE AREA
@@ -977,6 +983,7 @@ ul#nav li ul a,
 .catalouge-content ul li i {
     margin-right: 15px;
 }
+
 
 /* ---------------------------
     6. SERVIE BOTTOM AREA
@@ -1119,6 +1126,7 @@ ul#nav li ul a,
     background: #f39c12 none repeat scroll 0 0;
 }
 
+
 /* ----------------------------
     7. PROMO AREA
 ----------------------------- */
@@ -1133,7 +1141,7 @@ ul#nav li ul a,
     position: relative;
 }
 
-.promo-area .row > div.col-lg-4 .single-promo:last-child {
+.promo-area .row>div.col-lg-4 .single-promo:last-child {
     margin-bottom: 0;
 }
 
@@ -1150,6 +1158,7 @@ ul#nav li ul a,
     top: 0;
     width: 65px;
 }
+
 
 /* -----------------------------
     8. PROMO BOTTOM AREA
@@ -1199,6 +1208,7 @@ ul#nav li ul a,
     background: #fff none repeat scroll 0 0;
     color: #f39c12;
 }
+
 
 /*-----------------------------
     9. TESTMONIAL AREA
@@ -1294,6 +1304,7 @@ ul#nav li ul a,
     right: 0;
 }
 
+
 /* -----------------------------
     10. FOOTER AREA
 ------------------------------- */
@@ -1353,6 +1364,7 @@ ul#nav li ul a,
     background: #fff none repeat scroll 0 0;
     color: #f39c12;
 }
+
 
 /* ----------------------------
     11. FAQS AREA
@@ -1420,6 +1432,7 @@ ul#nav li ul a,
 .panel-body {
     padding-left: 0;
 }
+
 
 /* -----------------------------
     12. ABOUT DETAILS CONTENT AREA
@@ -1526,15 +1539,16 @@ ul#nav li ul a,
     width: 10px;
 }
 
+
 /* ------------------------------
     13. REPORT AREA
 ------------------------------ */
 
-.annual-reports > div {
+.annual-reports>div {
     margin-bottom: 50px;
 }
 
-.annual-reports > div:last-child {
+.annual-reports>div:last-child {
     margin-bottom: 0px;
 }
 
@@ -1555,6 +1569,7 @@ ul#nav li ul a,
     margin-right: 10px;
 }
 
+
 /* ----------------------------
     14. TEAM AERA
 -------------------------------- */
@@ -1565,7 +1580,7 @@ ul#nav li ul a,
     padding: 1px;
 }
 
-.team-list div > .col-lg-4:last-child .single-team {
+.team-list div>.col-lg-4:last-child .single-team {
     margin-bottom: 0;
 }
 
@@ -1596,6 +1611,7 @@ ul#nav li ul a,
 .member-social-bookmark .social-bookmark li a:hover {
     background: #f39c12 none repeat scroll 0 0;
 }
+
 
 /* -----------------------------
     15. SERVICE TWO 
@@ -1628,6 +1644,7 @@ ul#nav li ul a,
     color: inherit;
 }
 
+
 /* ----------------------------
     16. SERVICE THREE
 ------------------------------ */
@@ -1654,6 +1671,7 @@ ul#nav li ul a,
     text-align: center;
     width: 60px;
 }
+
 
 /*------------------------------
     17. CONTACT AREA
@@ -1694,6 +1712,7 @@ ul#nav li ul a,
     background: #f39c12 none repeat scroll 0 0;
     color: #fff;
 }
+
 
 /*------------------------------
     18. FOOTER AREA
@@ -1845,6 +1864,7 @@ ul#nav li ul a,
     color: #fff;
 }
 
+
 /*------------------------------
     19. SCROLL TO TOP
 -------------------------------*/
@@ -1871,6 +1891,7 @@ a.scrolltotop:hover {
     box-shadow: 0 0 0 0 #272727;
     background: #272727;
 }
+
 
 /*-----------------------------------
     20. WELCOME SLIDER AREA
@@ -1922,6 +1943,7 @@ a.scrolltotop:hover {
     display: block;
     padding: 0 10px;
 }
+
 
 /* ----------------------------------
     21. BLOG PAGE
@@ -2155,6 +2177,7 @@ blockquote::before {
     background: #f39c12 none repeat scroll 0 0;
 }
 
+
 /*-------------------------------
     22. SERVICE PAGE
 -------------------------------*/
@@ -2183,7 +2206,7 @@ blockquote::before {
     border: 1px solid #ddd;
 }
 
-.service-menu > ul li {
+.service-menu>ul li {
     border-top: 1px dashed #ddd;
     display: block;
     margin-top: -1px;
@@ -2202,6 +2225,7 @@ blockquote::before {
     color: #f39c12;
 }
 
+
 /*------------------------------
     23. 404 ERROR PAGE
 -------------------------------*/
@@ -2210,7 +2234,8 @@ blockquote::before {
     margin-bottom: 40px;
 }
 
-.error-content h3 {}
+
+/* .error-content h3 {} */
 
 .error-content h2,
 .error-content h3 {
@@ -2220,4 +2245,51 @@ blockquote::before {
 
 .error-area .read-more {
     width: auto;
+}
+
+
+/*custome css*/
+
+.p-10-10 {
+    padding: 10px 10px !important;
+}
+
+.p-t-10 {
+    padding-top: 10px !important;
+}
+
+.p-t-15 {
+    padding-top: 15px !important;
+}
+
+.p-t-50 {
+    padding-top: 50px !important;
+}
+
+.a-no-decoration {
+    text-decoration: none !important;
+}
+
+.m-l-25-per {
+    margin-left: 25% !important;
+}
+
+.m-l-15-per {
+    margin-left: 15% !important;
+}
+
+.m-l-10-per {
+    margin-left: 10% !important;
+}
+
+.m-t-15-per {
+    margin-top: 15% !important;
+}
+
+.m-t-15-per {
+    margin-top: 15% !important;
+}
+
+.text-right {
+    text-align: right !important;
 }

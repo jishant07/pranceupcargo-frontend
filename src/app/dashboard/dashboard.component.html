@@ -1,38 +1,37 @@
-
+<link href="/assets/css/app.min.css" rel="stylesheet" type="text/css" />
 <!-- Begin page -->
 <div id="layout-wrapper">
 
     <header id="page-topbar">
-<div class="layout-width">
-<div class="navbar-header">
-    <div class="d-flex">
-        <!-- LOGO -->
-        <div class="navbar-brand-box horizontal-logo">
-            <a href="#" class="logo logo-dark">
-                <span class="logo-sm">
+        <div class="layout-width">
+            <div class="navbar-header">
+                <div class="d-flex">
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box horizontal-logo">
+                        <a href="#" class="logo logo-dark">
+                            <span class="logo-sm">
                     <img src="/assets/images/logo-sm.png" alt="" height="22">
                 </span>
-                <span class="logo-lg">
+                            <span class="logo-lg">
                     <img src="/assets/images/logo-dark.png" alt="" height="17">
                 </span>
-            </a>
+                        </a>
 
-            <a href="#" class="logo logo-light">
-                <span class="logo-sm">
+                        <a href="#" class="logo logo-light">
+                            <span class="logo-sm">
                     <img src="/assets/images/logo-sm.png" alt="" height="22">
                 </span>
-                <span class="logo-lg">
+                            <span class="logo-lg">
                     <img src="/assets/images/logo-light.png" alt="" height="17">
                 </span>
-            </a>
-        </div>
-    </div>
+                        </a>
+                    </div>
+                </div>
 
-    <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center">
 
-        <div class="dropdown ms-sm-3 header-item topbar-user">
-            <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+                    <div class="dropdown ms-sm-3 header-item topbar-user">
+                        <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="d-flex align-items-center">
                     <img class="rounded-circle header-profile-user" src="/assets/images/users/user-dummy-img.jpg"
                         alt="Header Avatar">
@@ -42,23 +41,23 @@
                     </span>
                 </span>
             </button>
-            <div class="dropdown-menu dropdown-menu-end">
-                <!-- item-->
-                <h6 class="dropdown-header">Welcome Deepika!</h6>
-                <a class="dropdown-item" href="#"><i
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <!-- item-->
+                            <h6 class="dropdown-header">Welcome Deepika!</h6>
+                            <a class="dropdown-item" href="#"><i
                         class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
-                        class="align-middle">Profile</span></a>               
-                <!-- <div class="dropdown-divider"></div> -->               
-                <!-- <a class="dropdown-item" href="#"><i
+                        class="align-middle">Profile</span></a>
+                            <!-- <div class="dropdown-divider"></div> -->
+                            <!-- <a class="dropdown-item" href="#"><i
                         class="mdi mdi-lock text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Lock screen</span></a> -->
-                <a class="dropdown-item" href="#"><i
+                            <a class="dropdown-item" href="#"><i
                         class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span
                         class="align-middle" data-key="t-logout">Logout</span></a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-</div>
     </header>
     <!-- ========== App Menu ========== -->
     <div class="app-menu navbar-menu">
@@ -89,38 +88,38 @@
         </div>
 
         <div id="scrollbar">
-            <div class="container-fluid">    
+            <div class="container-fluid">
                 <ul class="navbar-nav" id="navbar-nav">
                     <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" routerLink="/dashboard" >
+                        <a class="nav-link menu-link" routerLink="/dashboard">
                             <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
-                        </a>                        
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" routerLink="/onholdquotation" >
+                        <a class="nav-link menu-link" routerLink="/onholdquotation">
                             <i class="ri-pencil-ruler-2-line"></i> <span data-key="t-dashboards">On hold Quotation</span>
-                        </a>                        
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" routerLink="/quotation" >
+                        <a class="nav-link menu-link" routerLink="/quotation">
                             <i class="ri-honour-line"></i> <span data-key="t-dashboards">New Quotation</span>
-                        </a>                        
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" routerLink="/ongoingorders" >
+                        <a class="nav-link menu-link" routerLink="/ongoingorders">
                             <i class="ri-stack-line"></i> <span data-key="t-dashboards">On going Orders</span>
-                        </a>                        
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" routerLink="/completedorders" >
+                        <a class="nav-link menu-link" routerLink="/completedorders">
                             <i class="ri-pages-line"></i> <span data-key="t-dashboards">Previous Orders</span>
-                        </a>                        
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" routerLink="/login" >
+                        <a class="nav-link menu-link" routerLink="/login">
                             <i class="ri-logout-box-line"></i> <span data-key="t-dashboards">Logout</span>
-                        </a>                        
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -131,16 +130,18 @@
 
     <!-- Vertical Overlay-->
     <div class="vertical-overlay"></div>
-    
+
     <div class="main-content">
 
-       <router-outlet></router-outlet>
+        <router-outlet></router-outlet>
 
         <footer class="footer">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-6">
-                        <script>document.write(new Date().getFullYear())</script> © PranceUp
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script> © PranceUp
                     </div>
                     <div class="col-sm-6">
                         <div class="text-sm-end d-none d-sm-block">
@@ -160,6 +161,5 @@
 
 <!-- Dashboard init -->
 <script src="/assets/js/pages/dashboard-ecommerce.init.js"></script>
- <!-- App js -->
- <script src="/assets/js/app.js"></script>
-
+<!-- App js -->
+<script src="/assets/js/app.js"></script>
