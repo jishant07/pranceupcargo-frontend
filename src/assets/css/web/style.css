@@ -1923,7 +1923,8 @@ a.scrolltotop:hover {
 }
 
 .top-area.single-page {
-    height: 500px;
+    /* height: 500px; */
+    height: 250px;
 }
 
 .single-page .top-area-bg::after {

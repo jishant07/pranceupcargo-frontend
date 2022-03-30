@@ -2,7 +2,7 @@
     <div class="container-fluid">
 
         <!-- start page title -->
-        <div class="row" style="padding-top: 63px !important;">
+        <div class="row p-t-80">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                     <h4 class="mb-sm-0">New Quotation</h4>
@@ -21,17 +21,17 @@
         <!-- strat card -->
         <div class="col-xl-12">
             <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                            
-                                        <div class="live-preview">
-                                            <!-- <form class="g-3 needs-validation was-validated" novalidate> -->
-                                                <form class="g-3 needs-validation" novalidate [formGroup]="estimateForm">
-                                                <div class="row">   
-                                                    <h4>Shipping Details</h4>                                             
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <div class="live-preview">
+                                        <!-- <form class="g-3 needs-validation was-validated" novalidate> -->
+                                        <form class="g-3 needs-validation" novalidate [formGroup]="estimateForm">
+                                            <div class="row">
+                                                <h4>Shipping Details</h4>
                                                 <div class="col-md-2">
                                                     <mat-form-field>
                                                         <mat-label>Activity Type</mat-label>
@@ -48,10 +48,10 @@
                                                     </mat-form-field>
                                                     <mat-autocomplete #dest_country_auto="matAutocomplete" (optionSelected)="destinationCountrySelected($event)">
                                                         <mat-option *ngFor="let option of destCountryList" [value]="option">
-                                                          {{option.countryName}}
+                                                            {{option.countryName}}
                                                         </mat-option>
-                                                      </mat-autocomplete>
-                                                </div>                                                                                                   
+                                                    </mat-autocomplete>
+                                                </div>
                                                 <div class="col-md-2" *ngIf="isActivityTypeSelected && !isExport">
                                                     <mat-form-field>
                                                         <mat-label>Country of Origin</mat-label>
@@ -59,9 +59,9 @@
                                                     </mat-form-field>
                                                     <mat-autocomplete #countryOfOrigin_auto="matAutocomplete" (optionSelected)="countryOfOriginSelected($event)">
                                                         <mat-option *ngFor="let option of countryOfOriginList" [value]="option">
-                                                          {{option.countryName}}
+                                                            {{option.countryName}}
                                                         </mat-option>
-                                                      </mat-autocomplete>
+                                                    </mat-autocomplete>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <mat-form-field>
@@ -92,7 +92,7 @@
                                                             {{option.airportName}}
                                                         </mat-option>
                                                     </mat-autocomplete>
-                                                </div> 
+                                                </div>
                                                 <div class="col-md-2" *ngIf="isTransportModeSelected && !isExport && isTrasnportTypeSea">
                                                     <mat-form-field>
                                                         <mat-label>Origin Port</mat-label>
@@ -103,7 +103,7 @@
                                                             {{port.portName}}
                                                         </mat-option>
                                                     </mat-autocomplete>
-                                                </div>                                               
+                                                </div>
                                                 <div class="col-md-2" *ngIf="isTransportModeSelected && !isExport && !isTrasnportTypeSea">
                                                     <mat-form-field>
                                                         <mat-label>Origin Airport</mat-label>
@@ -129,34 +129,40 @@
                                                         <mat-option *ngFor="let type of global_service.deliveryTypes" [value]="type">{{type}}</mat-option>
                                                     </mat-select>
                                                 </mat-form-field>
-                                            </div><!--.row-->
-                                            <br/>                                            
+                                            </div>
+                                            <!--.row-->
+                                            <br/>
                                             <!--start cargo detials-->
                                             <h4>Cargo Details</h4>
                                             <div>
                                                 <app-piece *ngFor="let pieceItem of pieceArray.controls" [pieceForm]="pieceItem"></app-piece>
-                                                <button (click)="addNewPackageType()"  class="btn btn-primary"><i class="ri-add-fill align-middle me-1"></i></button>
+                                                <button (click)="addNewPackageType()" class="btn btn-primary"><i class="ri-add-fill align-middle me-1"></i></button>
                                             </div>
                                             <!--end cargo details-->
                                             <br/>
-                                                <div class="col-12">
-                                                    <div class="hstack gap-2 justify-content-end">
-                                                        <button class="btn btn-warning" (click)="estimateSubmit()">Hold Quotation</button>
-                                                        <button type="button" class="btn btn-primary">Place Order</button>
-                                                    </div>
+                                            <div class="col-12">
+                                                <div class="hstack gap-2 justify-content-end">
+                                                    <button class="btn btn-warning" (click)="estimateSubmit()">Hold Quotation</button>
+                                                    <button type="button" class="btn btn-primary">Place Order</button>
                                                 </div>
-                                            </form>
-                                        </div>
-                                        
+                                            </div>
+                                        </form>
                                     </div>
+
                                 </div>
-                            </div> <!-- end col -->
+                            </div>
                         </div>
-                    </div> <!-- .card-body -->
-            </div> <!-- .card-->
-        </div> <!-- .col-->
+                        <!-- end col -->
+                    </div>
+                </div>
+                <!-- .card-body -->
+            </div>
+            <!-- .card-->
+        </div>
+        <!-- .col-->
         <!-- end card-->
-</div> <!-- end container-fluid -->
-</div><!-- end page-content -->
+    </div>
+    <!-- end container-fluid -->
+</div>
+<!-- end page-content -->
 <script src="assets/js/pages/form-validation.init.js"></script>
-    
