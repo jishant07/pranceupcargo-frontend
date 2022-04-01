@@ -31,7 +31,8 @@ import { OnholdQuotationComponent } from './quotation/onhold-quotation/onhold-qu
 import { ContactusComponent } from './contactus/contactus.component';
 import { HomeContentComponent } from './home/home-content/home-content.component';
 import { ServicesComponent } from './services/services.component';
-import { BlogAreaComponent } from './home/blog-area/blog-area.component';
+import { PromoAreaComponent } from './common/promo-area/promo-area.component';
+import { BlogAreaComponent } from './common/blog-area/blog-area.component';
 
 
 
@@ -54,6 +55,7 @@ import { BlogAreaComponent } from './home/blog-area/blog-area.component';
     ContactusComponent,
     HomeContentComponent,
     ServicesComponent,
+    PromoAreaComponent,
     BlogAreaComponent
   ],
   imports: [
