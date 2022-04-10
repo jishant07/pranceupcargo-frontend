@@ -952,7 +952,7 @@
 }
 
 [data-layout=vertical] .navbar-menu .container-fluid {
-    padding: 0
+    padding: 0;
 }
 
 @media (max-width:767.98px) {
@@ -16118,6 +16118,13 @@ span.flatpickr-weekday {
     }
 }
 
+
+/* @media (max-width:1400px) {
+    #layout-wrapper {
+        width: 1400px
+    }
+} */
+
 .tasks-board {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -16210,6 +16217,15 @@ span.flatpickr-weekday {
 
 .p-t-80 {
     padding-top: 80px !important;
+}
+
+.sidebar-title {
+    color: #fff;
+    /* margin-top: 30px; */
+}
+
+.m-0 {
+    margin: 0 !important;
 }
 
 

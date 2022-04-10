@@ -64,7 +64,7 @@
                                     <div class="d-flex align-items-end justify-content-between mt-4">
                                         <div>
                                             <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="559.25">158</span></h4>
-                                            <a href="#" class="">Completed + On going Orders</a>
+                                            <a href="#" class="">Completed + On-going Orders</a>
                                         </div>
                                         <div class="avatar-sm flex-shrink-0">
                                             <span class="avatar-title bg-soft-success rounded fs-3">
@@ -128,7 +128,7 @@
                                     <div class="d-flex align-items-end justify-content-between mt-4">
                                         <div>
                                             <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="183.35">5</span></h4>
-                                            <a routerLink="ongoingorders" class="text-decoration-underline">View on-going orders</a>
+                                            <a routerLink="/ongoingorders" class="text-decoration-underline">View on-going orders</a>
                                         </div>
                                         <div class="avatar-sm flex-shrink-0">
                                             <span class="avatar-title bg-soft-warning rounded fs-3">
@@ -210,220 +210,222 @@
                                 <!-- end card header -->
 
                                 <div class="card-body">
-                                    <table class="table table-borderless table-centered align-middle table-nowrap mb-0">
-                                        <thead class="text-muted table-light">
-                                            <tr>
-                                                <th scope="col">Order ID</th>
-                                                <th scope="col">Mode</th>
-                                                <th scope="col">Activity Type</th>
-                                                <th scope="col">Destination</th>
-                                                <th scope="col">Dest. Port</th>
-                                                <th scope="col">Dest. Airport</th>
-                                                <th scope="col">Origin</th>
-                                                <th scope="col">Origin Port</th>
-                                                <th scope="col">Origin Airport</th>
-                                                <th scope="col">Inco Terms</th>
-                                                <th scope="col">Delivery</th>
-                                                <th scope="col">Quote</th>
-                                                <th scope="col">Deadline</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2112</a>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-2">
-                                                            <img src="assets/images/ship-icon.jpg" alt="" class="avatar-xs rounded-circle" />
+                                    <div class="table-responsive table-card">
+                                        <table class="table table-borderless table-centered align-middle table-nowrap mb-0">
+                                            <thead class="text-muted table-light">
+                                                <tr>
+                                                    <th scope="col">Order ID</th>
+                                                    <th scope="col">Mode</th>
+                                                    <th scope="col">Activity Type</th>
+                                                    <th scope="col">Destination</th>
+                                                    <th scope="col">Dest. Port</th>
+                                                    <th scope="col">Dest. Airport</th>
+                                                    <th scope="col">Origin</th>
+                                                    <th scope="col">Origin Port</th>
+                                                    <th scope="col">Origin Airport</th>
+                                                    <th scope="col">Inco Terms</th>
+                                                    <th scope="col">Delivery</th>
+                                                    <th scope="col">Quote</th>
+                                                    <th scope="col">Deadline</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2112</a>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="assets/images/ship-icon.jpg" alt="" class="avatar-xs rounded-circle" />
+                                                            </div>
+                                                            <!-- <div class="flex-grow-1">Alex Smith</div> -->
                                                         </div>
-                                                        <!-- <div class="flex-grow-1">Alex Smith</div> -->
-                                                    </div>
-                                                </td>
-                                                <td>Import</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-2">
-                                                            <img src="assets/images/flags/china.svg" alt="" class="avatar-xs rounded-circle" />
+                                                    </td>
+                                                    <td>Import</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="assets/images/flags/china.svg" alt="" class="avatar-xs rounded-circle" />
+                                                            </div>
+                                                            <!-- <div class="flex-grow-1">India</div> -->
                                                         </div>
-                                                        <!-- <div class="flex-grow-1">India</div> -->
-                                                    </div>
-                                                </td>
-                                                <td>Dest. Port Name</td>
-                                                <td>Dest. Airport</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-2">
-                                                            <img src="assets/images/flags/india.svg" alt="" class="avatar-xs rounded-circle" />
+                                                    </td>
+                                                    <td>Dest. Port Name</td>
+                                                    <td>Dest. Airport</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="assets/images/flags/india.svg" alt="" class="avatar-xs rounded-circle" />
+                                                            </div>
+                                                            <!-- <div class="flex-grow-1">India</div> -->
                                                         </div>
-                                                        <!-- <div class="flex-grow-1">India</div> -->
-                                                    </div>
-                                                </td>
-                                                <td>IGI</td>
-                                                <td>IGI</td>
-                                                <td>Test</td>
-                                                <td>Normal</td>
-                                                <td><span class="text-success"></span>2500</td>
-                                                <td>29-Mar-2022</td>
-                                            </tr>
-                                            <!-- end tr -->
-                                            <tr>
-                                                <td>
-                                                    <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2111</a>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-2">
-                                                            <img src="assets/images/airplain.jpg" alt="" class="avatar-xs rounded-circle" />
+                                                    </td>
+                                                    <td>IGI</td>
+                                                    <td>IGI</td>
+                                                    <td>Test</td>
+                                                    <td>Normal</td>
+                                                    <td><span class="text-success"></span>2500</td>
+                                                    <td>29-Mar-2022</td>
+                                                </tr>
+                                                <!-- end tr -->
+                                                <tr>
+                                                    <td>
+                                                        <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2111</a>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="assets/images/airplain.jpg" alt="" class="avatar-xs rounded-circle" />
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td>Export</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-2">
-                                                            <img src="assets/images/flags/india.svg" alt="" class="avatar-xs rounded-circle" />
+                                                    </td>
+                                                    <td>Export</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="assets/images/flags/india.svg" alt="" class="avatar-xs rounded-circle" />
+                                                            </div>
+                                                            <!-- <div class="flex-grow-1">India</div> -->
                                                         </div>
-                                                        <!-- <div class="flex-grow-1">India</div> -->
-                                                    </div>
-                                                </td>
-                                                <td>Dest. Port Name</td>
-                                                <td>Dest. Airport</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-2">
-                                                            <img src="assets/images/flags/india.svg" alt="" class="avatar-xs rounded-circle" />
+                                                    </td>
+                                                    <td>Dest. Port Name</td>
+                                                    <td>Dest. Airport</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="assets/images/flags/india.svg" alt="" class="avatar-xs rounded-circle" />
+                                                            </div>
+                                                            <!-- <div class="flex-grow-1">India</div> -->
                                                         </div>
-                                                        <!-- <div class="flex-grow-1">India</div> -->
-                                                    </div>
-                                                </td>
-                                                <td>IGI</td>
-                                                <td>IGI</td>
-                                                <td>Test</td>
-                                                <td>Express</td>
-                                                <td><span class="text-success"></span>2500</td>
-                                                <td>29-Mar-2022</td>
-                                            </tr>
-                                            <!-- end tr -->
-                                            <tr>
-                                                <td>
-                                                    <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2109</a>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-2">
-                                                            <img src="assets/images/airplain.jpg" alt="" class="avatar-xs rounded-circle" />
+                                                    </td>
+                                                    <td>IGI</td>
+                                                    <td>IGI</td>
+                                                    <td>Test</td>
+                                                    <td>Express</td>
+                                                    <td><span class="text-success"></span>2500</td>
+                                                    <td>29-Mar-2022</td>
+                                                </tr>
+                                                <!-- end tr -->
+                                                <tr>
+                                                    <td>
+                                                        <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2109</a>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="assets/images/airplain.jpg" alt="" class="avatar-xs rounded-circle" />
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td>Import</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-2">
-                                                            <img src="assets/images/flags/india.svg" alt="" class="avatar-xs rounded-circle" />
+                                                    </td>
+                                                    <td>Import</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="assets/images/flags/india.svg" alt="" class="avatar-xs rounded-circle" />
+                                                            </div>
+                                                            <!-- <div class="flex-grow-1">India</div> -->
                                                         </div>
-                                                        <!-- <div class="flex-grow-1">India</div> -->
-                                                    </div>
-                                                </td>
-                                                <td>Dest. Port Name</td>
-                                                <td>Dest. Airport</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-2">
-                                                            <img src="assets/images/flags/us.svg" alt="" class="avatar-xs rounded-circle" />
+                                                    </td>
+                                                    <td>Dest. Port Name</td>
+                                                    <td>Dest. Airport</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="assets/images/flags/us.svg" alt="" class="avatar-xs rounded-circle" />
+                                                            </div>
+                                                            <!-- <div class="flex-grow-1">India</div> -->
                                                         </div>
-                                                        <!-- <div class="flex-grow-1">India</div> -->
-                                                    </div>
-                                                </td>
-                                                <td>IGI</td>
-                                                <td>IGI</td>
-                                                <td>Test</td>
-                                                <td>Normal</td>
-                                                <td><span class="text-success"></span>2500</td>
-                                                <td>29-Mar-2022</td>
-                                            </tr>
-                                            <!-- end tr -->
-                                            <tr>
-                                                <td>
-                                                    <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2108</a>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-2">
-                                                            <img src="assets/images/ship-icon.jpg" alt="" class="avatar-xs rounded-circle" />
+                                                    </td>
+                                                    <td>IGI</td>
+                                                    <td>IGI</td>
+                                                    <td>Test</td>
+                                                    <td>Normal</td>
+                                                    <td><span class="text-success"></span>2500</td>
+                                                    <td>29-Mar-2022</td>
+                                                </tr>
+                                                <!-- end tr -->
+                                                <tr>
+                                                    <td>
+                                                        <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2108</a>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="assets/images/ship-icon.jpg" alt="" class="avatar-xs rounded-circle" />
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td>Export</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-2">
-                                                            <img src="assets/images/flags/india.svg" alt="" class="avatar-xs rounded-circle" />
+                                                    </td>
+                                                    <td>Export</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="assets/images/flags/india.svg" alt="" class="avatar-xs rounded-circle" />
+                                                            </div>
+                                                            <!-- <div class="flex-grow-1">India</div> -->
                                                         </div>
-                                                        <!-- <div class="flex-grow-1">India</div> -->
-                                                    </div>
-                                                </td>
-                                                <td>Dest. Port Name</td>
-                                                <td>Dest. Airport</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-2">
-                                                            <img src="assets/images/flags/china.svg" alt="" class="avatar-xs rounded-circle" />
+                                                    </td>
+                                                    <td>Dest. Port Name</td>
+                                                    <td>Dest. Airport</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="assets/images/flags/china.svg" alt="" class="avatar-xs rounded-circle" />
+                                                            </div>
+                                                            <!-- <div class="flex-grow-1">India</div> -->
                                                         </div>
-                                                        <!-- <div class="flex-grow-1">India</div> -->
-                                                    </div>
-                                                </td>
-                                                <td>IGI</td>
-                                                <td>IGI</td>
-                                                <td>Test</td>
-                                                <td>Normal</td>
-                                                <td><span class="text-success"></span>2500</td>
-                                                <td>29-Mar-2022</td>
-                                            </tr>
-                                            <!-- end tr -->
-                                            <tr>
-                                                <td>
-                                                    <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2109</a>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-2">
-                                                            <img src="assets/images/airplain.jpg" alt="" class="avatar-xs rounded-circle" />
+                                                    </td>
+                                                    <td>IGI</td>
+                                                    <td>IGI</td>
+                                                    <td>Test</td>
+                                                    <td>Normal</td>
+                                                    <td><span class="text-success"></span>2500</td>
+                                                    <td>29-Mar-2022</td>
+                                                </tr>
+                                                <!-- end tr -->
+                                                <tr>
+                                                    <td>
+                                                        <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2109</a>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="assets/images/airplain.jpg" alt="" class="avatar-xs rounded-circle" />
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td>Export</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-2">
-                                                            <img src="assets/images/flags/china.svg" alt="" class="avatar-xs rounded-circle" />
+                                                    </td>
+                                                    <td>Export</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="assets/images/flags/china.svg" alt="" class="avatar-xs rounded-circle" />
+                                                            </div>
+                                                            <!-- <div class="flex-grow-1">India</div> -->
                                                         </div>
-                                                        <!-- <div class="flex-grow-1">India</div> -->
-                                                    </div>
-                                                </td>
-                                                <td>Dest. Port Name</td>
-                                                <td>Dest. Airport</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="flex-shrink-0 me-2">
-                                                            <img src="assets/images/flags/india.svg" alt="" class="avatar-xs rounded-circle" />
+                                                    </td>
+                                                    <td>Dest. Port Name</td>
+                                                    <td>Dest. Airport</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-2">
+                                                                <img src="assets/images/flags/india.svg" alt="" class="avatar-xs rounded-circle" />
+                                                            </div>
+                                                            <!-- <div class="flex-grow-1">India</div> -->
                                                         </div>
-                                                        <!-- <div class="flex-grow-1">India</div> -->
-                                                    </div>
-                                                </td>
-                                                <td>IGI</td>
-                                                <td>IGI</td>
-                                                <td>Test</td>
-                                                <td>Express</td>
-                                                <td><span class="text-success"></span>2500</td>
-                                                <td>29-Mar-2022</td>
-                                            </tr>
-                                            <!-- end tr -->
-                                        </tbody>
-                                        <!-- end tbody -->
-                                    </table>
-                                    <!-- end table -->
+                                                    </td>
+                                                    <td>IGI</td>
+                                                    <td>IGI</td>
+                                                    <td>Test</td>
+                                                    <td>Express</td>
+                                                    <td><span class="text-success"></span>2500</td>
+                                                    <td>29-Mar-2022</td>
+                                                </tr>
+                                                <!-- end tr -->
+                                            </tbody>
+                                            <!-- end tbody -->
+                                        </table>
+                                        <!-- end table -->
+                                    </div>
                                 </div>
                             </div>
                             <!-- .card-->

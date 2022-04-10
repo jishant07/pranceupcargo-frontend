@@ -1,35 +1,35 @@
 <form [formGroup]="pieceForm">
-    <div class="row">  
-            <mat-form-field class="col-md-2">
-                <mat-label>HSCODE</mat-label>
-                <input matInput type="text" formControlName="hsCode">
-            </mat-form-field>
-            <mat-form-field class="col-md-2">
-                <mat-label>No. of Pieces</mat-label>
-                <input matInput type="number" formControlName="noOfPieces">
-            </mat-form-field>
-            <mat-form-field class="col-md-1">
-                <mat-label>Length</mat-label>
-                <input matInput type="number" formControlName="length">
-            </mat-form-field>
-            <mat-form-field class="col-md-1">
-                <mat-label>Breath</mat-label>
-                <input matInput type="number" formControlName="breath">
-            </mat-form-field>
-            <mat-form-field class="col-md-1">
-                <mat-label>Height</mat-label>
-                <input matInput type="number" formControlName="height">
-            </mat-form-field>
-            <mat-form-field class="col-md-2">
-                <mat-label>Inches or CMs</mat-label>
-                <mat-select formControlName="inchOrCm">
-                    <mat-option value="Inches">Inches</mat-option>
-                    <mat-option value="CMs">Centimeters</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field class="col-md-2">
-                <mat-label>Gross Weight (in Kgs)</mat-label>
-                <input matInput type="number" formControlName="grossWeight">
-            </mat-form-field>
+    <div class="row">
+        <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+            <mat-label>HSCODE</mat-label>
+            <input matInput type="text" formControlName="hsCode">
+        </mat-form-field>
+        <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+            <mat-label>No. of Pieces</mat-label>
+            <input matInput type="number" formControlName="noOfPieces">
+        </mat-form-field>
+        <mat-form-field class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+            <mat-label>Length</mat-label>
+            <input matInput type="number" formControlName="length">
+        </mat-form-field>
+        <mat-form-field class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+            <mat-label>Breath</mat-label>
+            <input matInput type="number" formControlName="breath">
+        </mat-form-field>
+        <mat-form-field class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+            <mat-label>Height</mat-label>
+            <input matInput type="number" formControlName="height">
+        </mat-form-field>
+        <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+            <mat-label>Inches or CMs</mat-label>
+            <mat-select formControlName="inchOrCm">
+                <mat-option value="Inches">Inches</mat-option>
+                <mat-option value="CMs">Centimeters</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+            <mat-label>Gross Weight (in Kgs)</mat-label>
+            <input matInput type="number" formControlName="grossWeight">
+        </mat-form-field>
     </div>
 </form>

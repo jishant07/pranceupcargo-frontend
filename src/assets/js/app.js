@@ -1,4 +1,10 @@
+// $.document.ready(function() {
+//     alert('app.js loaded');
+//     console.log('app.js loaded');
+// });
+
 ! function() {
+    alert("I am form app.js file");
     "use strict";
     var a, t, o, e, n, s, d, l = document.querySelector(".navbar-menu").innerHTML,
         i = 6,
@@ -60,8 +66,8 @@
             a.querySelectorAll("span").forEach(function(e) {
                 e.classList.add("d-none")
             }), e.parentElement.classList.contains("twocolumn-item-show") && e.classList.add("active"), t.appendChild(a), o.appendChild(t), a.classList.contains("nav-link") && a.classList.replace("nav-link", "nav-icon"), a.classList.remove("collapsed", "menu-link")
-        }), (a = (a = "/" == location.pathname ? "index.html" : location.pathname.substring(1)).substring(a.lastIndexOf("/") + 1)) && (!(a = document.getElementById("navbar-nav").querySelector('[href="' + a + '"]')) || (e = a.closest(".collapse.menu-dropdown")) && (e.classList.add("show"), e.parentElement.children[0].classList.add("active"), e.parentElement.children[0].setAttribute("aria-expanded", "true"), e.parentElement.closest(".collapse.menu-dropdown") && (e.parentElement.closest(".collapse").classList.add("show"), e.parentElement.closest(".collapse").previousElementSibling && e.parentElement.closest(".collapse").previousElementSibling.classList.add("active")))), document.getElementById("two-column-menu").innerHTML = o.outerHTML, document.querySelector("#two-column-menu ul").querySelectorAll("li a").forEach(function(a) {
-            var o = (o = "/" == location.pathname ? "index.html" : location.pathname.substring(1)).substring(o.lastIndexOf("/") + 1);
+        }), (a = (a = "/" == location.pathname ? "dashboard" : location.pathname.substring(1)).substring(a.lastIndexOf("/") + 1)) && (!(a = document.getElementById("navbar-nav").querySelector('[href="' + a + '"]')) || (e = a.closest(".collapse.menu-dropdown")) && (e.classList.add("show"), e.parentElement.children[0].classList.add("active"), e.parentElement.children[0].setAttribute("aria-expanded", "true"), e.parentElement.closest(".collapse.menu-dropdown") && (e.parentElement.closest(".collapse").classList.add("show"), e.parentElement.closest(".collapse").previousElementSibling && e.parentElement.closest(".collapse").previousElementSibling.classList.add("active")))), document.getElementById("two-column-menu").innerHTML = o.outerHTML, document.querySelector("#two-column-menu ul").querySelectorAll("li a").forEach(function(a) {
+            var o = (o = "/" == location.pathname ? "dashboard" : location.pathname.substring(1)).substring(o.lastIndexOf("/") + 1);
             a.addEventListener("click", function(e) {
                 var t;
                 (o != "/" + a.getAttribute("href") || a.getAttribute("data-bs-toggle")) && document.body.classList.contains("twocolumn-panel") && document.body.classList.remove("twocolumn-panel"), document.getElementById("navbar-nav").classList.remove("twocolumn-nav-hide"), document.querySelector(".hamburger-icon").classList.remove("open"), (e.target && e.target.matches("a.nav-icon") || e.target && e.target.matches("i")) && (null !== document.querySelector("#two-column-menu ul .nav-icon.active") && document.querySelector("#two-column-menu ul .nav-icon.active").classList.remove("active"), (e.target.matches("i") ? e.target.closest("a") : e.target).classList.add("active"), 0 < (t = document.getElementsByClassName("twocolumn-item-show")).length && t[0].classList.remove("twocolumn-item-show"), e = (e.target.matches("i") ? e.target.closest("a") : e.target).getAttribute("href").slice(1), document.getElementById(e) && document.getElementById(e).parentElement.classList.add("twocolumn-item-show"))
@@ -146,12 +152,12 @@
 
     function E() {
         feather.replace();
-        var e, t = "/" == location.pathname ? "index.html" : location.pathname.substring(1);
+        var e, t = "/" == location.pathname ? "dashboard" : location.pathname.substring(1);
         (t = t.substring(t.lastIndexOf("/") + 1)) && ((e = document.getElementById("navbar-nav").querySelector('[href="' + t + '"]')) ? (e.classList.add("active"), t = (t = e.closest(".collapse.menu-dropdown")) && t.parentElement.closest(".collapse.menu-dropdown") ? (t.classList.add("show"), t.parentElement.children[0].classList.add("active"), t.parentElement.closest(".collapse.menu-dropdown").parentElement.classList.add("twocolumn-item-show"), t.parentElement.closest(".collapse.menu-dropdown").getAttribute("id")) : (e.closest(".collapse.menu-dropdown").parentElement.classList.add("twocolumn-item-show"), t.getAttribute("id")), document.getElementById("two-column-menu").querySelector('[href="#' + t + '"]') && document.getElementById("two-column-menu").querySelector('[href="#' + t + '"]').classList.add("active")) : document.body.classList.add("twocolumn-panel"))
     }
 
     function w() {
-        var e = "/" == location.pathname ? "index.html" : location.pathname.substring(1);
+        var e = "/" == location.pathname ? "dashboard" : location.pathname.substring(1);
         !(e = e.substring(e.lastIndexOf("/") + 1)) || (e = document.getElementById("navbar-nav").querySelector('[href="' + e + '"]')) && (e.classList.add("active"), (e = e.closest(".collapse.menu-dropdown")) && (e.classList.add("show"), e.parentElement.children[0].classList.add("active"), e.parentElement.children[0].setAttribute("aria-expanded", "true"), e.parentElement.closest(".collapse.menu-dropdown") && (e.parentElement.closest(".collapse").classList.add("show"), e.parentElement.closest(".collapse").previousElementSibling && e.parentElement.closest(".collapse").previousElementSibling.classList.add("active"))))
     }
 

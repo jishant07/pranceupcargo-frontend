@@ -904,7 +904,8 @@ ul#nav li ul a,
 .single-about-count {
     background: #fff none repeat scroll 0 0;
     float: left;
-    padding: 30px 20px 20px;
+    /* padding: 30px 20px 20px; */
+    padding-top: 10px;
     text-align: center;
     text-transform: capitalize;
     width: 33.33%;
@@ -2259,6 +2260,12 @@ blockquote::before {
     padding-top: 10px !important;
 }
 
+
+/* .hearder-padding {
+    padding-top: 50px !important;
+    padding-bottom: 5px !important;
+} */
+
 .p-t-15 {
     padding-top: 15px !important;
 }
@@ -2293,4 +2300,13 @@ blockquote::before {
 
 .text-right {
     text-align: right !important;
+}
+
+
+/* .hearder-padding {
+    padding-top: 50px !important;
+} */
+
+.p-t-50 {
+    padding-top: 50px !important;
 }
