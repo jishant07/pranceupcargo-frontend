@@ -39,16 +39,21 @@
     --vz-body-color: #212529;
     --vz-body-color-rgb: 33, 37, 41;
     --vz-vertical-menu-bg: #fff;
-    --vz-vertical-menu-item-color: #6d7080;
+    /* --vz-vertical-menu-item-color: #6d7080;
+    --vz-vertical-menu-item-hover-color: #405189; */
+    --vz-vertical-menu-item-color: #fff;
     --vz-vertical-menu-item-hover-color: #405189;
     --vz-vertical-menu-item-active-color: #405189;
     --vz-vertical-menu-sub-item-color: #7c7f90;
     --vz-vertical-menu-sub-item-hover-color: #405189;
     --vz-vertical-menu-sub-item-active-color: #405189;
     --vz-vertical-menu-title-color: #919da9;
-    --vz-vertical-menu-bg-dark: #405189;
-    --vz-vertical-menu-item-color-dark: #abb9e8;
-    --vz-vertical-menu-item-hover-color-dark: #fff;
+    /* --vz-vertical-menu-bg-dark: #405189; */
+    --vz-vertical-menu-bg-dark: #CE49BF;
+    /* --vz-vertical-menu-item-color-dark: #abb9e8;
+    --vz-vertical-menu-item-hover-color-dark: #fff; */
+    --vz-vertical-menu-item-color-dark: #fff;
+    --vz-vertical-menu-item-hover-color-dark: #abb9e8;
     --vz-vertical-menu-item-active-color-dark: #fff;
     --vz-vertical-menu-sub-item-color-dark: #abb9e8;
     --vz-vertical-menu-sub-item-hover-color-dark: #fff;
@@ -124,15 +129,21 @@
     --vz-body-color: #ced4da;
     --vz-body-color-rgb: 206, 212, 218;
     --vz-vertical-menu-bg: #fff;
-    --vz-vertical-menu-item-color: #5f6270;
+    /* --vz-vertical-menu-item-color: #5f6270;
     --vz-vertical-menu-item-hover-color: #405189;
-    --vz-vertical-menu-item-active-color: #405189;
+    --vz-vertical-menu-item-active-color: #405189; */
+    --vz-vertical-menu-item-color: #fff;
+    --vz-vertical-menu-item-hover-color: #CE49BF;
+    --vz-vertical-menu-item-active-color: #CE49BF;
     --vz-vertical-menu-sub-item-color: #686b7b;
-    --vz-vertical-menu-sub-item-hover-color: #405189;
-    --vz-vertical-menu-sub-item-active-color: #405189;
+    /* --vz-vertical-menu-sub-item-hover-color: #405189;
+    --vz-vertical-menu-sub-item-active-color: #405189; */
+    --vz-vertical-menu-sub-item-hover-color: #CE49BF;
+    --vz-vertical-menu-sub-item-active-color: #CE49BF;
     --vz-vertical-menu-title-color: #878a99;
     --vz-vertical-menu-bg-dark: #212529;
-    --vz-vertical-menu-item-color-dark: #878a99;
+    /* --vz-vertical-menu-item-color-dark: #878a99; */
+    --vz-vertical-menu-item-color-dark: #fff;
     --vz-vertical-menu-item-hover-color-dark: #fff;
     --vz-vertical-menu-item-active-color-dark: #fff;
     --vz-vertical-menu-sub-item-color-dark: #7c7f90;
@@ -141,7 +152,8 @@
     --vz-vertical-menu-title-color-dark: #5f6270;
     --vz-header-bg: #292e32;
     --vz-header-item-color: #e9ecef;
-    --vz-header-bg-dark: #405189;
+    /* --vz-header-bg-dark: #405189; */
+    --vz-header-bg-dark: #CE49BF;
     --vz-header-item-color-dark: #b0c4d9;
     --vz-topbar-search-bg: #202328;
     --vz-topbar-user-bg: #31373c;
@@ -16226,6 +16238,19 @@ span.flatpickr-weekday {
 
 .m-0 {
     margin: 0 !important;
+}
+
+.btn-bg-dark {
+    background: var(--vz-vertical-menu-bg-dark);
+    color: var(--vz-vertical-menu-item-color-dark);
+    height: auto;
+    border-radius: 5px;
+    height: 40px;
+    border: none;
+}
+
+.btn-gb-dark:hover {
+    color: var(--vz-vertical-menu-item-color-dark);
 }
 
 

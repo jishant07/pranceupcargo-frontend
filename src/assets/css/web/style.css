@@ -193,7 +193,7 @@ a {
 }
 
 .social-bookmark li a:hover {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
     color: #fff;
 }
 
@@ -207,12 +207,12 @@ a {
 }
 
 .navbar-toggle {
-    border: 2px solid #f39c12;
+    border: 2px solid #CE49BF;
     border-radius: 0;
 }
 
 .navbar-toggle .icon-bar {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
 }
 
 .no-margin {
@@ -282,7 +282,7 @@ input:-webkit-autofill:focus {
 }
 
 .area-title h2::after {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
     height: 4px;
     width: 20px;
 }
@@ -323,7 +323,7 @@ input:-webkit-autofill:focus {
 }
 
 .red-bg {
-    background: #f39c12;
+    background: #CE49BF;
     color: #ffffff;
 }
 
@@ -423,7 +423,7 @@ input:-webkit-autofill:focus {
 
 .search-form input {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 center;
-    border: 1px solid #f39c12;
+    border: 1px solid #CE49BF;
     color: #333;
     height: 40px;
     left: 11px;
@@ -435,8 +435,8 @@ input:-webkit-autofill:focus {
 
 .search-form button {
     background: transparent none repeat scroll 0 0;
-    border: 1px solid #f39c12;
-    color: #f39c12;
+    border: 1px solid #CE49BF;
+    color: #CE49BF;
     font-size: 20px;
     height: 40px;
     padding: 7px 12px;
@@ -448,7 +448,7 @@ input:-webkit-autofill:focus {
 }
 
 .search-form button:hover {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
     color: #fff;
 }
 
@@ -476,7 +476,9 @@ input:-webkit-autofill:focus {
 }
 
 .mainmenu-area {
-    border-bottom: 1px solid rgba(243, 156, 18, .4);
+    /* border-bottom: 2px solid rgba(243, 156, 18, .4); */
+    border-bottom: 2px solid #CE49BF;
+    opacity: 0.7;
     position: relative;
     -webkit-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
@@ -522,7 +524,7 @@ ul#nav li a {
 
 ul#nav li a:hover,
 ul#nav li.active a {
-    color: #f39c12;
+    color: #CE49BF;
 }
 
 .is-sticky ul#nav li a {
@@ -532,7 +534,7 @@ ul#nav li.active a {
 
 .is-sticky ul#nav li a:hover,
 .is-sticky ul#nav li.active a {
-    color: #f39c12;
+    color: #CE49BF;
 }
 
 .is-sticky .navbar-header {
@@ -556,7 +558,7 @@ ul#nav li.active a {
     text-align: center;
     top: 20px;
     width: 110px;
-    color: #f39c12 !important;
+    color: #CE49BF !important;
 }
 
 .is-sticky .menu-toggle.full {
@@ -629,8 +631,8 @@ ul#nav li ul a,
 }
 
 .home-button a:hover {
-    background: #f39c12 none repeat scroll 0 0;
-    border-color: #f39c12;
+    background: #CE49BF none repeat scroll 0 0;
+    border-color: #CE49BF;
     color: #ffffff;
 }
 
@@ -749,7 +751,7 @@ ul#nav li ul a,
 }
 
 .welcome-slider-area.owl-carousel .owl-nav>div:hover {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
     color: #fff;
 }
 
@@ -772,7 +774,7 @@ ul#nav li ul a,
 }
 
 .blog-meta {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
     border-radius: 0 50px 50px 0;
     font-size: 24px;
     height: 50px;
@@ -811,7 +813,7 @@ ul#nav li ul a,
 
 .read-more:hover,
 .read-more:focus {
-    background: #f39c12;
+    background: #CE49BF;
     color: #fff;
 }
 
@@ -821,7 +823,7 @@ ul#nav li ul a,
 
 .blog-details h3 a:hover,
 .blog-details h3 a:focus {
-    color: #f39c12;
+    color: #CE49BF;
 }
 
 
@@ -871,7 +873,7 @@ ul#nav li ul a,
 }
 
 .quote-form button:hover {
-    background: #f39c12;
+    background: #CE49BF;
     color: #fff;
 }
 
@@ -885,7 +887,7 @@ ul#nav li ul a,
 }
 
 .about-content a:hover {
-    color: #f39c12;
+    color: #CE49BF;
 }
 
 .about-content a i {
@@ -912,7 +914,7 @@ ul#nav li ul a,
 }
 
 .single-about-count h4 {
-    color: #f39c12;
+    color: #CE49BF;
     font-size: 24px;
     font-weight: 800;
 }
@@ -945,8 +947,9 @@ ul#nav li ul a,
 }
 
 .catalouge-content {
-    background: rgba(243, 156, 18, 0.9) none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
     color: #fff;
+    opacity: 0.9;
     padding: 30px;
 }
 
@@ -970,7 +973,7 @@ ul#nav li ul a,
 .catalouge-content .read-more:hover,
 .catalouge-content .read-more:focus {
     background: #fff none repeat scroll 0 0;
-    color: #f39c12;
+    color: #CE49BF;
 }
 
 .catalouge-content ul {
@@ -1118,13 +1121,13 @@ ul#nav li ul a,
 }
 
 .single-service:hover .service-details h4 {
-    color: #f39c12;
+    color: #CE49BF;
 }
 
 .single-service:hover .service-icon,
 .single-service:hover .service-icon::before,
 .single-service:hover .service-icon::after {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
 }
 
 
@@ -1149,7 +1152,7 @@ ul#nav li ul a,
 .promo-icon {
     background: #f4f7f9 none repeat scroll 0 0;
     border-radius: 50%;
-    color: #f39c12;
+    color: #CE49BF;
     font-size: 24px;
     height: 65px;
     left: 0;
@@ -1195,7 +1198,7 @@ ul#nav li ul a,
 }
 
 .promo-bottom-content .read-more {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
     font-weight: bold;
     height: auto;
     letter-spacing: 1px;
@@ -1207,7 +1210,7 @@ ul#nav li ul a,
 .promo-bottom-area .read-more:hover,
 .promo-bottom-area .read-more:focus {
     background: #fff none repeat scroll 0 0;
-    color: #f39c12;
+    color: #CE49BF;
 }
 
 
@@ -1222,8 +1225,8 @@ ul#nav li ul a,
 }
 
 .client-photo-list .owl-carousel .owl-item.active.center .item {
-    -webkit-box-shadow: 0 0 0 5px #f39c12;
-    box-shadow: 0 0 0 5px #f39c12;
+    -webkit-box-shadow: 0 0 0 5px #CE49BF;
+    box-shadow: 0 0 0 5px #CE49BF;
     position: relative;
     z-index: 999;
     -webkit-transition: 0.3s;
@@ -1287,7 +1290,7 @@ ul#nav li ul a,
 }
 
 .client_nav span:hover {
-    background: #f39c12;
+    background: #CE49BF;
 }
 
 .client_nav span.fa.testi_next {
@@ -1345,7 +1348,7 @@ ul#nav li ul a,
 }
 
 .subsriber-form button {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
     border: 0 none;
     border-radius: 5px;
     color: #fff;
@@ -1363,7 +1366,7 @@ ul#nav li ul a,
 
 .subsriber-form button:hover {
     background: #fff none repeat scroll 0 0;
-    color: #f39c12;
+    color: #CE49BF;
 }
 
 
@@ -1376,7 +1379,7 @@ ul#nav li ul a,
 }
 
 .faqs-list h3 span {
-    color: #f39c12;
+    color: #CE49BF;
 }
 
 .faqs-list #accordion .panel-title {
@@ -1386,7 +1389,7 @@ ul#nav li ul a,
 }
 
 .faqs-list #accordion .panel-title i {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
     color: #fff;
     height: 30px;
     left: 0;
@@ -1458,8 +1461,8 @@ ul#nav li ul a,
 }
 
 .about-details-menu li.active a {
-    background: #f39c12 none repeat scroll 0 0;
-    border-color: #f39c12;
+    background: #CE49BF none repeat scroll 0 0;
+    border-color: #CE49BF;
     color: #fff;
 }
 
@@ -1473,7 +1476,7 @@ ul#nav li ul a,
 }
 
 .about-history-content h3::after {
-    border-bottom: 1px dashed #f39c12;
+    border-bottom: 1px dashed #CE49BF;
     bottom: 0;
     content: "";
     height: 1px;
@@ -1533,7 +1536,7 @@ ul#nav li ul a,
 }
 
 .single-history .history-year::after {
-    background: #f39c12;
+    background: #CE49BF;
     height: 10px;
     right: -2px;
     top: 9px;
@@ -1566,7 +1569,7 @@ ul#nav li ul a,
 }
 
 .annual-reports-content ul li i {
-    color: #f39c12;
+    color: #CE49BF;
     margin-right: 10px;
 }
 
@@ -1610,7 +1613,7 @@ ul#nav li ul a,
 }
 
 .member-social-bookmark .social-bookmark li a:hover {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
 }
 
 
@@ -1627,7 +1630,7 @@ ul#nav li ul a,
 
 .service-icon-two {
     border-right: 1px solid #ddd;
-    color: #f39c12;
+    color: #CE49BF;
     font-size: 30px;
     left: 0;
     position: absolute;
@@ -1636,7 +1639,7 @@ ul#nav li ul a,
 }
 
 .single-service-two:hover {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
     color: #fff;
 }
 
@@ -1660,12 +1663,12 @@ ul#nav li ul a,
 }
 
 .single-service-three h4 {
-    color: #f39c12;
+    color: #CE49BF;
 }
 
 .service-icon-three {
     border-right: 1px solid #ddd;
-    color: #f39c12;
+    color: #CE49BF;
     font-size: 30px;
     left: 0;
     position: absolute;
@@ -1687,7 +1690,7 @@ ul#nav li ul a,
 }
 
 .contact-address a:hover {
-    color: #f39c12;
+    color: #CE49BF;
 }
 
 .contact-area .form-control {
@@ -1710,7 +1713,7 @@ ul#nav li ul a,
 }
 
 .contact-area button:hover {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
     color: #fff;
 }
 
@@ -1754,7 +1757,7 @@ ul#nav li ul a,
 }
 
 .single-footer-widget a:hover {
-    color: #f39c12;
+    color: #CE49BF;
 }
 
 .single-footer-widget h3 {
@@ -1766,7 +1769,7 @@ ul#nav li ul a,
 }
 
 .single-footer-widget h3::after {
-    border-bottom: 1px dashed #f39c12;
+    border-bottom: 1px dashed #CE49BF;
     bottom: 0;
     content: "";
     height: 1px;
@@ -1796,7 +1799,7 @@ ul#nav li ul a,
 }
 
 .single-footer-widget.twitter-widget ul li .twitter-icon {
-    color: #f39c12;
+    color: #CE49BF;
     left: 0;
     position: absolute;
 }
@@ -1861,7 +1864,7 @@ ul#nav li ul a,
 }
 
 .footer-social-bookmark .social-bookmark li a:hover {
-    background: #f39c12;
+    background: #CE49BF;
     color: #fff;
 }
 
@@ -1871,7 +1874,7 @@ ul#nav li ul a,
 -------------------------------*/
 
 a.scrolltotop {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
     bottom: 20px;
     -webkit-box-shadow: 0 0 0 7px transparent;
     box-shadow: 0 0 0 7px transparent;
@@ -1966,7 +1969,7 @@ a.scrolltotop:hover {
 }
 
 .blog-page .single-blog .post-date a:hover {
-    color: #f39c12;
+    color: #CE49BF;
 }
 
 .blog-page .blog-image img {
@@ -1982,9 +1985,9 @@ a.scrolltotop:hover {
 .pagination li a:hover,
 .pagination li.active a,
 .pagination li a:focus {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
     color: #fff;
-    border-color: #f39c12;
+    border-color: #CE49BF;
 }
 
 .single-sidebar-widget {
@@ -1995,7 +1998,7 @@ a.scrolltotop:hover {
 }
 
 .single-sidebar-widget h4::after {
-    border-bottom: 1px dashed #f39c12;
+    border-bottom: 1px dashed #CE49BF;
     bottom: 0;
     content: "";
     height: 1px;
@@ -2041,9 +2044,9 @@ a.scrolltotop:hover {
 
 .widget_search form button:hover,
 .tagcloud a:hover {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
     color: #fff;
-    border-color: #f39c12;
+    border-color: #CE49BF;
 }
 
 .widget_categories li {
@@ -2059,7 +2062,7 @@ a.scrolltotop:hover {
 }
 
 .single-sidebar-widget li a:hover {
-    color: #f39c12;
+    color: #CE49BF;
 }
 
 .single-sidebar-widget {
@@ -2176,7 +2179,7 @@ blockquote::before {
 }
 
 .comment-form button:hover {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
 }
 
 
@@ -2197,7 +2200,7 @@ blockquote::before {
 }
 
 .service-menu h4 {
-    background: #f39c12 none repeat scroll 0 0;
+    background: #CE49BF none repeat scroll 0 0;
     color: #fff;
     margin-bottom: 0;
     padding: 10px;
@@ -2224,7 +2227,7 @@ blockquote::before {
 }
 
 .service-menu ul li a:hover {
-    color: #f39c12;
+    color: #CE49BF;
 }
 
 
@@ -2310,3 +2313,40 @@ blockquote::before {
 .p-t-50 {
     padding-top: 50px !important;
 }
+
+
+/* for logo image */
+
+.navbar-header img {
+    max-width: 35%;
+}
+
+.logo-sm {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.logo-lg {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+
+/* .carousel-item {
+    background: rgba(0, 0, 0, 0) url("/assets/images/web/slider/slide_1.jpg") no-repeat scroll center center / cover;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+} 
+.carousel-item ::after {
+    background: #3c4147;
+    content: "";
+    height: 100%;
+    left: 0;
+    opacity: 0.9;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}*/

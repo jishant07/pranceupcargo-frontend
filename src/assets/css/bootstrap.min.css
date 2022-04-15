@@ -257,9 +257,10 @@ a {
     text-decoration: underline
 }
 
-a:hover {
+
+/* a:hover {
     color: var(--vz-link-hover-color)
-}
+} */
 
 a:not([href]):not([class]),
 a:not([href]):not([class]):hover {
@@ -680,6 +681,9 @@ progress {
     .container-md,
     .container-sm {
         max-width: 720px
+    }
+    .t[_ngcontent-bqa-c107] .carousel-caption[_ngcontent-bqa-c107] {
+        bottom: 70px;
     }
 }
 

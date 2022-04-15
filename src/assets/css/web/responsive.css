@@ -13,7 +13,7 @@
 .preloader-spinner {
     -webkit-animation: 1s ease-out 0s normal none infinite running pulsate;
     animation: 1s ease-out 0s normal none infinite running pulsate;
-    border: 5px solid #f39c12;
+    border: 5px solid #CE49BF;
     border-radius: 40px;
     display: block;
     height: 40px;
@@ -79,7 +79,7 @@
     }
     .navbar-header .collapse,
     .navbar-toggle {
-        border: 2px solid #f39c12;
+        border: 2px solid #CE49BF;
         border-radius: 0;
         display: block !important;
     }
@@ -98,9 +98,12 @@
     }
     .navbar-header .collapse,
     .navbar-toggle {
-        border: 2px solid #f39c12;
+        border: 2px solid #CE49BF;
         border-radius: 0;
         display: block !important;
+    }
+    .t .carousel-item {
+        height: 100vh;
     }
 }
 
@@ -150,6 +153,9 @@
 ------------------------------------*/
 
 @media (min-width: 768px) and (max-width: 991px) {
+    .t .carousel-item {
+        height: 33vh;
+    }
     .section-padding {
         padding: 80px 0;
     }
@@ -164,16 +170,16 @@
     }
     .navbar-header .collapse,
     .navbar-toggle {
-        border: 2px solid #f39c12;
+        border: 2px solid #CE49BF;
         border-radius: 0;
         display: block !important;
     }
     .navbar-toggle .icon-bar {
-        background: #f39c12 none repeat scroll 0 0;
+        background: #CE49BF none repeat scroll 0 0;
     }
     .navbar-header {
         float: none;
-        /* border-bottom: 1px solid #f39c12; */
+        /* border-bottom: 1px solid #CE49BF; */
         margin: 0;
         padding: 15px 0;
     }
@@ -202,6 +208,7 @@
     } */
     .mainmenu-area {
         border-bottom: 2px solid rgba(243, 156, 18, .4);
+        /* border-bottom: 2px solid #CE49BF; */
         position: relative;
         -webkit-transition: all 0.3s ease 0s;
         transition: all 0.3s ease 0s;
@@ -334,7 +341,7 @@
 
 @media only screen and (max-width: 767px) {
     .top-area {
-        height: 50%;
+        height: 40%;
     }
     .welcome-text p {
         font-size: 14px;
@@ -352,14 +359,14 @@
         padding-top: 50px;
     }
     .navbar-header {
-        /* border-bottom: 1px solid #f39c12; */
+        /* border-bottom: 1px solid #CE49BF; */
         margin: 0;
         padding: 15px 0;
         height: 40px;
     }
     .navbar-header .collapse,
     .navbar-toggle {
-        border: 2px solid #f39c12;
+        border: 2px solid #CE49BF;
         border-radius: 0;
         display: block !important;
     }
@@ -379,7 +386,9 @@
         height: 5px;
     }
     .navbar-brand img {
-        max-width: 60%;
+        /* for logo image */
+        /* max-width: 60%; */
+        max-width: 20%;
         height: auto;
         padding-top: 10px;
     }
@@ -390,11 +399,14 @@
         background: #272727 none repeat scroll 0 0;
     } */
     .mainmenu-area {
-        border-bottom: 2px solid rgba(243, 156, 18, .4);
+        /* border-bottom: 2px solid rgba(243, 156, 18, .4); */
+        border-bottom: 2px solid #CE49BF;
+        /* opacity: 0.4; */
         position: relative;
         -webkit-transition: all 0.3s ease 0s;
         transition: all 0.3s ease 0s;
         z-index: 9999;
+        font-weight: 700;
     }
     ul#nav li a,
     .is-sticky ul#nav li a {
@@ -568,6 +580,9 @@
     .blog-image {
         width: max-content;
     }
+    .t .carousel-item {
+        height: 20vh;
+    }
 }
 
 
@@ -592,4 +607,23 @@
     ul#nav li {
         float: none;
     }
+    /* .t .carousel-item {
+        height: 33vh;
+    } */
 }
+
+
+/*----------------------------------
+    WIDE MOBILE LAYOUT: 360px
+-----------------------------------*/
+
+
+/* 
+@media only screen and (min-width: 360px) and (max-width: 767px) {
+    .section-padding {
+        padding: 30px 0;
+    }
+    .t .carousel-item {
+        height: 20vh;
+    }
+} */
