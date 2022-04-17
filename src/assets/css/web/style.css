@@ -2331,6 +2331,10 @@ blockquote::before {
     font-weight: 600;
 }
 
+.mat-ink-bar {
+    background-color: #CE49BF !important;
+}
+
 
 /* .carousel-item {
     background: rgba(0, 0, 0, 0) url("/assets/images/web/slider/slide_1.jpg") no-repeat scroll center center / cover;

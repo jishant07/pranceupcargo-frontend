@@ -1175,7 +1175,7 @@
 }
 
 [data-layout=vertical][data-sidebar-size=sm] .navbar-menu {
-    position: absolute;
+    /* position: absolute; */
     width: 70px!important;
     padding-top: 70px
 }
@@ -16251,6 +16251,12 @@ span.flatpickr-weekday {
 
 .btn-gb-dark:hover {
     color: var(--vz-vertical-menu-item-color-dark);
+}
+
+@media only screen and (min-width:360px) and (max-width:1024px) {
+    .navbar-header .header-profile-user {
+        max-width: 100% !important;
+    }
 }
 
 
