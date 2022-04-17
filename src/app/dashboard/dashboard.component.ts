@@ -37,9 +37,9 @@ export class DashboardComponent implements OnInit {
         toggleSidebarWidth();
       });//#topnav-hamburger-icon click-event
 
-      $('body,html').click(function(){
-          toggleSidebarWidth();
-     });
+    //   $('body,html').click(function(){
+    //       toggleSidebarWidth();
+    //  });
 
      function toggleSidebarWidth(){        
       //Toggle icon
@@ -53,7 +53,8 @@ export class DashboardComponent implements OnInit {
         $('html').attr('data-sidebar-size', dataSidebarSize);
         $('#sidebar-title').text(sidebarFullTitle);
       }   
-      if(screenWidth<768){console.log('< 768');
+      if(screenWidth<768){
+        console.log('< 768');
         $('html').attr('data-sidebar-size','lg');
         if($('.hamburger-icon').hasClass('open')){
           $('body').addClass('twocolumn-panel').toggleClass('vertical-sidebar-enable');

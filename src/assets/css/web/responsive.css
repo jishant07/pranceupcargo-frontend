@@ -177,7 +177,7 @@
             min-height: 240px !important;
         }
         .top-area-bg {
-            height: 81% !important;
+            height: 100% !important;
         }
         .section-padding {
             /* padding: 80px 0; */
@@ -215,11 +215,15 @@
             margin: 0;
             padding: 15px 0;
         }
+        .navbar-header img {
+            max-width: 35%;
+            margin-top: 15px;
+        }
         ul#nav {
             width: 70%;
             max-height: 200px;
-            overflow: scroll;
-            overflow-x: hidden;
+            /* overflow: scroll; */
+            /* overflow-x: hidden; */
         }
         ul#nav li {
             float: none;
@@ -638,6 +642,7 @@
         }
         .t .carousel-item {
             height: 20vh;
+            /* min-height: 267px !important; */
         }
     }
     /*----------------------------------
@@ -663,7 +668,14 @@
             float: none;
         }
         .t .carousel-item {
-            height: 33vh;
+            height: 40vh;
+            min-height: 267px !important;
+        }
+        .t .welcome-single-slide img {
+            height: 300px !important;
+        }
+        .top-area-bg:after {
+            height: 200px !important;
         }
     }
     /*----------------------------------
