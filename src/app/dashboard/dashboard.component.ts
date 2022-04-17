@@ -37,13 +37,17 @@ export class DashboardComponent implements OnInit {
         toggleSidebarWidth();
       });//#topnav-hamburger-icon click-event
 
-    //   $('body,html').click(function(){
-    //       toggleSidebarWidth();
-    //  });
+      $('body,html').click(function(){
+          toggleSidebarWidth();
+     });
 
-     function toggleSidebarWidth(){        
+     function toggleSidebarWidth(){      
+       
+      // console.log(screenWidth);  
       //Toggle icon
-      $('.hamburger-icon').toggleClass('open');      
+      if(screenWidth>768){
+        $('.hamburger-icon').toggleClass('open');      
+      }
        //Toggle sidebar width
        if($('.hamburger-icon').hasClass('open')){
         $('html').attr('data-sidebar-size','sm');
@@ -54,14 +58,19 @@ export class DashboardComponent implements OnInit {
         $('#sidebar-title').text(sidebarFullTitle);
       }   
       if(screenWidth<768){
-        console.log('< 768');
-        $('html').attr('data-sidebar-size','lg');
+        //Mobile view
+        // console.log('< 768');
+        $('html').attr('data-sidebar-size',dataSidebarSize);
         if($('.hamburger-icon').hasClass('open')){
           $('body').addClass('twocolumn-panel').toggleClass('vertical-sidebar-enable');
         }
+      
+        //Mobile view - Close sidemenu on menu click
+        $('.app-menu').on("click", "a", null, function () {
+          location.reload();
+        });
       }
-      else{//console.log('> 768');
-      }
+      else{}
      };
     });
   }

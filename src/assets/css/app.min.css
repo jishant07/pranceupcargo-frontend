@@ -13108,8 +13108,9 @@ span.flatpickr-weekday {
 }
 
 .auth-one-bg .bg-overlay {
-    background: -webkit-gradient(linear, left top, right top, from(#364574), to(#405189));
-    background: linear-gradient(to right, #364574, #405189);
+    /* background: -webkit-gradient(linear, left top, right top, from(#364574), to(#405189));     
+    background: linear-gradient(to right, #364574, #405189);*/
+    background: var(--vz-vertical-menu-bg-dark);
     opacity: .9
 }
 
@@ -16247,9 +16248,10 @@ span.flatpickr-weekday {
     border-radius: 5px;
     height: 40px;
     border: none;
+    font-weight: 600;
 }
 
-.btn-gb-dark:hover {
+.btn-bg-dark:hover {
     color: var(--vz-vertical-menu-item-color-dark);
 }
 
@@ -16257,6 +16259,10 @@ span.flatpickr-weekday {
     .navbar-header .header-profile-user {
         max-width: 100% !important;
     }
+}
+
+.text-theme-dark {
+    color: #CE49BF !important;
 }
 
 

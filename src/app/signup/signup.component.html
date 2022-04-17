@@ -60,34 +60,34 @@
 
                         <div class="card-body p-4">
                             <div class="text-center mt-2">
-                                <h5 class="text-primary">Create New Account</h5>
+                                <h5 class="text-theme-dark">Create New Account</h5>
                                 <p class="text-muted">Get your free pranceup cargo account now</p>
                             </div>
                             <div class="p-2 mt-4">
                                 <form [formGroup]="signupForm">
                                     <div class="mb-3">
-                                        <label for="useremail" class="form-label">Email Id<span class="text-danger">*</span></label>
+                                        <label for="useremail" class="form-label">Email Id <span class="text-muted">*</span></label>
                                         <input type="email" class="form-control" id="useremail" placeholder="Enter Email Id" formControlName="email" required>
                                         <div class="invalid-feedback">
                                             Please enter email
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="userpassword" class="form-label">Password <span class="text-danger">*</span></label>
+                                        <label for="userpassword" class="form-label">Password <span class="text-muted">*</span></label>
                                         <input type="password" class="form-control" id="userpassword" formControlName="passWord" placeholder="Enter Password" required>
                                         <div class="invalid-feedback">
                                             Please enter password
                                         </div>
                                     </div>
                                     <div class="mb-2">
-                                        <label for="userrepassword" class="form-label">Re-Password <span class="text-danger">*</span></label>
+                                        <label for="userrepassword" class="form-label">Re-Password <span class="text-muted">*</span></label>
                                         <input type="password" class="form-control" id="userrepassword" placeholder="Enter Re-Password" formControlName="rePassWord" required>
                                         <div class="invalid-feedback">
                                             Please enter re-password
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="companyname" class="form-label">Company Name<span class="text-danger">*</span></label>
+                                        <label for="companyname" class="form-label">Company Name<span class="text-muted">*</span></label>
                                         <input type="text" class="form-control" id="companyname" placeholder="Enter Company Name" formControlName="companyName" required>
                                         <div class="invalid-feedback">
                                             Please enter company name
@@ -99,7 +99,7 @@
                                     </div> -->
 
                                     <div class="mt-4">
-                                        <button class="btn btn-success w-100" (click)="signUp()">Sign Up</button>
+                                        <button class="btn btn-bg-dark w-100" (click)="signUp()">Sign Up</button>
                                     </div>
                                 </form>
 
