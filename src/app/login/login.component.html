@@ -40,7 +40,7 @@
                             <div class="p-2 mt-4">
                                 <form [formGroup]="loginForm" (submit)="submitForm()">
                                     <div class="mb-3">
-                                        <label for="username" class="form-label">Email Id</label>
+                                        <label for="username" class="form-label">Email Id <span class="text-muted">*</span></label>
                                         <input type="email" class="form-control" id="username" placeholder="Enter Email ID" formControlName="email">
                                     </div>
 
@@ -48,7 +48,7 @@
                                         <!-- <div class="float-end">
                                             <a href="" class="text-muted">Forgot password?</a>
                                         </div> -->
-                                        <label class="form-label" for="password-input">Password</label>
+                                        <label class="form-label" for="password-input">Password <span class="text-muted">*</span></label>
                                         <div class="position-relative auth-pass-inputgroup mb-3">
                                             <input [type]="fieldTextType ? 'text' : 'password'" class="form-control pe-5" placeholder="Enter password" formControlName="passWord">
                                             <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" type="button" id="password-addon">
