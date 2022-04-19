@@ -74,14 +74,38 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="userpassword" class="form-label">Password <span class="text-muted">*</span></label>
-                                        <input type="password" class="form-control" id="userpassword" formControlName="passWord" placeholder="Enter Password" required>
+                                        <!-- <input type="password" class="form-control" id="userpassword" formControlName="passWord" placeholder="Enter Password"> -->
+                                        <div class="position-relative auth-pass-inputgroup mb-3">
+                                            <input [type]="fieldTextType ? 'text' : 'password'" class="form-control pe-5" placeholder="Enter password" formControlName="passWord">
+                                            <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" type="button">
+                                                <i class="fa"
+                                                    [ngClass]="{
+                                                    'fa-eye-slash': !fieldTextType,
+                                                    'fa-eye': fieldTextType
+                                                    }"
+                                                    (click)="toggleFieldTextType()"
+                                                ></i>
+                                            </button>
+                                        </div>
                                         <div class="invalid-feedback">
                                             Please enter password
                                         </div>
                                     </div>
                                     <div class="mb-2">
                                         <label for="userrepassword" class="form-label">Re-Password <span class="text-muted">*</span></label>
-                                        <input type="password" class="form-control" id="userrepassword" placeholder="Enter Re-Password" formControlName="rePassWord" required>
+                                        <!-- <input type="password" class="form-control" id="userrepassword" placeholder="Enter Re-Password" formControlName="rePassWord" required> -->
+                                        <div class="position-relative auth-pass-inputgroup mb-3">
+                                            <input id="userrepassword" [type]="fieldRePasswordTextType ? 'text' : 'password'" class="form-control pe-5" placeholder="Enter Re-password" formControlName="rePassWord">
+                                            <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" type="button">
+                                                <i class="fa"
+                                                    [ngClass]="{
+                                                    'fa-eye-slash': !fieldRePasswordTextType,
+                                                    'fa-eye': fieldRePasswordTextType
+                                                    }"
+                                                    (click)="toggleRePasswordFieldType()"
+                                                ></i>
+                                            </button>
+                                        </div>
                                         <div class="invalid-feedback">
                                             Please enter re-password
                                         </div>

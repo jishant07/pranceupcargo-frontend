@@ -27,6 +27,15 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  fieldTextType: boolean;
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
+  }
+  fieldRePasswordTextType: boolean;
+  toggleRePasswordFieldType() {
+    this.fieldRePasswordTextType = !this.fieldRePasswordTextType;
+  }
+
   signUp(){
     if(this.signupForm.valid && (this.signupForm.value.passWord == this.signupForm.value.rePassWord)){
       this.loader_service.isLoading.next(true);

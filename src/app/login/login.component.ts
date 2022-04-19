@@ -14,8 +14,8 @@ import { LoaderService } from '../_services/loader/loader.service';
 export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup({
-    email: new FormControl('',[Validators.required]),
-    passWord: new FormControl('',[Validators.required]),
+    email: new FormControl('',[Validators.required,Validators.email]),
+    passWord: new FormControl('',[Validators.required]),    
   })
 
   constructor(private auth_service:AuthService,
@@ -25,6 +25,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
   
+  fieldTextType: boolean;
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
+  }
+
   signOut(){
     this.auth_service.signOut();
   }
