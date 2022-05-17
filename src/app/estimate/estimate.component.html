@@ -1,108 +1,110 @@
 <form [formGroup]="estimateForm">
-    <div class="row">   
-        <h4>Shipping Details</h4>                                             
-    <div class="col-md-2">
-        <mat-form-field>
-            <mat-label>Activity Type</mat-label>
-            <mat-select formControlName="typeOfActivity" (selectionChange)="activityChanged($event)">
-                <mat-option *ngFor="let type of global_service.typeOfActivity" [value]="type">{{type}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+    <div class="row">
+        <h4>Shipping Details</h4>
+        <div class="col-md-2">
+            <mat-form-field>
+                <mat-label>Activity Type</mat-label>
+                <mat-select formControlName="typeOfActivity" (selectionChange)="activityChanged($event)">
+                    <mat-option *ngFor="let type of global_service.typeOfActivity" [value]="type">{{type}}</mat-option>
+                </mat-select>
+            </mat-form-field>
 
-    </div>
-    <div class="col-md-2" *ngIf="isActivityTypeSelected && isExport">
-        <mat-form-field>
-            <mat-label>Destination Country</mat-label>
-            <input matInput type="text" formControlName="destCountry" (input)="destCountryTypeAhead()" [matAutocomplete]="dest_country_auto">
-        </mat-form-field>
-        <mat-autocomplete #dest_country_auto="matAutocomplete" (optionSelected)="destinationCountrySelected($event)">
-            <mat-option *ngFor="let option of destCountryList" [value]="option">
-              {{option.countryName}}
-            </mat-option>
-          </mat-autocomplete>
-    </div>                                                                                                   
-    <div class="col-md-2" *ngIf="isActivityTypeSelected && !isExport">
-        <mat-form-field>
-            <mat-label>Country of Origin</mat-label>
-            <input matInput type="text" formControlName="countryOfOrigin" (input)="countryOfOriginTypeahead()" [matAutocomplete]="countryOfOrigin_auto">
-        </mat-form-field>
-        <mat-autocomplete #countryOfOrigin_auto="matAutocomplete" (optionSelected)="countryOfOriginSelected($event)">
-            <mat-option *ngFor="let option of countryOfOriginList" [value]="option">
-              {{option.countryName}}
-            </mat-option>
-          </mat-autocomplete>
-    </div>
-    <div class="col-md-2">
-        <mat-form-field>
-            <mat-label>Transport Mode</mat-label>
-            <mat-select formControlName="modeOfTransport" (selectionChange)="transportModeChanged($event)">
-                <mat-option *ngFor="let mode of global_service.modeOfTransport" [value]="mode">{{mode}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-    <div class="col-md-2" *ngIf="isTransportModeSelected && isExport && isTrasnportTypeSea">
-        <mat-form-field>
-            <mat-label>Destination Port</mat-label>
-            <input matInput type="text" formControlName="destinationPort" [matAutocomplete]="dest_port_auto">
-            <mat-autocomplete #dest_port_auto="matAutocomplete">
-                <mat-option *ngFor="let port of destFilterPortsList" [value]="port">
+        </div>
+        <div class="col-md-2" *ngIf="isActivityTypeSelected && isExport">
+            <mat-form-field>
+                <mat-label>Destination Country</mat-label>
+                <input matInput type="text" formControlName="destCountry" (input)="destCountryTypeAhead()" [matAutocomplete]="dest_country_auto">
+            </mat-form-field>
+            <mat-autocomplete #dest_country_auto="matAutocomplete" (optionSelected)="destinationCountrySelected($event)">
+                <mat-option *ngFor="let option of destCountryList" [value]="option">
+                    {{option.countryName}}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+        <div class="col-md-2" *ngIf="isActivityTypeSelected && !isExport">
+            <mat-form-field>
+                <mat-label>Country of Origin</mat-label>
+                <input matInput type="text" formControlName="countryOfOrigin" (input)="countryOfOriginTypeahead()" [matAutocomplete]="countryOfOrigin_auto">
+            </mat-form-field>
+            <mat-autocomplete #countryOfOrigin_auto="matAutocomplete" (optionSelected)="countryOfOriginSelected($event)">
+                <mat-option *ngFor="let option of countryOfOriginList" [value]="option">
+                    {{option.countryName}}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field>
+                <mat-label>Transport Mode</mat-label>
+                <mat-select formControlName="modeOfTransport" (selectionChange)="transportModeChanged($event)">
+                    <mat-option *ngFor="let mode of global_service.modeOfTransport" [value]="mode">{{mode}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2" *ngIf="isTransportModeSelected && isExport && isTrasnportTypeSea">
+            <mat-form-field>
+                <mat-label>Destination Port</mat-label>
+                <input matInput type="text" formControlName="destinationPort" [matAutocomplete]="dest_port_auto">
+                <mat-autocomplete #dest_port_auto="matAutocomplete">
+                    <mat-option *ngFor="let port of destFilterPortsList" [value]="port">
+                        {{port.portName}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2" *ngIf="isTransportModeSelected && isExport && !isTrasnportTypeSea">
+            <mat-form-field *ngIf="estimateForm.value.modeOfTransport == 'AIR'">
+                <mat-label>Destination Airport</mat-label>
+                <input matInput type="text" formControlName="destinationAirport" (input)="destAirportTypeAhead()" [matAutocomplete]="dest_airport_auto">
+            </mat-form-field>
+            <mat-autocomplete #dest_airport_auto="matAutocomplete">
+                <mat-option *ngFor="let option of destFilterAirportsList" [value]="option">
+                    {{option.airportName}}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+        <div class="col-md-2" *ngIf="isTransportModeSelected && !isExport && isTrasnportTypeSea">
+            <mat-form-field>
+                <mat-label>Origin Port</mat-label>
+                <input matInput type="text" formControlName="portOfOrigin" (input)="countryOfOriginPortTypeahead()" [matAutocomplete]="countryOfOrigin_port_auto">
+            </mat-form-field>
+            <mat-autocomplete #countryOfOrigin_port_auto>
+                <mat-option *ngFor="let port of countryOforiginFilterPortsList" [value]="port">
                     {{port.portName}}
                 </mat-option>
             </mat-autocomplete>
-        </mat-form-field>
-    </div>
-    <div class="col-md-2" *ngIf="isTransportModeSelected && isExport && !isTrasnportTypeSea">
-        <mat-form-field *ngIf="estimateForm.value.modeOfTransport == 'AIR'">
-            <mat-label>Destination Airport</mat-label>
-            <input matInput type="text" formControlName="destinationAirport" (input)="destAirportTypeAhead()" [matAutocomplete]="dest_airport_auto">
-        </mat-form-field>
-        <mat-autocomplete #dest_airport_auto="matAutocomplete">
-            <mat-option *ngFor="let option of destFilterAirportsList" [value]="option">
-                {{option.airportName}}
-            </mat-option>
-        </mat-autocomplete>
-    </div> 
-    <div class="col-md-2" *ngIf="isTransportModeSelected && !isExport && isTrasnportTypeSea">
-        <mat-form-field>
-            <mat-label>Origin Port</mat-label>
-            <input matInput type="text" formControlName="portOfOrigin" (input)="countryOfOriginPortTypeahead()" [matAutocomplete]="countryOfOrigin_port_auto">
-        </mat-form-field>
-        <mat-autocomplete #countryOfOrigin_port_auto>
-            <mat-option *ngFor="let port of countryOforiginFilterPortsList" [value]="port">
-                {{port.portName}}
-            </mat-option>
-        </mat-autocomplete>
-    </div>                                               
-    <div class="col-md-2" *ngIf="isTransportModeSelected && !isExport && !isTrasnportTypeSea">
-        <mat-form-field>
-            <mat-label>Origin Airport</mat-label>
-            <input matInput type="text" formControlName="airportOfOrigin" (input)="countryOfOriginAirportTypeahead()" [matAutocomplete]="countryOfOrigin_airport_auto">
-        </mat-form-field>
-        <mat-autocomplete #countryOfOrigin_airport_auto>
-            <mat-option *ngFor="let airport of countryOfOriginFilterAirportsList" [value]="airport">
-                {{airport.airportName}}
-            </mat-option>
-        </mat-autocomplete>
-    </div>
-    <div class="col-md-2">
-        <mat-form-field>
-            <mat-label>Inco Terms</mat-label>
-            <mat-select formControlName="incoTerms">
-                <mat-option *ngFor="let type of global_service.incoTerms" [value]="type.id">{{type.data}}</mat-option>
+        </div>
+        <div class="col-md-2" *ngIf="isTransportModeSelected && !isExport && !isTrasnportTypeSea">
+            <mat-form-field>
+                <mat-label>Origin Airport</mat-label>
+                <input matInput type="text" formControlName="airportOfOrigin" (input)="countryOfOriginAirportTypeahead()" [matAutocomplete]="countryOfOrigin_airport_auto">
+            </mat-form-field>
+            <mat-autocomplete #countryOfOrigin_airport_auto>
+                <mat-option *ngFor="let airport of countryOfOriginFilterAirportsList" [value]="airport">
+                    {{airport.airportName}}
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field>
+                <mat-label>Inco Terms</mat-label>
+                <mat-select formControlName="incoTerms">
+                    <mat-option *ngFor="let type of global_service.incoTerms" [value]="type.id">{{type.data}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <mat-form-field class="col-md-2">
+            <mat-label>Delivery Type</mat-label>
+            <mat-select formControlName="deliveryType">
+                <mat-option *ngFor="let type of global_service.deliveryTypes" [value]="type">{{type}}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
-    <mat-form-field class="col-md-2">
-        <mat-label>Delivery Type</mat-label>
-        <mat-select formControlName="deliveryType">
-            <mat-option *ngFor="let type of global_service.deliveryTypes" [value]="type">{{type}}</mat-option>
-        </mat-select>
-    </mat-form-field>
-</div><!--.row-->
+    <!--.row-->
     <br/>
     <h4>Cargo Details</h4>
     <div>
-        <app-piece *ngFor="let pieceItem of pieceArray.controls" [pieceForm]="pieceItem"></app-piece>
+        <!-- <app-piece *ngFor="let pieceItem of pieceArray.controls" [pieceForm]="pieceItem"></app-piece> -->
+        <app-piece></app-piece>
     </div>
 </form>
 <div *ngIf="chargableWeight && chargableWeight != 0">

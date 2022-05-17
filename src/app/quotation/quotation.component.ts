@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Form, FormArray, FormControl, FormGroup, Validators, FormBuilder, Validator, ValidatorFn } from '@angular/forms';
 import { PieceComponent } from '../piece/piece.component';
 
 import { GlobalService } from '../_services/global.service';
 import { TypeaheadService } from '../_services/typeahead.service';
+
+import {AirportModel, PortsModel, PiecesModel} from '../_models/model';
+
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-quotation',
@@ -33,40 +38,109 @@ export class QuotationComponent implements OnInit {
   chargableWeight:any = 0
   cbmWeight:any = 0
 
-  estimateForm:FormGroup =  new FormGroup({
+  indianPortsArray: PortsModel[];
+  allPortsArray: PortsModel[];
+  allDestinationPorts: string[] = [];
+  allOriginPorts: string[] = [];
+  filteredDestinationPorts: string[] = [];
+  filteredOriginPorts: string[] = [];
+  destinationPorts:boolean = true;
+  originPorts:boolean = false;
+
+  indianAirportsArray: AirportModel[];
+  allAirportsArray: AirportModel[];
+  allDestinationAirports: string[] = [];
+  allOriginAirports: string[] = [];
+  filteredDestinationAirports: string[] = [];
+  filteredOriginAirports: string[] = [];
+  destinationAirports:boolean = true;
+  originAirports:boolean = false;
+
+  activityTypeExport: string = 'Export';
+  activityTypeImport: string = 'Import';
+  TransportModeAir : string = 'Air';
+  TransportModeSea : string = 'Sea';
+
+  rowNumber:number = 0;
+
+
+  constructor(public global_service:GlobalService,private typeadhead_service:TypeaheadService
+    , private fb :FormBuilder) {   
+   }
+   
+  // estimateForm:FormGroup =  new FormGroup({
+  //   modeOfTransport : new FormControl('',[Validators.required]),
+  //   typeOfActivity : new FormControl('',[Validators.required]),
+  //   destCountry : new FormControl(''),
+  //   destCountryId : new FormControl(''),
+  //   destinationPort: new FormControl(''),
+  //   destinationAirport: new FormControl(''),
+  //   countryOfOrigin: new FormControl(''),
+  //   countryOfOriginId: new FormControl(''),
+  //   portOfOrigin: new FormControl(''),
+  //   airportOfOrigin: new FormControl(''),
+  //   incoTerms: new FormControl('',[Validators.required]),
+  //   pieces: new FormArray([
+  //     PieceComponent.makePieceItem()
+  //   ]),
+  //   deliveryType: new FormControl('',[Validators.required])
+  // });
+  
+  estimateForm =  this.fb.group({
     modeOfTransport : new FormControl('',[Validators.required]),
     typeOfActivity : new FormControl('',[Validators.required]),
-    destCountry : new FormControl(''),
-    destCountryId : new FormControl(''),
-    destinationPort: new FormControl(''),
+    destinationPort: [''],
     destinationAirport: new FormControl(''),
-    countryOfOrigin: new FormControl(''),
-    countryOfOriginId: new FormControl(''),
     portOfOrigin: new FormControl(''),
     airportOfOrigin: new FormControl(''),
     incoTerms: new FormControl('',[Validators.required]),
+    // pieces: new FormArray([
+    //   PieceComponent.makePieceItem()
+    // ]),
+
+    // pieces: this.fb.array([ 
+    //   this.PiecesFormGroup() 
+    // ]),
     pieces: new FormArray([
       PieceComponent.makePieceItem()
     ]),
-    deliveryType: new FormControl('',[Validators.required])
+
+    deliveryType: new FormControl('',[Validators.required]),
+
+    //Inco Tearm - Ex Works(exw)
+    pickUpAddress : new FormControl(''),
+    spocName : new FormControl(''),
+    spocPhone : new FormControl(''),
+
+    //Inco Tearm - Free Carrier(fca)
+    shipperAddress : new FormControl(''),
+    fcaLocation : new FormControl(''),
+
+    //Inco Tearm - Delivered at Place(dap)
+    dapdduAddress : new FormControl(''),
+
+    //Inco Tearm - Delivered Duty Paid(ddp)
+    ddpdduAddress : new FormControl(''),
+    hscode : new FormControl(''),
+    invoiceValue : new FormControl(''),
+
+    //Inco Tearm - Delivered Duty Unpaid(ddu)
+    dduAddress : new FormControl(''),
+    dduHscode : new FormControl(''),
+    dduInvoiceValue : new FormControl(''),
   });
 
-  constructor(public global_service:GlobalService,private typeadhead_service:TypeaheadService) {
-    console.log(global_service.typeOfActivity);
-    console.log(global_service.modeOfTransport);
-   }
 
   ngOnInit(): void {
-    this.typeadhead_service.getCountries().subscribe((res:any) =>{
-      this.countryList = res.message;
-      this.destCountryList = res.message;
-      this.countryOfOriginList = res.message;
-    })
+    this.incoTerm_removeAllValidation();
+    this.autoComplete();
   }
 
   activityChanged(event:any){
+    this.getPorts();
+    this.getAirports();
     this.isActivityTypeSelected=true;
-    if(event.value == 'Export'){
+    if(event.value == this.activityTypeExport){
       this.isExport = true;
       this.estimateForm.get('countryOfOrigin')?.removeValidators(Validators.required);
       this.estimateForm.get('countryOfOriginId')?.removeValidators(Validators.required);
@@ -109,9 +183,9 @@ export class QuotationComponent implements OnInit {
     return this.estimateForm.get('pieces') as FormArray;
   }
 
-  addNewPackageType(){
-    this.pieceArray.push(PieceComponent.makePieceItem())  
-  }
+  // addNewPackageType(){
+  //   this.pieceArray.push(PieceComponent.makePieceItem())  
+  // }
 
   destCountryTypeAhead(){
     let term = this.estimateForm.value.destCountry
@@ -211,27 +285,455 @@ export class QuotationComponent implements OnInit {
       return item.portName.toLowerCase().indexOf(term) == -1 ? false : true;
     })
   }
-
   estimateSubmit(){
+     
+    let temp:any = {};
     if(this.estimateForm.value.modeOfTransport == 'AIR'){
-      this.calculateChargableWeight("AIR");
+      this.calculateChargableWeight("AIR");     
+      Object.keys(this.estimateForm.value).forEach(key =>{
+        if(this.estimateForm.value[key] != "" && this.estimateForm.value[key] != null 
+        && (this.estimateForm.value[key] != 'portOfOrigin' || this.estimateForm.value[key] != 'destinationPort')){
+          temp[key] = this.estimateForm.value[key];
+        }
+      });
     }else{
       this.calculateChargableWeight("SEA")
+      Object.keys(this.estimateForm.value).forEach(key =>{
+        if(this.estimateForm.value[key] != "" && this.estimateForm.value[key] != null 
+        && (this.estimateForm.value[key] != 'airportOfOrigin' || this.estimateForm.value[key] != 'destinationAirport')){
+          temp[key] = this.estimateForm.value[key];
+        }
+      });
     }
-    let temp:any = {}
-    Object.keys(this.estimateForm.value).forEach(key =>{
-      if(this.estimateForm.value[key] != "" && this.estimateForm.value[key] != null)temp[key] = this.estimateForm.value[key];
-    })
+    console.log(this.estimateForm);
     console.log(temp)
   }
+
   transportModeChanged(event:any){
     this.isTransportModeSelected=true;
-    if(event.value.toLowerCase() =='sea'){
+    if(event.value.toLowerCase() =='sea'){      
+      this.getPorts();
       this.isTrasnportTypeSea=true;
     }
     else{
+      this.getAirports();
       this.isTrasnportTypeSea=false;
     }
   }
+
+//Begin: Inco Terms
+  incoTermChanged(event:any){
+    this.incoTerm_removeAllValidation();
+    var selectedIncoTearm = this.estimateForm.value.incoTerms.toLowerCase();
+    switch(selectedIncoTearm )
+    {
+      case 'exw': 
+        //Ex Works        
+        this.incoTerm_exw_Validation('add');
+        break;
+      case 'fca':
+        //Free Carrier
+        this.incoTerm_fca_Validation('add');
+        break;
+      case 'cpt':
+        //Carrige Paid To
+        break;
+      case 'cip':
+        //Carrige and Insurance Paid To
+        break;
+      case 'dap':
+          //Delivered at Place
+          this.incoTerm_dap_Validation('add');
+          break;
+      case 'dpu':
+        //Delivered at Place Unload
+        break;
+      case 'ddp':
+        //Delivered Duty Paid
+        this.incoTerm_ddp_Validation('add');
+        break;
+      case 'ddu':
+        //Delivered Duty Unpaid
+        this.incoTerm_ddu_Validation('add');
+        break;
+      case 'fas':
+        //Free Alongside ship
+        break;
+      case 'fob':
+        //Free on Board
+         break;
+      case 'cfr':
+        //Cost and Freight
+        break;
+      case 'cif':
+        //Cost Insurance and Freight
+        break;
+      default:
+        //console.log("No such day exists!");
+        this.incoTerm_removeAllValidation();
+        break;
+    }
+    //console.log(selectedIncoTearm);
+  }
+
+  incoTerm_removeAllValidation(){
+    this.incoTerm_exw_Validation('remove');
+    this.incoTerm_fca_Validation('remove');
+    this.incoTerm_dap_Validation('remove');
+    this.incoTerm_ddp_Validation('remove');
+    this.incoTerm_ddu_Validation('remove');
+  }
+
+  incoTerm_exw_Validation(addOrRemove:string){
+    addOrRemove = addOrRemove.toLowerCase();
+    if(addOrRemove == 'add'){
+    this.estimateForm.get('pickUpAddress')?.addValidators(Validators.required);
+    this.estimateForm.get('spocName')?.addValidators(Validators.required);
+    this.estimateForm.get('spocPhone')?.addValidators(Validators.required);
+    }
+    else{
+      // this.estimateForm.get('pickUpAddress')?.removeValidators(Validators.required);
+      // this.estimateForm.get('spocName')?.removeValidators(Validators.required);
+      // this.estimateForm.get('spocPhone')?.removeValidators(Validators.required);
+
+      this.estimateForm.get('pickUpAddress')?.clearValidators();
+      this.estimateForm.get('spocName')?.clearValidators();
+      this.estimateForm.get('spocPhone')?.clearValidators();
+      
+      this.estimateForm.get('pickUpAddress')?.setValue('');
+      this.estimateForm.get('spocName')?.setValue('');
+      this.estimateForm.get('spocPhone')?.setValue('');
+    }
+    this.estimateForm.updateValueAndValidity();
+  }
+
+  incoTerm_fca_Validation(addOrRemove:string){
+    addOrRemove = addOrRemove.toLowerCase();
+    if(addOrRemove == 'add'){
+      this.estimateForm.get('shipperAddress')?.addValidators(Validators.required);
+      this.estimateForm.get('fcaLocation')?.addValidators(Validators.required);
+    }
+    else{      
+      // this.estimateForm.get('shipperAddress')?.removeValidators(Validators.required);
+      // this.estimateForm.get('fcaLocation')?.removeValidators(Validators.required);
+      
+      this.estimateForm.get('shipperAddress')?.clearValidators();
+      this.estimateForm.get('fcaLocation')?.clearValidators();
+      
+      this.estimateForm.get('shipperAddress')?.setValue('');
+      this.estimateForm.get('fcaLocation')?.setValue('');
+    }
+    this.estimateForm.updateValueAndValidity();
+  }
+  
+  incoTerm_dap_Validation(addOrRemove:string){
+    addOrRemove = addOrRemove.toLowerCase();
+    if(addOrRemove == 'add'){
+      this.estimateForm.get('dapdduAddress')?.addValidators(Validators.required);
+    }
+    else{
+      //this.estimateForm.get('dapdduAddress')?.removeValidators(Validators.required);      
+      this.estimateForm.get('dapdduAddress')?.clearValidators();
+      
+      this.estimateForm.get('dapdduAddress')?.setValue('');
+    }
+    this.estimateForm.updateValueAndValidity();
+  }
+  
+  incoTerm_ddp_Validation(addOrRemove:string){
+    addOrRemove = addOrRemove.toLowerCase();
+    if(addOrRemove == 'add'){
+    this.estimateForm.get('ddpdduAddress')?.addValidators(Validators.required);
+    this.estimateForm.get('hscode')?.addValidators(Validators.required);
+    this.estimateForm.get('invoiceValue')?.addValidators(Validators.required);
+    }
+    else{
+    // this.estimateForm.get('ddpdduAddress')?.removeValidators(Validators.required);
+    // this.estimateForm.get('hscode')?.removeValidators(Validators.required);
+    // this.estimateForm.get('invoiceValue')?.removeValidators(Validators.required);
+    
+    this.estimateForm.get('ddpdduAddress')?.clearValidators();
+    this.estimateForm.get('hscode')?.clearValidators();
+    this.estimateForm.get('spocPhone')?.clearValidators();
+    
+    this.estimateForm.get('ddpdduAddress')?.setValue('');
+    this.estimateForm.get('hscode')?.setValue('');
+    this.estimateForm.get('invoiceValue')?.setValue('');
+    }
+    this.estimateForm.updateValueAndValidity();
+  }
+
+  incoTerm_ddu_Validation(addOrRemove:string){
+    addOrRemove = addOrRemove.toLowerCase();
+    if(addOrRemove == 'add'){
+    this.estimateForm.get('dduAddress')?.addValidators(Validators.required);
+    this.estimateForm.get('dduHscode')?.addValidators(Validators.required);
+    this.estimateForm.get('dduInvoiceValue')?.addValidators(Validators.required);
+    }
+    else{
+    this.estimateForm.get('dduAddress')?.clearValidators();
+    this.estimateForm.get('dduHscode')?.clearValidators();
+    this.estimateForm.get('spocPhone')?.clearValidators();
+    
+    this.estimateForm.get('dduAddress')?.setValue('');
+    this.estimateForm.get('dduHscode')?.setValue('');
+    this.estimateForm.get('dduInvoiceValue')?.setValue('');
+    }
+    this.estimateForm.updateValueAndValidity();
+  }
+
+  incoTermsExWorksFormControls(){
+      this.estimateForm= new FormGroup({
+      modeOfTransport : new FormControl('',[Validators.required]),
+      typeOfActivity : new FormControl('',[Validators.required]),
+      destCountry : new FormControl(''),
+      destCountryId : new FormControl(''),
+      destinationPort: new FormControl(''),
+      destinationAirport: new FormControl(''),
+      countryOfOrigin: new FormControl(''),
+      countryOfOriginId: new FormControl(''),
+      portOfOrigin: new FormControl(''),
+      airportOfOrigin: new FormControl(''),
+      incoTerms: new FormControl('',[Validators.required]),
+      pieces: new FormArray([
+        PieceComponent.makePieceItem()
+      ]),
+      deliveryType: new FormControl('',[Validators.required]),
+      pickUpAddress : new FormControl('',[Validators.required]),
+      spocName : new FormControl('',[Validators.required]),
+      spocPhone : new FormControl('',[Validators.required])
+    });
+  }
+//End: Inco Terms
+//Begin: Port and Airports
+  autoComplete(){
+    //Ports
+    this.estimateForm.get('portOfOrigin')?.valueChanges.subscribe(value => {
+      this.getFilteredPorts(this.originPorts, value);
+    });
+    this.estimateForm.get('destinationPort')?.valueChanges.subscribe(value => {
+      this.getFilteredPorts(this.destinationPorts, value);
+    });
+    //Airport
+    this.estimateForm.get('airportOfOrigin')?.valueChanges.subscribe(value => {
+      this.getFilteredAirports(this.originPorts, value);
+    });
+    this.estimateForm.get('destinationAirport')?.valueChanges.subscribe(value => {
+      this.getFilteredAirports(this.destinationPorts, value);
+    });
+  }
+
+  getPorts(){
+    this.estimateForm.controls['destinationPort'].reset();
+    this.estimateForm.controls['portOfOrigin'].reset();
+
+    if(this.estimateForm.value.typeOfActivity.toLowerCase() == this.activityTypeExport.toLowerCase()){
+
+      if(this.estimateForm.value.modeOfTransport.toLowerCase() == this.TransportModeSea.toLowerCase())
+      {
+        this.getIndianPorts(this.originPorts);
+        this.getPortsExceptIndia(this.destinationPorts);
+      }
+    }
+    else{
+
+      if(this.estimateForm.value.modeOfTransport.toLowerCase() == this.TransportModeSea.toLowerCase())
+      {
+        this.getPortsExceptIndia(this.originPorts);
+        this.getIndianPorts(this.destinationPorts);
+      }
+    }      
+  }
+  getIndianPorts(isDestinationPorts:boolean){
+    this.typeadhead_service.getIndianPorts().subscribe((res:any) =>{      
+      this.indianPortsArray = res.message ;  
+
+      var filteredPorts: string[] = [];
+      //To convert array value into comma separated 
+      this.indianPortsArray?.forEach(element => {
+        filteredPorts.push(element.portName + ', '+ element.state +', '+ element.country);              
+      });  
+
+      this.allDestinationPorts =  isDestinationPorts? filteredPorts: this.allDestinationPorts;
+      this.allOriginPorts =  isDestinationPorts? this.allOriginPorts: filteredPorts;
+
+      this.filteredDestinationPorts = this.allDestinationPorts;
+      this.filteredOriginPorts = this.allOriginPorts;
+      
+      // console.log('isDestinationPorts '+isDestinationPorts);
+      // console.log(this.filteredOriginPorts);
+      // console.log(this.filteredDestinationPorts);
+    });
+  }
+  getPortsExceptIndia(isDestinationPorts:boolean){
+    this.typeadhead_service.getPortsExceptIndia().subscribe((res:any) =>{      
+      this.allPortsArray = res.message;  
+
+      var filteredPorts: string[] = [];
+      //To convert array value into comma separated 
+      this.allPortsArray?.forEach(element => {
+        filteredPorts.push(element.portName + ', '+ element.state +', '+ element.country); 
+      });  
+            
+      this.allDestinationPorts =  isDestinationPorts? filteredPorts: this.allDestinationPorts;
+      this.allOriginPorts =  isDestinationPorts? this.allOriginPorts: filteredPorts;
+      
+      this.filteredDestinationPorts = this.allDestinationPorts;
+      this.filteredOriginPorts = this.allOriginPorts;
+
+      // console.log('isDestinationPorts '+isDestinationPorts);
+      // console.log(this.filteredOriginPorts);
+      // console.log(this.filteredDestinationPorts);
+    });
+  }
+  getFilteredPorts(isDestinationPorts:boolean, enteredstring:string){
+    if(enteredstring== null){
+      return;
+    }
+    if(isDestinationPorts){
+      this.filteredDestinationPorts = this.allDestinationPorts.filter(item => {
+        return item.toLowerCase().indexOf(enteredstring.toLowerCase())> -1
+      });
+    }
+    else{
+      this.filteredOriginPorts = this.allOriginPorts.filter(item => {
+        return item.toLowerCase().indexOf(enteredstring.toLowerCase())> -1
+      });
+    }
+  }
+
+  getAirports(){
+    this.estimateForm.controls['destinationAirport'].reset();
+    this.estimateForm.controls['airportOfOrigin'].reset();
+
+    if(this.estimateForm.value.typeOfActivity.toLowerCase() == this.activityTypeExport.toLowerCase()){
+
+      if(this.estimateForm.value.modeOfTransport.toLowerCase() == this.TransportModeAir.toLowerCase())
+      {
+        this.getIndianAirports(this.originAirports);
+        this.getAirportsExceptIndia(this.destinationPorts);
+      }
+    }
+    else{
+
+      if(this.estimateForm.value.modeOfTransport.toLowerCase() == this.TransportModeAir.toLowerCase())
+      {
+        this.getAirportsExceptIndia(this.originAirports);
+        this.getIndianAirports(this.destinationPorts);
+      }
+    }      
+  }
+  getIndianAirports(isDestinationAirports:boolean){
+    this.typeadhead_service.getIndianAirports().subscribe((res:any) =>{      
+      this.indianAirportsArray = res.message ;  
+
+      var filteredAirports: string[] = [];
+      //To convert array value into comma separated 
+      this.indianAirportsArray?.forEach(element => {
+        filteredAirports.push(element.airportTag + ', ' +element.airportName + ', '+ element.state +', '+ element.country);              
+      });  
+
+      this.allDestinationAirports =  isDestinationAirports? filteredAirports: this.allDestinationAirports;
+      this.allOriginAirports =  isDestinationAirports? this.allOriginAirports: filteredAirports;
+
+      this.filteredDestinationAirports = this.allDestinationAirports;
+      this.filteredOriginAirports = this.allOriginAirports;
+
+      // console.log('isDestinationAirports '+isDestinationAirports);
+      // console.log(this.filteredOriginPorts);
+      // console.log(this.filteredDestinationPorts);
+    });
+  }
+  getAirportsExceptIndia(isDestinationAirports:boolean){
+    this.typeadhead_service.getAirportsExceptIndia().subscribe((res:any) =>{      
+      this.allAirportsArray = res.message;  
+
+      var filteredAirports: string[] = [];
+      //To convert array value into comma separated 
+      this.allAirportsArray?.forEach(element => {
+        filteredAirports.push(element.airportTag + ', ' +element.airportName + ', '+ element.state +', '+ element.country); 
+      });  
+            
+      this.allDestinationAirports =  isDestinationAirports? filteredAirports: this.allDestinationAirports;
+      this.allOriginAirports =  isDestinationAirports? this.allOriginAirports: filteredAirports;
+
+      this.filteredDestinationAirports = this.allDestinationAirports;
+      this.filteredOriginAirports = this.allOriginAirports;
+      
+      // console.log('isDestinationAirports '+isDestinationAirports);
+      // console.log(this.filteredOriginPorts);
+      // console.log(this.filteredDestinationPorts);
+    });
+  }
+  getFilteredAirports(isDestinationAirports:boolean, enteredstring:string){
+    if(enteredstring== null){
+      return;
+    }
+    if(isDestinationAirports){
+      this.filteredDestinationAirports = this.allDestinationAirports.filter(item => {
+        return item.toLowerCase().indexOf(enteredstring.toLowerCase())> -1
+      });
+    }
+    else{
+      this.filteredOriginAirports = this.allOriginAirports.filter(item => {
+        return item.toLowerCase().indexOf(enteredstring.toLowerCase())> -1
+      });
+    }
+  }
+//End: Port and Airports
+//Being: Cargo details
+  PiecesFormGroup(): FormGroup{
+    return this.fb.group({
+      cargoType: new FormControl('',[Validators.required]),
+      noOfPieces: new FormControl(null,[Validators.required]),
+      length: new FormControl(null,[Validators.required]),
+      breath: new FormControl(null,[Validators.required]),
+      height: new FormControl(null,[Validators.required]),
+      inchOrCm: new FormControl(),
+      grossWeight: new FormControl(null,[Validators.required])  
+    });
+};
+get PicesFormArray() {
+  return (this.estimateForm.get('pieces') as FormArray);
+}
+addNewPackage(): void {
+  this.rowNumber++;
+  console.log(this.rowNumber);
+  var pieces = this.estimateForm.get('pieces') as FormArray;
+  pieces.push(this.PiecesFormGroup());
+}
+removePackage(i: number) {
+  var pieces = this.estimateForm.get('pieces') as FormArray;
+  pieces.removeAt(i);
+}
+// PicesArray: Array<PicesModel> = [];  
+// newDynamic: any = {};  
+// addRow() {    
+//   //this.newDynamic = {cargoType: ' ', noOfPieces: '',length: ' ',breath: ' ',height: ' ',inchOrCm: ' ',grossWeight: ' '};  
+//   this.newDynamic = new FormGroup({
+//     cargoType: new FormControl('',[Validators.required]),
+//     noOfPieces: new FormControl(null,[Validators.required]),
+//     length: new FormControl(null,[Validators.required]),
+//     breath: new FormControl(null,[Validators.required]),
+//     height: new FormControl(null,[Validators.required]),
+//     inchOrCm: new FormControl(),
+//     grossWeight: new FormControl(null,[Validators.required])  
+//   });
+//   this.PicesArray.push(this.newDynamic);
+//   return true;  
+// } 
+
+// deleteRow(index:number) {  
+//   if(this.PicesArray.length ==1) { 
+//      //when only one row  
+//        return false;  
+//   } else {  
+//     //delete row
+//     this.PicesArray.splice(index, 1);          
+//     return true;  
+//   }  
+// }
+
+//End: Cargo details
 }
 

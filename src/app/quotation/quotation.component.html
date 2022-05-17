@@ -30,15 +30,25 @@
                                     <div class="live-preview">
                                         <!-- <form class="g-3 needs-validation was-validated" novalidate> -->
                                         <form class="g-3 needs-validation" novalidate [formGroup]="estimateForm">
+
+                                            <h4>Shipping Details</h4>
                                             <div class="row">
-                                                <h4>Shipping Details</h4>
                                                 <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
                                                     <mat-label>Activity Type</mat-label>
                                                     <mat-select formControlName="typeOfActivity" (selectionChange)="activityChanged($event)">
                                                         <mat-option *ngFor="let type of global_service.typeOfActivity" [value]="type">{{type}}</mat-option>
                                                     </mat-select>
                                                 </mat-form-field>
-                                                <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4" *ngIf="isActivityTypeSelected && isExport">
+
+                                                <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                    <mat-label>Transport Mode</mat-label>
+                                                    <mat-select formControlName="modeOfTransport" (selectionChange)="transportModeChanged($event)">
+                                                        <mat-option *ngFor="let mode of global_service.modeOfTransport" [value]="mode">{{mode}}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <!-- <div class="row">
+                                               <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4" *ngIf="isActivityTypeSelected && isExport">
                                                     <mat-label>Destination Country</mat-label>
                                                     <input matInput type="text" formControlName="destCountry" (input)="destCountryTypeAhead()" [matAutocomplete]="dest_country_auto">
                                                 </mat-form-field>
@@ -56,12 +66,6 @@
                                                         {{option.countryName}}
                                                     </mat-option>
                                                 </mat-autocomplete>
-                                                <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-                                                    <mat-label>Transport Mode</mat-label>
-                                                    <mat-select formControlName="modeOfTransport" (selectionChange)="transportModeChanged($event)">
-                                                        <mat-option *ngFor="let mode of global_service.modeOfTransport" [value]="mode">{{mode}}</mat-option>
-                                                    </mat-select>
-                                                </mat-form-field>
                                                 <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4" *ngIf="isTransportModeSelected && isExport && isTrasnportTypeSea">
                                                     <mat-label>Destination Port</mat-label>
                                                     <input matInput type="text" formControlName="destinationPort" [matAutocomplete]="dest_port_auto">
@@ -71,7 +75,6 @@
                                                         </mat-option>
                                                     </mat-autocomplete>
                                                 </mat-form-field>
-                                                <!-- <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4" *ngIf="isTransportModeSelected && isExport && !isTrasnportTypeSea"> -->
                                                 <mat-form-field class="col-lg-2 col-md-2 col-sm-4 col-xs-4" *ngIf="isTransportModeSelected && isExport && !isTrasnportTypeSea && estimateForm.value.modeOfTransport == 'AIR'">
                                                     <mat-label>Destination Airport</mat-label>
                                                     <input matInput type="text" formControlName="destinationAirport" (input)="destAirportTypeAhead()" [matAutocomplete]="dest_airport_auto">
@@ -81,7 +84,6 @@
                                                         {{option.airportName}}
                                                     </mat-option>
                                                 </mat-autocomplete>
-                                                <!-- </div> -->
                                                 <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4" *ngIf="isTransportModeSelected && !isExport && isTrasnportTypeSea">
                                                     <mat-label>Origin Port</mat-label>
                                                     <input matInput type="text" formControlName="portOfOrigin" (input)="countryOfOriginPortTypeahead()" [matAutocomplete]="countryOfOrigin_port_auto">
@@ -99,10 +101,54 @@
                                                     <mat-option *ngFor="let airport of countryOfOriginFilterAirportsList" [value]="airport">
                                                         {{airport.airportName}}
                                                     </mat-option>
-                                                </mat-autocomplete>
+                                                </mat-autocomplete> 
+                                            
+                                            </div>-->
+                                            <div class="row" *ngIf="isTrasnportTypeSea">
+                                                <mat-form-field class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <mat-label>Origin Port</mat-label>
+                                                    <input matInput type="text" formControlName="portOfOrigin" [matAutocomplete]="autoOriginPort">
+                                                    <mat-autocomplete #autoOriginPort="matAutocomplete">
+                                                        <mat-option *ngFor="let port of filteredOriginPorts" [value]="port">
+                                                            {{port}}
+                                                        </mat-option>
+                                                    </mat-autocomplete>
+                                                </mat-form-field>
+                                                <mat-form-field class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <mat-label>Destination Port</mat-label>
+                                                    <input matInput type="text" formControlName="destinationPort" [matAutocomplete]="autoDestPort">
+                                                    <mat-autocomplete #autoDestPort="matAutocomplete">
+                                                        <mat-option *ngFor="let port of filteredDestinationPorts" [value]="port">
+                                                            {{port}}
+                                                        </mat-option>
+                                                    </mat-autocomplete>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="row" *ngIf="isTransportModeSelected && !isTrasnportTypeSea">
+                                                <mat-form-field class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <mat-label>Origin Airport</mat-label>
+                                                    <input matInput type="text" formControlName="airportOfOrigin" [matAutocomplete]="autoOriginAirport">
+
+                                                    <mat-autocomplete #autoOriginAirport="matAutocomplete">
+                                                        <mat-option *ngFor="let option of filteredOriginAirports" [value]="option">
+                                                            {{option}}
+                                                        </mat-option>
+                                                    </mat-autocomplete>
+                                                </mat-form-field>
+                                                <mat-form-field class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <mat-label>Destination Airport</mat-label>
+                                                    <input matInput type="text" formControlName="destinationAirport" [matAutocomplete]="autoDestAirport">
+                                                    <mat-autocomplete #autoDestAirport="matAutocomplete">
+                                                        <mat-option *ngFor="let option of filteredDestinationAirports" [value]="option">
+                                                            {{option}}
+                                                        </mat-option>
+                                                    </mat-autocomplete>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="row">
                                                 <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
                                                     <mat-label>Inco Terms</mat-label>
-                                                    <mat-select formControlName="incoTerms">
+                                                    <mat-select formControlName="incoTerms" (selectionChange)="incoTermChanged($event)">
                                                         <mat-option *ngFor="let type of global_service.incoTerms" [value]="type.id">{{type.data}}</mat-option>
                                                     </mat-select>
                                                 </mat-form-field>
@@ -114,19 +160,135 @@
                                                 </mat-form-field>
                                             </div>
                                             <!--.row-->
+                                            <!-- Begin: Inco Terms Journey-->
+                                            <!-- Begin: Ex Works(exw) -->
+                                            <div class="row" *ngIf="this.estimateForm.value.incoTerms.toLowerCase() == 'exw'">
+                                                <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                    <mat-label>Pick Up Address</mat-label>
+                                                    <input matInput type="text" formControlName="pickUpAddress">
+                                                </mat-form-field>
+                                                <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                    <mat-label>Name</mat-label>
+                                                    <input matInput type="text" formControlName="spocName">
+                                                </mat-form-field>
+                                                <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                    <mat-label>Phone Number</mat-label>
+                                                    <input matInput type="text" formControlName="spocPhone">
+                                                </mat-form-field>
+                                            </div>
+                                            <!-- End: Ex Works(exw) -->
+                                            <!-- Begin: Free Carrier(fca) -->
+                                            <div class="row" *ngIf="this.estimateForm.value.incoTerms.toLowerCase() == 'fca'">
+                                                <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                    <mat-label>Shipper Address</mat-label>
+                                                    <input matInput type="text" formControlName="shipperAddress">
+                                                </mat-form-field>
+                                                <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                    <mat-label>FCA Location</mat-label>
+                                                    <input matInput type="text" formControlName="fcaLocation">
+                                                </mat-form-field>
+                                            </div>
+                                            <!-- End: Free Carrier(fca) -->
+                                            <!-- Begin: Delivered at Place(dap) -->
+                                            <div class="row" *ngIf="this.estimateForm.value.incoTerms.toLowerCase() == 'dap'">
+                                                <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                    <mat-label>Door Delivery Address</mat-label>
+                                                    <input matInput type="text" formControlName="dapdduAddress">
+                                                </mat-form-field>
+                                            </div>
+                                            <!-- End: Delivered at Place(dap) -->
+                                            <!-- Begin: Delivered Duty Paid(ddp) -->
+                                            <div class="row" *ngIf="this.estimateForm.value.incoTerms.toLowerCase() == 'ddp'">
+                                                <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                    <mat-label>Door Delivery Address</mat-label>
+                                                    <input matInput type="text" formControlName="ddpdduAddress">
+                                                </mat-form-field>
+                                                <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                    <mat-label>HSCODE</mat-label>
+                                                    <input matInput type="text" formControlName="hscode">
+                                                </mat-form-field>
+                                                <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                    <mat-label>Invoice Value</mat-label>
+                                                    <input matInput type="text" formControlName="invoiceValue">
+                                                </mat-form-field>
+                                            </div>
+                                            <!-- End: Delivered Duty Paid(ddp) -->
+                                            <!-- Begin: Delivered Duty Unpaid(ddu) -->
+                                            <div class="row" *ngIf="this.estimateForm.value.incoTerms.toLowerCase() == 'ddu'">
+                                                <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                    <mat-label>Door Delivery Address</mat-label>
+                                                    <input matInput type="text" formControlName="dduAddress">
+                                                </mat-form-field>
+                                                <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                    <mat-label>HSCODE</mat-label>
+                                                    <input matInput type="text" formControlName="dduHscode">
+                                                </mat-form-field>
+                                                <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                    <mat-label>Invoice Value</mat-label>
+                                                    <input matInput type="text" formControlName="dduInvoiceValue">
+                                                </mat-form-field>
+                                            </div>
+                                            <!-- End: Delivered Duty Unpaid(ddu) -->
+                                            <!-- End: Inco Terms Journey-->
                                             <br/>
                                             <!--start cargo detials-->
                                             <h4>Cargo Details</h4>
                                             <div>
-                                                <app-piece *ngFor="let pieceItem of pieceArray.controls" [pieceForm]="pieceItem"></app-piece>
-                                                <button (click)="addNewPackageType()" class="btn btn-bg-dark"><i class="ri-add-fill align-middle me-1"></i></button>
+                                                <app-piece *ngFor="let pieceItem of pieceArray.controls" [pieceForm]="pieceItem" [rowNumber]="rowNumber"></app-piece>
+                                                <button (click)="addNewPackage()" class="btn btn-bg-dark"><i class="ri-add-fill align-middle me-1"></i></button>
+                                                <!-- <app-piece></app-piece> -->
+                                                <!-- <div formArrayName="pieces">
+                                                    <div class="row" *ngFor="let item of PicesFormArray.controls;let i = index;">
+                                                        <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                            <mat-label>Cargo Type</mat-label>
+                                                            <mat-select formControlName="cargoType">
+                                                                <mat-option value="general">General</mat-option>
+                                                                <mat-option value="Feight">Feight</mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                        <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                            <mat-label>No. of Pieces</mat-label>
+                                                            <input matInput type="number" formControlName="noOfPieces">
+                                                        </mat-form-field>
+                                                        <mat-form-field class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+                                                            <mat-label>Length</mat-label>
+                                                            <input matInput type="number" formControlName="length">
+                                                        </mat-form-field>
+                                                        <mat-form-field class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+                                                            <mat-label>Breath</mat-label>
+                                                            <input matInput type="number" formControlName="breath">
+                                                        </mat-form-field>
+                                                        <mat-form-field class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+                                                            <mat-label>Height</mat-label>
+                                                            <input matInput type="number" formControlName="height">
+                                                        </mat-form-field>
+                                                        <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                            <mat-label>Inches or CMs</mat-label>
+                                                            <mat-select formControlName="inchOrCm">
+                                                                <mat-option value="Inches">Inches</mat-option>
+                                                                <mat-option value="CMs">Centimeters</mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                        <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                            <mat-label>Gross Weight (in Kgs)</mat-label>
+                                                            <input matInput type="number" formControlName="grossWeight">
+                                                        </mat-form-field>
+                                                        <div class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+                                                            <div class="hstack gap-2 justify-content-end">
+                                                                <button class="btn btn-danger" (click)="removePackage(i)"><i class="ri-delete-bin-2-line"></i></button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <button (click)="addNewPackage()" class="btn btn-bg-dark"><i class="ri-add-fill align-middle me-1"></i></button>
+                                                </div> -->
                                             </div>
                                             <!--end cargo details-->
                                             <br/>
                                             <div class="col-12">
                                                 <div class="hstack gap-2 justify-content-end">
+                                                    <!-- <button class="btn btn-warning" (click)="estimateSubmit()" [disabled]="!this.estimateForm.valid">Hold Quotation</button> -->
                                                     <button class="btn btn-warning" (click)="estimateSubmit()">Hold Quotation</button>
-                                                    <button type="button" class="btn btn-bg-dark">Place Order</button>
                                                 </div>
                                             </div>
                                         </form>

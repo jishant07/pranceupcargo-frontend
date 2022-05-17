@@ -24,7 +24,7 @@ export class EstimateComponent implements OnInit {
     airportOfOrigin: new FormControl(''),
     incoTerms: new FormControl('',[Validators.required]),
     pieces: new FormArray([
-      PieceComponent.makePieceItem()
+      //PieceComponent.makePieceItem()
     ]),
     deliveryType: new FormControl('',[Validators.required])
   })
@@ -106,7 +106,7 @@ export class EstimateComponent implements OnInit {
   }
 
   addNewPackageType(){
-    this.pieceArray.push(PieceComponent.makePieceItem())  
+    //this.pieceArray.push(PieceComponent.makePieceItem())  
   }
 
   destCountryTypeAhead(){

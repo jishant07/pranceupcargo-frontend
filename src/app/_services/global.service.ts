@@ -18,6 +18,7 @@ export class GlobalService {
     {id:"DAP", data:"Delivered at Place (insert named place of destination)"},
     {id:"DPU", data:"Delivered at Place Unloaded (insert of place of destination)"},
     {id:"DDP", data:"Delivered Duty Paid (Insert place of destination)."},
+    {id:"DDU", data:"Delivered Duty Unpaid (Insert place of destination)."}, //Added
     {id:"FAS", data:"Free Alongside Ship (insert name of port of loading)"},
     {id:"FOB", data:"Free on Board (insert named port of loading)"},
     {id:"CFR", data:"Cost and Freight (insert named port of destination)"},

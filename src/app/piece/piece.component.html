@@ -1,8 +1,11 @@
-<form [formGroup]="pieceForm">
+<form [formGroup]="pieceForm" class="pieces-class">
     <div class="row">
         <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-            <mat-label>HSCODE</mat-label>
-            <input matInput type="text" formControlName="hsCode">
+            <mat-label>Cargo Type</mat-label>
+            <mat-select formControlName="cargoType">
+                <mat-option value="general">General</mat-option>
+                <mat-option value="Feight">Feight</mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
             <mat-label>No. of Pieces</mat-label>
@@ -31,5 +34,58 @@
             <mat-label>Gross Weight (in Kgs)</mat-label>
             <input matInput type="number" formControlName="grossWeight">
         </mat-form-field>
+        <div class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+            <div class="hstack gap-2 justify-content-end">
+                <button class="btn btn-danger" (click)="deleteRow($event)"><i class="ri-delete-bin-2-line"></i></button>
+            </div>
+        </div>
     </div>
 </form>
+
+
+<!-- Working approach -->
+<!-- <form [formGroup]="pieceForm">
+    <div class="row" *ngFor="let item of PicesArray;let i = index;">
+        <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+            <mat-label>Cargo Type</mat-label>
+            <mat-select formControlName="cargoType">
+                <mat-option value="general">General</mat-option>
+                <mat-option value="Feight">Feight</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+            <mat-label>No. of Pieces</mat-label>
+            <input matInput type="number" formControlName="noOfPieces">
+        </mat-form-field>
+        <mat-form-field class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+            <mat-label>Length</mat-label>
+            <input matInput type="number" formControlName="length">
+        </mat-form-field>
+        <mat-form-field class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+            <mat-label>Breath</mat-label>
+            <input matInput type="number" formControlName="breath">
+        </mat-form-field>
+        <mat-form-field class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+            <mat-label>Height</mat-label>
+            <input matInput type="number" formControlName="height">
+        </mat-form-field>
+        <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+            <mat-label>Inches or CMs</mat-label>
+            <mat-select formControlName="inchOrCm">
+                <mat-option value="Inches">Inches</mat-option>
+                <mat-option value="CMs">Centimeters</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+            <mat-label>Gross Weight (in Kgs)</mat-label>
+            <input matInput type="number" formControlName="grossWeight">
+        </mat-form-field>
+        <div class="col-lg-1 col-md-1 col-sm-2 col-xs-4">
+            <div class="hstack gap-2 justify-content-end">
+                <button class="btn btn-danger" (click)="deleteRow(i)"><i class="ri-delete-bin-2-line"></i></button>
+            </div>
+        </div>
+
+    </div>
+    <button (click)="addRow()" class="btn btn-bg-dark"><i class="ri-add-fill align-middle me-1"></i></button>
+</form> -->
