@@ -5,10 +5,12 @@ import { PieceComponent } from '../piece/piece.component';
 import { GlobalService } from '../_services/global.service';
 import { TypeaheadService } from '../_services/typeahead.service';
 
-import {AirportModel, PortsModel, PiecesModel} from '../_models/model';
+import {AirportModel, PortsModel, keyValuePairModel} from '../_models/model';
 
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import { PlaceholderPiece } from '@angular/compiler/src/output/output_ast';
+import { isReactNative } from '@firebase/util';
 
 @Component({
   selector: 'app-quotation',
@@ -46,6 +48,9 @@ export class QuotationComponent implements OnInit {
   filteredOriginPorts: string[] = [];
   destinationPorts:boolean = true;
   originPorts:boolean = false;
+  allDestinationPortsKeyValue: keyValuePairModel[] = [];
+  allOriginPortsKeyValue: keyValuePairModel[] = [];
+
 
   indianAirportsArray: AirportModel[];
   allAirportsArray: AirportModel[];
@@ -54,7 +59,9 @@ export class QuotationComponent implements OnInit {
   filteredDestinationAirports: string[] = [];
   filteredOriginAirports: string[] = [];
   destinationAirports:boolean = true;
-  originAirports:boolean = false;
+  originAirports:boolean = false;  
+  allDestinationAirportsKeyValue: keyValuePairModel[] = [];
+  allOriginAirportsKeyValue: keyValuePairModel[] = [];
 
   activityTypeExport: string = 'Export';
   activityTypeImport: string = 'Import';
@@ -129,7 +136,6 @@ export class QuotationComponent implements OnInit {
     dduHscode : new FormControl(''),
     dduInvoiceValue : new FormControl(''),
   });
-
 
   ngOnInit(): void {
     this.incoTerm_removeAllValidation();
@@ -289,21 +295,45 @@ export class QuotationComponent implements OnInit {
      
     let temp:any = {};
     if(this.estimateForm.value.modeOfTransport == 'AIR'){
-      this.calculateChargableWeight("AIR");     
+      this.calculateChargableWeight("AIR");           
       Object.keys(this.estimateForm.value).forEach(key =>{
-        if(this.estimateForm.value[key] != "" && this.estimateForm.value[key] != null 
-        && (this.estimateForm.value[key] != 'portOfOrigin' || this.estimateForm.value[key] != 'destinationPort')){
-          temp[key] = this.estimateForm.value[key];
+        if(this.estimateForm.value[key] != "" && this.estimateForm.value[key] != null){
+
+          if(key == 'portOfOrigin' || key == 'destinationPort'){
+            //Do not add portOfOrigin & destinationPort if transport mode is Air
+          }
+          else if(key == 'airportOfOrigin'){           
+            temp[key] = this.GetAirortPlaceIdByAirportName(this.originPorts, this.estimateForm.value[key]);
+          }
+          else if(key == 'destinationAirport'){
+            temp[key] = this.GetAirortPlaceIdByAirportName(this.destinationPorts, this.estimateForm.value[key]);
+          }
+          else{
+            temp[key] = this.estimateForm.value[key];
+          }
         }
       });
     }else{
       this.calculateChargableWeight("SEA")
       Object.keys(this.estimateForm.value).forEach(key =>{
-        if(this.estimateForm.value[key] != "" && this.estimateForm.value[key] != null 
-        && (this.estimateForm.value[key] != 'airportOfOrigin' || this.estimateForm.value[key] != 'destinationAirport')){
-          temp[key] = this.estimateForm.value[key];
+        if(this.estimateForm.value[key] != "" && this.estimateForm.value[key] != null){ 
+          
+          if(key == 'airportOfOrigin' || key == 'destinationAirport'){
+            //Do not add airportOfOrigin & destinationAirport if transport mode is Sea
+          }
+          else if(key == 'portOfOrigin'){           
+            temp[key] = this.GetPortPlaceIdByPortName(this.originPorts, this.estimateForm.value[key]);
+          }
+          else if(key == 'destinationPort'){
+            temp[key] = this.GetPortPlaceIdByPortName(this.destinationPorts, this.estimateForm.value[key]);
+          }
+          else{
+            temp[key] = this.estimateForm.value[key];
+          }
+
         }
       });
+
     }
     console.log(this.estimateForm);
     console.log(temp)
@@ -522,7 +552,7 @@ export class QuotationComponent implements OnInit {
       this.getFilteredAirports(this.destinationPorts, value);
     });
   }
-
+  
   getPorts(){
     this.estimateForm.controls['destinationPort'].reset();
     this.estimateForm.controls['portOfOrigin'].reset();
@@ -549,13 +579,18 @@ export class QuotationComponent implements OnInit {
       this.indianPortsArray = res.message ;  
 
       var filteredPorts: string[] = [];
+      var filteredPortsKeyValue: keyValuePairModel[] = [];
       //To convert array value into comma separated 
       this.indianPortsArray?.forEach(element => {
-        filteredPorts.push(element.portName + ', '+ element.state +', '+ element.country);              
+        filteredPorts.push(element.portName + ', '+ element.state +', '+ element.country); 
+        filteredPortsKeyValue.push({key:element.id,value: element.portName + ', '+ element.state +', '+ element.country});
       });  
 
       this.allDestinationPorts =  isDestinationPorts? filteredPorts: this.allDestinationPorts;
       this.allOriginPorts =  isDestinationPorts? this.allOriginPorts: filteredPorts;
+
+      this.allDestinationPortsKeyValue =  isDestinationPorts? filteredPortsKeyValue: this.allDestinationPortsKeyValue;
+      this.allOriginPortsKeyValue =  isDestinationPorts? this.allOriginPortsKeyValue: filteredPortsKeyValue;
 
       this.filteredDestinationPorts = this.allDestinationPorts;
       this.filteredOriginPorts = this.allOriginPorts;
@@ -570,13 +605,18 @@ export class QuotationComponent implements OnInit {
       this.allPortsArray = res.message;  
 
       var filteredPorts: string[] = [];
+      var filteredPortsKeyValue: keyValuePairModel[] = [];
       //To convert array value into comma separated 
       this.allPortsArray?.forEach(element => {
-        filteredPorts.push(element.portName + ', '+ element.state +', '+ element.country); 
+        filteredPorts.push(element.portName + ', '+ element.state +', '+ element.country);
+        filteredPortsKeyValue.push({key:element.id,value: element.portName + ', '+ element.state +', '+ element.country}); 
       });  
             
       this.allDestinationPorts =  isDestinationPorts? filteredPorts: this.allDestinationPorts;
       this.allOriginPorts =  isDestinationPorts? this.allOriginPorts: filteredPorts;
+
+      this.allDestinationPortsKeyValue =  isDestinationPorts? filteredPortsKeyValue: this.allDestinationPortsKeyValue;
+      this.allOriginPortsKeyValue =  isDestinationPorts? this.allOriginPortsKeyValue: filteredPortsKeyValue;
       
       this.filteredDestinationPorts = this.allDestinationPorts;
       this.filteredOriginPorts = this.allOriginPorts;
@@ -602,6 +642,18 @@ export class QuotationComponent implements OnInit {
     }
   }
 
+  GetPortPlaceIdByPortName(isDestinationPorts:boolean, Port:string){
+    if(isDestinationPorts)
+      return this.allDestinationPortsKeyValue.find(item => item.value === Port)?.key;
+    else 
+      return this.allOriginPortsKeyValue.find(item => item.value === Port)?.key;
+  }
+  GetAirortPlaceIdByAirportName(isDestinationPorts:boolean, Airport:string){
+    if(isDestinationPorts)
+      return this.allDestinationAirportsKeyValue.find(item => item.value === Airport)?.key;
+    else 
+      return this.allOriginAirportsKeyValue.find(item => item.value === Airport)?.key;
+  }
   getAirports(){
     this.estimateForm.controls['destinationAirport'].reset();
     this.estimateForm.controls['airportOfOrigin'].reset();
@@ -628,13 +680,18 @@ export class QuotationComponent implements OnInit {
       this.indianAirportsArray = res.message ;  
 
       var filteredAirports: string[] = [];
+      var filteredAirportsKeyValue: keyValuePairModel[] = [];
       //To convert array value into comma separated 
       this.indianAirportsArray?.forEach(element => {
-        filteredAirports.push(element.airportTag + ', ' +element.airportName + ', '+ element.state +', '+ element.country);              
+        filteredAirports.push(element.airportTag + ', ' +element.airportName + ', '+ element.state +', '+ element.country);
+        filteredAirportsKeyValue.push({key: element.id,value: element.airportTag + ', ' +element.airportName + ', '+ element.state +', '+ element.country});
       });  
 
       this.allDestinationAirports =  isDestinationAirports? filteredAirports: this.allDestinationAirports;
       this.allOriginAirports =  isDestinationAirports? this.allOriginAirports: filteredAirports;
+
+      this.allDestinationAirportsKeyValue =  isDestinationAirports? filteredAirportsKeyValue: this.allDestinationAirportsKeyValue;
+      this.allOriginAirportsKeyValue =  isDestinationAirports? this.allOriginAirportsKeyValue: filteredAirportsKeyValue;
 
       this.filteredDestinationAirports = this.allDestinationAirports;
       this.filteredOriginAirports = this.allOriginAirports;
@@ -649,13 +706,18 @@ export class QuotationComponent implements OnInit {
       this.allAirportsArray = res.message;  
 
       var filteredAirports: string[] = [];
+      var filteredAirportsKeyValue: keyValuePairModel[] = [];
       //To convert array value into comma separated 
       this.allAirportsArray?.forEach(element => {
         filteredAirports.push(element.airportTag + ', ' +element.airportName + ', '+ element.state +', '+ element.country); 
+        filteredAirportsKeyValue.push({key: element.id,value: element.airportTag + ', ' +element.airportName + ', '+ element.state +', '+ element.country});
       });  
             
       this.allDestinationAirports =  isDestinationAirports? filteredAirports: this.allDestinationAirports;
       this.allOriginAirports =  isDestinationAirports? this.allOriginAirports: filteredAirports;
+
+      this.allDestinationAirportsKeyValue =  isDestinationAirports? filteredAirportsKeyValue: this.allDestinationAirportsKeyValue;
+      this.allOriginAirportsKeyValue =  isDestinationAirports? this.allOriginAirportsKeyValue: filteredAirportsKeyValue;
 
       this.filteredDestinationAirports = this.allDestinationAirports;
       this.filteredOriginAirports = this.allOriginAirports;
@@ -706,34 +768,6 @@ removePackage(i: number) {
   var pieces = this.estimateForm.get('pieces') as FormArray;
   pieces.removeAt(i);
 }
-// PicesArray: Array<PicesModel> = [];  
-// newDynamic: any = {};  
-// addRow() {    
-//   //this.newDynamic = {cargoType: ' ', noOfPieces: '',length: ' ',breath: ' ',height: ' ',inchOrCm: ' ',grossWeight: ' '};  
-//   this.newDynamic = new FormGroup({
-//     cargoType: new FormControl('',[Validators.required]),
-//     noOfPieces: new FormControl(null,[Validators.required]),
-//     length: new FormControl(null,[Validators.required]),
-//     breath: new FormControl(null,[Validators.required]),
-//     height: new FormControl(null,[Validators.required]),
-//     inchOrCm: new FormControl(),
-//     grossWeight: new FormControl(null,[Validators.required])  
-//   });
-//   this.PicesArray.push(this.newDynamic);
-//   return true;  
-// } 
-
-// deleteRow(index:number) {  
-//   if(this.PicesArray.length ==1) { 
-//      //when only one row  
-//        return false;  
-//   } else {  
-//     //delete row
-//     this.PicesArray.splice(index, 1);          
-//     return true;  
-//   }  
-// }
-
 //End: Cargo details
 }
 

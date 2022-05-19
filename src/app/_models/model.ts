@@ -24,7 +24,7 @@ export class PiecesModel{
     inchOrCm:string; 
     grossWeight:number;     
 }
-export class keyValuePairModel{
+export interface keyValuePairModel{
   key:string;
   value:string;
 }
