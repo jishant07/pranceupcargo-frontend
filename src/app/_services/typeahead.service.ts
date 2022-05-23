@@ -11,6 +11,7 @@ import { variable } from '@angular/compiler/src/output/output_ast';
 export class TypeaheadService {  
   token?:string; 
   httpHeader:any;
+  isLoading:boolean = false;
 
   constructor(private http:HttpClient) { 
     this.setHeader(); 
