@@ -13,7 +13,8 @@ import { OnholdQuotationComponent } from './quotation/onhold-quotation/onhold-qu
 import { HomeContentComponent } from './home/home-content/home-content.component';
 import { ContactusComponent } from './contactus/contactus.component';
 import { ServicesComponent } from './services/services.component';
-
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+ 
 const routes: Routes = [
   //Web
   { path:"", component:HomeComponent, children:[
@@ -36,7 +37,9 @@ const routes: Routes = [
   { path:"quotation",component:DashboardComponent , children:[
     {path:'', component: QuotationComponent}]},
   { path:"onholdquotation",component:DashboardComponent , children:[
-    {path:'', component: OnholdQuotationComponent}]}
+    {path:'', component: OnholdQuotationComponent}]},
+    
+  { path: '**', component: PagenotfoundComponent },
 ];
 
 @NgModule({

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalService } from '../_services/global.service';
 import { ScriptService } from '../_services/script.service';
 
 //const js_path = '/src/assets/js/app.js';
@@ -12,7 +13,8 @@ declare var $: any;
 export class DashboardComponent implements OnInit {
 
   constructor( 
-    private scriptService : ScriptService
+    private scriptService : ScriptService,
+    private global_service: GlobalService
     ) { }
 
   ngOnInit(): void {
@@ -73,5 +75,9 @@ export class DashboardComponent implements OnInit {
       else{}
      };
     });
+  }
+
+  logout() {
+    this.global_service.logout();
   }
 }

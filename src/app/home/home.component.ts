@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { GlobalService } from '../_services/global.service';
 import { SwitchThemeService } from '../_services/switch-theme';
 
 @Component({
@@ -20,9 +21,10 @@ import { SwitchThemeService } from '../_services/switch-theme';
 export class HomeComponent implements OnInit {
 
   // constructor(private switchtheme: SwitchThemeService) { }
-  constructor() { }
+  constructor(private global_service: GlobalService) { }
 
   ngOnInit(): void {
+    this.global_service.checksignedin();
   }
 
 }

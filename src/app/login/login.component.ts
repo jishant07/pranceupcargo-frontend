@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
     public loader_service:LoaderService,
     private router:Router) { }
 
+
   ngOnInit(): void {}
   
   fieldTextType: boolean;
@@ -33,12 +34,15 @@ export class LoginComponent implements OnInit {
   signOut(){
     this.auth_service.signOut();
   }
+
   submitForm(){
     if(this.loginForm.valid){
       this.loader_service.isLoading.next(true)
       this.auth_service.signIn(this.loginForm.value.email,this.loginForm.value.passWord).then((user:any) =>{
         this.loader_service.isLoading.next(false)
         localStorage.setItem("token",user.user.multiFactor.user.accessToken);
+        localStorage.setItem('email',this.loginForm.value.email);
+        localStorage.setItem('password',this.loginForm.value.passWord);
         this.global_service.openSnackBar("Signin Successful");
         this.auth_service.passAuthData();
         this.router.navigate(["/dashboard"])
@@ -51,4 +55,5 @@ export class LoginComponent implements OnInit {
       this.global_service.openSnackBar("Fill details properly")
     }
   }
+
 }

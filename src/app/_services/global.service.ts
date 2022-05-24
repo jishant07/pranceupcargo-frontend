@@ -2,12 +2,19 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalService {
-  constructor(private _snackBar:MatSnackBar) { }
+  constructor(private afAuth:AngularFireAuth, private _snackBar:MatSnackBar, private router: Router) { }
+  
+  email:any;
+  password:any;
+
   public modeOfTransport: any[] = ["AIR", "SEA"]
   public typeOfActivity: any[] = ["Export", "Import"] 
   public incoTerms: any[] = [
@@ -45,6 +52,33 @@ export class GlobalService {
       horizontalPosition:"center",
       verticalPosition:"bottom"
     })
+  }
+
+  checksignedin() {
+    if (this.router.url == "/") {
+      this.email = localStorage.getItem('email');
+      this.password = localStorage.getItem('password');
+
+      if(this.email) {
+        this.signIn(this.email,this.password).then((user:any) =>{
+          localStorage.setItem("token",user.user.multiFactor.user.accessToken);
+          this.openSnackBar("Signin Successful");
+          this.router.navigate(["/dashboard"])
+        }).catch(err =>{
+          console.log(err);
+          this.openSnackBar(err.message);
+        })
+      }  
+    }
+  }
+
+  signIn(email:string,password:string){
+    return this.afAuth.signInWithEmailAndPassword(email,password);
+  }
+
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['/']);
   }
 
 }

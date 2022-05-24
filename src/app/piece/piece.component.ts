@@ -1,40 +1,77 @@
 import { FormArray, FormControl, FormGroup, Validators, FormBuilder, ControlContainer } from '@angular/forms';
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { QuotationComponent } from '../quotation/quotation.component';
 
 @Component({
   selector: 'app-piece',
   templateUrl: './piece.component.html',
   styleUrls: ['./piece.component.css']
 })
-export class PieceComponent implements OnInit {
 
-  constructor(private elRef: ElementRef) { }
+export class PieceComponent implements OnInit {
+  hs_codediv: boolean = true;
+  static hs_codediv: boolean;
+
+  constructor(private elRef: ElementRef, private quotation: QuotationComponent) { }
 
   @Input() pieceForm:any;
   @Input() rowNumber: number = 0;
 
   ngOnInit(): void {}
 
+  // ngOnDestroy() {
+  //   var t;
+  //   for(t = this.PicesArray.length; t > 0; t--) {
+  //     this.PicesArray.pop();
+  //   }
+  // }
+
   static makePieceItem(){
-    return new FormGroup({
-      cargoType: new FormControl('',[Validators.required]),
-      noOfPieces: new FormControl(null,[Validators.required]),
-      length: new FormControl(null,[Validators.required]),
-      breath: new FormControl(null,[Validators.required]),
-      height: new FormControl(null,[Validators.required]),
-      // // inchOrCm: new FormControl('CMs'),
-      inchOrCm: new FormControl(),
-      grossWeight: new FormControl(null,[Validators.required])      
-    })
+
+    if(localStorage.getItem('inco_terms') == 'ddp' || localStorage.getItem('inco_terms') == 'ddu') {
+      this.hs_codediv = false;
+
+      return new FormGroup({
+        hs_code: new FormControl('',[Validators.required]),
+        cargoType: new FormControl('',[Validators.required]),
+        noOfPieces: new FormControl(null,[Validators.required]),
+        length: new FormControl(null,[Validators.required]),
+        breath: new FormControl(null,[Validators.required]),
+        height: new FormControl(null,[Validators.required]),
+        inchOrCm: new FormControl(),
+        grossWeight: new FormControl(null,[Validators.required])  
+      });
+
+    }else{
+      
+      return new FormGroup({
+        hs_code: new FormControl(''),
+        cargoType: new FormControl('',[Validators.required]),
+        noOfPieces: new FormControl(null,[Validators.required]),
+        length: new FormControl(null,[Validators.required]),
+        breath: new FormControl(null,[Validators.required]),
+        height: new FormControl(null,[Validators.required]),
+        inchOrCm: new FormControl(),
+        grossWeight: new FormControl(null,[Validators.required])  
+      });
+    }
   }
   
   // deleteRow(rowNumber:number){
   //   console.log('Row number is '+rowNumber);
   // }
 
+  openhidehs_codediv() {
+    if(localStorage.getItem('inco_terms') == 'ddp' || localStorage.getItem('inco_terms') == 'dpu') {
+      this.hs_codediv = false;
+    }else{
+      this.hs_codediv = true;
+    }
+  }
+
   deleteRow(event:any){
     const parentElement = this.elRef.nativeElement.closest('.pieces-class');
-    console.log(parentElement);
+    this.quotation.removePackage(parentElement);
   }
 //-------------------------------------------------------------
 // //Working approach

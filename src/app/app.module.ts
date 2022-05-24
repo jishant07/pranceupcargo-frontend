@@ -35,6 +35,7 @@ import { PromoAreaComponent } from './common/promo-area/promo-area.component';
 import { BlogAreaComponent } from './common/blog-area/blog-area.component';
 
 import { LoadingSpinnerComponent} from './common/loading-spinner/loading-spinner.component'
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { LoadingSpinnerComponent} from './common/loading-spinner/loading-spinner
     ServicesComponent,
     PromoAreaComponent,
     BlogAreaComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    PagenotfoundComponent
   ],
   imports: [
     BrowserModule,
