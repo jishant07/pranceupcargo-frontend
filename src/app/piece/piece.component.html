@@ -1,6 +1,6 @@
 <form [formGroup]="pieceForm" class="pieces-class">
     <div class="row">
-        <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4" [hidden]="hs_codediv">
+        <mat-form-field class="col-lg-2 col-md-2 col-sm-2 col-xs-4" [ngClass]="getClass()">
             <mat-label>HS Code</mat-label>
             <input matInput type="text" formControlName="hs_code">
         </mat-form-field>

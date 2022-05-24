@@ -381,16 +381,10 @@ export class QuotationComponent implements OnInit {
       case 'ddp':
         //Delivered Duty Paid
         this.incoTerm_ddp_Validation('add');
-        this.childC.openhidehs_codediv();
-        this.removePackage(1);
-        this.addNewPackage();
         break;
       case 'ddu':
         //Delivered Duty Unpaid
         this.incoTerm_ddu_Validation('add');
-        this.childC.openhidehs_codediv();
-        this.removePackage(1);
-        this.addNewPackage();
         break;
       case 'fas':
         //Free Alongside ship

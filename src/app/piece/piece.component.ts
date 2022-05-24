@@ -62,12 +62,23 @@ export class PieceComponent implements OnInit {
   // }
 
   openhidehs_codediv() {
-    if(localStorage.getItem('inco_terms') == 'ddp' || localStorage.getItem('inco_terms') == 'dpu') {
+    if(localStorage.getItem('inco_terms') == 'ddp' || localStorage.getItem('inco_terms') == 'ddu') {
       this.hs_codediv = false;
     }else{
       this.hs_codediv = true;
     }
   }
+
+
+  getClass() {
+    console.log(localStorage.getItem('inco_terms'));
+    if(localStorage.getItem('inco_terms') == 'ddp' || localStorage.getItem('inco_terms') == 'ddu') {
+      return 'showdiv';
+    }else{
+      return 'hidediv';
+    }
+  }
+
 
   deleteRow(event:any){
     const parentElement = this.elRef.nativeElement.closest('.pieces-class');

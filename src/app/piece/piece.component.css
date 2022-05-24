@@ -1,7 +1,7 @@
-.removehs_codediv {
-    display: none;
+.showdiv {
+    display: block;
 }
 
-.addhs_codediv {
-    display: block;
+.hidediv {
+    display: none;
 }
