@@ -128,12 +128,12 @@ export class QuotationComponent implements OnInit {
 
     //Inco Tearm - Delivered Duty Paid(ddp)
     ddpdduAddress: new FormControl(''),
-    hscode: new FormControl(''),
+    //hscode: new FormControl(''),
     invoiceValue: new FormControl(''),
 
     //Inco Tearm - Delivered Duty Unpaid(ddu)
     dduAddress: new FormControl(''),
-    dduHscode: new FormControl(''),
+    //dduHscode: new FormControl(''),
     dduInvoiceValue: new FormControl(''),
   });
 
@@ -473,7 +473,7 @@ export class QuotationComponent implements OnInit {
     addOrRemove = addOrRemove.toLowerCase();
     if (addOrRemove == 'add') {
       this.estimateForm.get('ddpdduAddress')?.addValidators(Validators.required);
-      this.estimateForm.get('hscode')?.addValidators(Validators.required);
+      //this.estimateForm.get('hscode')?.addValidators(Validators.required);
       this.estimateForm.get('invoiceValue')?.addValidators(Validators.required);
     }
     else {
@@ -482,11 +482,11 @@ export class QuotationComponent implements OnInit {
       // this.estimateForm.get('invoiceValue')?.removeValidators(Validators.required);
 
       this.estimateForm.get('ddpdduAddress')?.clearValidators();
-      this.estimateForm.get('hscode')?.clearValidators();
+      //this.estimateForm.get('hscode')?.clearValidators();
       this.estimateForm.get('spocPhone')?.clearValidators();
 
       this.estimateForm.get('ddpdduAddress')?.setValue('');
-      this.estimateForm.get('hscode')?.setValue('');
+      //this.estimateForm.get('hscode')?.setValue('');
       this.estimateForm.get('invoiceValue')?.setValue('');
     }
     this.estimateForm.updateValueAndValidity();
@@ -496,16 +496,16 @@ export class QuotationComponent implements OnInit {
     addOrRemove = addOrRemove.toLowerCase();
     if (addOrRemove == 'add') {
       this.estimateForm.get('dduAddress')?.addValidators(Validators.required);
-      this.estimateForm.get('dduHscode')?.addValidators(Validators.required);
+      //this.estimateForm.get('dduHscode')?.addValidators(Validators.required);
       this.estimateForm.get('dduInvoiceValue')?.addValidators(Validators.required);
     }
     else {
       this.estimateForm.get('dduAddress')?.clearValidators();
-      this.estimateForm.get('dduHscode')?.clearValidators();
+      //this.estimateForm.get('dduHscode')?.clearValidators();
       this.estimateForm.get('spocPhone')?.clearValidators();
 
       this.estimateForm.get('dduAddress')?.setValue('');
-      this.estimateForm.get('dduHscode')?.setValue('');
+      //this.estimateForm.get('dduHscode')?.setValue('');
       this.estimateForm.get('dduInvoiceValue')?.setValue('');
     }
     this.estimateForm.updateValueAndValidity();
