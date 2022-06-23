@@ -22,9 +22,62 @@ export class PiecesModel{
     breath:number;  
     height:number;  
     inchOrCm:string; 
-    grossWeight:number;     
+    grossWeight:number; 
+    hs_code?:string;    
 }
 export interface keyValuePairModel{
   key:string;
   value:string;
+}
+export interface APIQuotesModel{
+    id:string;
+    data: QuotationModel[];
+    destinationData: PortModel;
+    originData: PortModel;      
+}
+export interface QuotationModel{
+    modeOfTransport: string;
+    typeOfActivity: string;
+    // destinationPort: string;
+    // destinationAirport: string;
+    // portOfOrigin: string;
+    // airportOfOrigin: string;
+
+    incoTerms: string;
+    pieces: PiecesModel[];
+
+    deliveryType: string;
+
+    //Inco Tearm - Ex Works(exw)
+    pickUpAddress?: string;
+    spocName?: string;
+    spocPhone?: string;
+
+    //Inco Tearm - Free Carrier(fca)
+    shipperAddress?: string;
+    fcaLocation?: string;
+
+    //Inco Tearm - Delivered at Place(dap)
+    dapdduAddress?: string;
+
+    //Inco Tearm - Delivered Duty Paid(ddp)
+    ddpdduAddress?: string;
+    //hscode: new FormControl(''),
+    invoiceValue?: string;
+
+    //Inco Tearm - Delivered Duty Unpaid(ddu)
+    dduAddress?: string;
+    dduInvoiceValue?: string;
+
+    //Extra properties
+    quoteAmount: string;
+    deadline: string;
+    status: string;
+    uid: string;
+    sentFrom: string;
+}
+export interface PortModel{
+    country: string;
+    portName: string;
+    state: string;
 }

@@ -8,7 +8,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule} from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from "@angular/material/form-field";
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule} from '@angular/material/tabs';
+import { MatTableModule} from '@angular/material/table';
+import { MatPaginatorModule} from '@angular/material/paginator';
+import { MatSortModule } from "@angular/material/sort";
 
 @NgModule({
     imports:[        
@@ -19,7 +22,10 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatInputModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
     ],
     exports:[          
     MatAutocompleteModule,
@@ -29,7 +35,10 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatInputModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
     ]
 })
 export class MaterialModule{}

@@ -57,7 +57,7 @@ export class GlobalService {
   checksignedin() {
     if (this.router.url == "/") {
       this.email = localStorage.getItem('email');
-      this.password = localStorage.getItem('password');
+      //this.password = localStorage.getItem('password');
 
       if(this.email) {
         this.signIn(this.email,this.password).then((user:any) =>{
@@ -65,7 +65,7 @@ export class GlobalService {
           this.openSnackBar("Signin Successful");
           this.router.navigate(["/dashboard"])
         }).catch(err =>{
-          console.log(err);
+          //console.log(err);
           this.openSnackBar(err.message);
         })
       }  

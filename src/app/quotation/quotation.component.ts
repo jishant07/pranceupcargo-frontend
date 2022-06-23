@@ -5,12 +5,14 @@ import { PieceComponent } from '../piece/piece.component';
 import { GlobalService } from '../_services/global.service';
 import { TypeaheadService } from '../_services/typeahead.service';
 
-import { AirportModel, PortsModel, keyValuePairModel } from '../_models/model';
+import { AirportModel, PortsModel, keyValuePairModel, QuotationModel } from '../_models/model';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { PlaceholderPiece } from '@angular/compiler/src/output/output_ast';
 import { isReactNative } from '@firebase/util';
+import { QuoteService } from '../_services/quote.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quotation',
@@ -72,26 +74,13 @@ export class QuotationComponent implements OnInit {
   rowNumber: number = 0;
   hs_codediv: boolean = true;
 
-  constructor(public global_service: GlobalService, private typeadhead_service: TypeaheadService, private fb: FormBuilder) {
+  constructor(
+    public global_service: GlobalService
+    , private typeadhead_service: TypeaheadService
+    , private fb: FormBuilder
+    , private quoteService: QuoteService
+    , private router: Router) {
   }
-
-  // estimateForm:FormGroup =  new FormGroup({
-  //   modeOfTransport : new FormControl('',[Validators.required]),
-  //   typeOfActivity : new FormControl('',[Validators.required]),
-  //   destCountry : new FormControl(''),
-  //   destCountryId : new FormControl(''),
-  //   destinationPort: new FormControl(''),
-  //   destinationAirport: new FormControl(''),
-  //   countryOfOrigin: new FormControl(''),
-  //   countryOfOriginId: new FormControl(''),
-  //   portOfOrigin: new FormControl(''),
-  //   airportOfOrigin: new FormControl(''),
-  //   incoTerms: new FormControl('',[Validators.required]),
-  //   pieces: new FormArray([
-  //     PieceComponent.makePieceItem()
-  //   ]),
-  //   deliveryType: new FormControl('',[Validators.required])
-  // });
 
   estimateForm = this.fb.group({
     modeOfTransport: new FormControl('', [Validators.required]),
@@ -101,13 +90,6 @@ export class QuotationComponent implements OnInit {
     portOfOrigin: new FormControl(''),
     airportOfOrigin: new FormControl(''),
     incoTerms: new FormControl('', [Validators.required]),
-    // pieces: new FormArray([
-    //   PieceComponent.makePieceItem()
-    // ]),
-
-    // pieces: this.fb.array([ 
-    //   this.PiecesFormGroup() 
-    // ]),
     pieces: new FormArray([
       PieceComponent.makePieceItem()
     ]),
@@ -189,10 +171,6 @@ export class QuotationComponent implements OnInit {
     return this.estimateForm.get('pieces') as FormArray;
   }
 
-  // addNewPackageType(){
-  //   this.pieceArray.push(PieceComponent.makePieceItem())  
-  // }
-
   destCountryTypeAhead() {
     let term = this.estimateForm.value.destCountry
     term = term.toLowerCase();
@@ -262,7 +240,6 @@ export class QuotationComponent implements OnInit {
     let term = this.estimateForm.value.destinationAirport
     term = term.toLowerCase();
     this.destFilterAirportsList = this.destAirportsList.filter(function (item: any) {
-      console.log(item);
       return item.airportName.toLowerCase().indexOf(term) == -1 ? false : true
     })
   }
@@ -271,7 +248,6 @@ export class QuotationComponent implements OnInit {
     let term = this.estimateForm.value.destinationPort
     term = term.toLowerCase();
     this.destFilterPortsList = this.destPortsList.filter(function (item: any) {
-      console.log(item);
       return item.portName.toLowerCase().indexOf(term) == -1 ? false : true
     })
   }
@@ -292,8 +268,11 @@ export class QuotationComponent implements OnInit {
     })
   }
   estimateSubmit() {
-
-    let temp: any = {};
+  debugger
+    if(!this.estimateForm.valid){
+      return;
+    }
+    let formData: any = {};
     if (this.estimateForm.value.modeOfTransport == 'AIR') {
       this.calculateChargableWeight("AIR");
       Object.keys(this.estimateForm.value).forEach(key => {
@@ -303,13 +282,15 @@ export class QuotationComponent implements OnInit {
             //Do not add portOfOrigin & destinationPort if transport mode is Air
           }
           else if (key == 'airportOfOrigin') {
-            temp[key] = this.GetAirortPlaceIdByAirportName(this.originPorts, this.estimateForm.value[key]);
+            formData[key] = this.GetAirortPlaceIdByAirportName(this.originPorts, this.estimateForm.value[key]); 
+            console.log('origin airport ='+ this.estimateForm.value[key]);           
           }
           else if (key == 'destinationAirport') {
-            temp[key] = this.GetAirortPlaceIdByAirportName(this.destinationPorts, this.estimateForm.value[key]);
+            formData[key] = this.GetAirortPlaceIdByAirportName(this.destinationPorts, this.estimateForm.value[key]);
+            console.log('dest. airport ='+ this.estimateForm.value[key]); 
           }
           else {
-            temp[key] = this.estimateForm.value[key];
+            formData[key] = this.estimateForm.value[key];
           }
         }
       });
@@ -322,21 +303,38 @@ export class QuotationComponent implements OnInit {
             //Do not add airportOfOrigin & destinationAirport if transport mode is Sea
           }
           else if (key == 'portOfOrigin') {
-            temp[key] = this.GetPortPlaceIdByPortName(this.originPorts, this.estimateForm.value[key]);
+            formData[key] = this.GetPortPlaceIdByPortName(this.originPorts, this.estimateForm.value[key]);
+            console.log('origin port ='+ this.estimateForm.value[key]);
           }
           else if (key == 'destinationPort') {
-            temp[key] = this.GetPortPlaceIdByPortName(this.destinationPorts, this.estimateForm.value[key]);
+            formData[key] = this.GetPortPlaceIdByPortName(this.destinationPorts, this.estimateForm.value[key]);
+            console.log('Dest. port ='+ this.estimateForm.value[key]);
           }
           else {
-            temp[key] = this.estimateForm.value[key];
+            formData[key] = this.estimateForm.value[key];
           }
 
         }
       });
 
     }
-    console.log(this.estimateForm);
-    console.log(temp)
+    // console.log(this.estimateForm);    
+    formData["sentFrom"] = "USER";
+    //console.log(formData)
+
+    this.quoteService.quoteOnHold(formData).subscribe((res: any) => {
+     //res = {status: 'success', message: 'qtyOFyP20ClbVz7Syz06'}
+     if(res != null && res.status == 'success'){
+      this.global_service.openSnackBar("Quotation submitted successful");
+      this.router.navigate(["/onholdquotation"])
+     }
+     else{
+      this.global_service.openSnackBar("There is some technical problem, try again later")
+     }
+    },error=>{
+      this.global_service.openSnackBar("Error: There is some technical problem, try again later");
+      this.global_service.openSnackBar(error);
+    });
   }
 
   transportModeChanged(event: any) {
@@ -752,7 +750,7 @@ export class QuotationComponent implements OnInit {
         length: new FormControl(null,[Validators.required]),
         breath: new FormControl(null,[Validators.required]),
         height: new FormControl(null,[Validators.required]),
-        inchOrCm: new FormControl(),
+        inchOrCm: new FormControl(null,[Validators.required]),
         grossWeight: new FormControl(null,[Validators.required])  
       });
       
@@ -765,7 +763,7 @@ export class QuotationComponent implements OnInit {
         length: new FormControl(null,[Validators.required]),
         breath: new FormControl(null,[Validators.required]),
         height: new FormControl(null,[Validators.required]),
-        inchOrCm: new FormControl(),
+        inchOrCm: new FormControl(null,[Validators.required]),
         grossWeight: new FormControl(null,[Validators.required])  
       });
     }

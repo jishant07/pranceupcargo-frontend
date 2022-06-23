@@ -31,7 +31,7 @@ export class PieceComponent implements OnInit {
         length: new FormControl(null,[Validators.required]),
         breath: new FormControl(null,[Validators.required]),
         height: new FormControl(null,[Validators.required]),
-        inchOrCm: new FormControl(),
+        inchOrCm: new FormControl(null,[Validators.required]),
         grossWeight: new FormControl(null,[Validators.required])  
       });
 
@@ -44,7 +44,7 @@ export class PieceComponent implements OnInit {
         length: new FormControl(null,[Validators.required]),
         breath: new FormControl(null,[Validators.required]),
         height: new FormControl(null,[Validators.required]),
-        inchOrCm: new FormControl(),
+        inchOrCm: new FormControl(null,[Validators.required]),
         grossWeight: new FormControl(null,[Validators.required])  
       });
     }
@@ -59,7 +59,7 @@ export class PieceComponent implements OnInit {
   }
 
   getClass() {
-    console.log(localStorage.getItem('inco_terms'));
+    //console.log(localStorage.getItem('inco_terms'));
     if(localStorage.getItem('inco_terms') == 'ddp' || localStorage.getItem('inco_terms') == 'ddu') {
       return 'showdiv';
     }else{
@@ -73,12 +73,12 @@ export class PieceComponent implements OnInit {
   }  
 }
 
-export class PicesModel{     
-  cargoType:string;  
-  noOfPieces:number;  
-  length:number;  
-  breath:number;  
-  height:number;  
-  inchOrCm:string; 
-  grossWeight:number;     
-} 
+// export class PicesModel{     
+//   cargoType:string;  
+//   noOfPieces:number;  
+//   length:number;  
+//   breath:number;  
+//   height:number;  
+//   inchOrCm:string; 
+//   grossWeight:number;     
+// } 
