@@ -29,20 +29,16 @@ export interface keyValuePairModel{
   key:string;
   value:string;
 }
-export interface APIQuotesModel{
-    id:string;
-    data: QuotationModel[];
-    destinationData: PortModel;
-    originData: PortModel;      
-}
+// export interface APIQuotesModel{
+//     id:string;
+//     data: QuotationModel[];
+//     destinationData: PortModel;
+//     originData: PortModel;      
+// }
 export interface QuotationModel{
+    id: string;
     modeOfTransport: string;
     typeOfActivity: string;
-    // destinationPort: string;
-    // destinationAirport: string;
-    // portOfOrigin: string;
-    // airportOfOrigin: string;
-
     incoTerms: string;
     pieces: PiecesModel[];
 
@@ -75,9 +71,42 @@ export interface QuotationModel{
     status: string;
     uid: string;
     sentFrom: string;
+
+    
+    portOfOrigin: string;
+    originPortName:string;
+
+    airportOfOrigin: string;
+    originAirportName:string;
+    originAirportTag:string;
+    
+    originState:string;
+    originCountry:string;
+
+    destinationPort: string;
+    destinationPortName:string;
+
+    destinationAirport: string;
+    destinationAirportName:string;
+    destinationAirportTag:string;
+
+    destinationState:string;
+    destinationCountry:string;
 }
-export interface PortModel{
-    country: string;
-    portName: string;
-    state: string;
-}
+// export interface PortModel{
+//     country: string;
+//     portName: string;
+//     state: string;
+// }
+// export interface DestinationAirportModel{
+//     destinationAirportName:string;
+//     destinationAirportTag:string;
+//     destinationState:string;
+//     destinationCountry:string;
+// }
+// export interface OriginAirportModel{
+//     originAirportName:string;
+//     originAirportTag:string;
+//     originState:string;
+//     originCountry:string;
+// }

@@ -19,6 +19,7 @@
         </div>
         <!-- end page title -->
 
+
         <!-- strat card -->
         <div class="col-xl-12">
             <div class="card">
@@ -32,89 +33,111 @@
                 </div> -->
                 <!-- end card header -->
 
-                <div class="card-body">
-                    <mat-form-field>
-                        <mat-label>Filter</mat-label>
-                        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-                    </mat-form-field>
+                <div class="loading" *ngIf="isLoading">
+                    <div class="spinner">
+                        <mat-spinner></mat-spinner>
+                    </div>
+                </div>
+
+                <div class="card-body" [hidden]="isLoading">
+                    <div class="d-flex">
+                        <div class="row card-title mb-0 flex-grow-1">
+                            <mat-form-field class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <mat-label>Filter</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" placeholder="search..." #input>
+                            </mat-form-field>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-end">
+                                <button type="button" class="btn btn-bg-dark" routerLink="/quotation"><i class="ri-add-circle-line align-middle me-1"></i> New Quotation</button>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="table-responsive table-card">
-                        <!-- <div class="mat-elevation-z8"> -->
                         <table mat-table [dataSource]="dataSource" matSort class="table table-borderless table-centered align-middle table-nowrap mb-0">
 
                             <ng-container matColumnDef="id">
-                                <th mat-header-cell *matHeaderCellDef class="text-muted table-light" scope="col"> Order Id </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-muted table-light" scope="col"> Order Id </th>
                                 <td mat-cell *matCellDef="let row">
                                     <a class="fw-medium link-primary">#{{row.id}}</a> </td>
                             </ng-container>
                             <ng-container matColumnDef="modeOfTransport">
                                 <th mat-header-cell *matHeaderCellDef class="text-muted table-light" scope="col"> Mode </th>
-                                <td mat-cell *matCellDef="let row">{{row.data.modeOfTransport}}
-                                    <!-- <div class="d-flex align-items-center">
+                                <td mat-cell *matCellDef="let row">
+                                    <!-- {{row.modeOfTransport}} -->
+                                    <div class="d-flex align-items-center" style="margin-right:25px;">
                                         <div class="flex-shrink-0 me-2">
-                                            <img *ngIf="row.data.modeOfTransport =='SEA'" src="assets/images/ship-icon.jpg" alt="SEA" class="avatar-xs rounded-circle" />
-                                            <img *ngIf="row.data.modeOfTransport =='AIR'" src="assets/images/airplain.jpg" alt="AIR" class="avatar-xs rounded-circle" />
+                                            <img *ngIf="row.modeOfTransport=='SEA'" src="assets/images/ship-icon.jpg" alt="SEA" class="avatar-xs rounded-circle" />
+                                            <img *ngIf="row.modeOfTransport=='AIR'" src="assets/images/airplain.jpg" alt="AIR" class="avatar-xs rounded-circle" />
                                         </div>
-                                    </div> -->
+                                    </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="typeOfActivity">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-muted table-light" scope="col"> Activity Type </th>
-                                <td mat-cell *matCellDef="let row"> {{row.data.typeOfActivity}} </td>
+                                <td mat-cell *matCellDef="let row"> {{row.typeOfActivity}} </td>
                             </ng-container>
                             <ng-container matColumnDef="destinationPort">
                                 <th mat-header-cell *matHeaderCellDef class="text-muted table-light" scope="col"> Dest. Port </th>
                                 <td mat-cell *matCellDef="let row">
-                                    {{row.destinationData.portName}}, {{row.destinationData.state}}, {{row.destinationData.country}}
+                                    <span *ngIf="row.modeOfTransport=='SEA'">
+                                        {{row.destinationPortName}}, {{row.destinationState}}, {{row.destinationCountry}}
+                                    </span>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="destinationAirport">
                                 <th mat-header-cell *matHeaderCellDef class="text-muted table-light" scope="col"> Dest. Airport </th>
                                 <td mat-cell *matCellDef="let row">
-                                    <!-- {{row.originData.portName}}, {{row.originData.state}}, {{row.originData.country}} -->
+                                    <span *ngIf="row.modeOfTransport=='AIR'">
+                                        {{row.destinationAirportTag}}, {{row.destinationAirportName}}, {{row.destinationState}}, {{row.destinationCountry}}
+                                    </span>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="portOfOrigin">
                                 <th mat-header-cell *matHeaderCellDef class="text-muted table-light" scope="col"> Origin Port </th>
                                 <td mat-cell *matCellDef="let row">
-                                    {{row.originData.portName}}, {{row.originData.state}}, {{row.originData.country}}
+                                    <span *ngIf="row.modeOfTransport=='SEA'">
+                                        {{row.originPortName}}, {{row.state}}, {{row.originCountry}}
+                                    </span>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="airportOfOrigin">
                                 <th mat-header-cell *matHeaderCellDef class="text-muted table-light" scope="col"> Origin Airport </th>
                                 <td mat-cell *matCellDef="let row">
-                                    <!-- {{row.originData.portName}}, {{row.originData.state}}, {{row.originData.country}} -->
+                                    <span *ngIf="row.modeOfTransport=='AIR'">
+                                        {{row.originAirportTag}}, {{row.originAirportName}}, {{row.originState}}, {{row.originCountry}}
+                                    </span>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="incoTerms">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-muted table-light" scope="col"> Inco Terms </th>
-                                <td mat-cell *matCellDef="let row"> {{row.data.incoTerms}} </td>
+                                <td mat-cell *matCellDef="let row"> {{row.incoTerms}} </td>
                             </ng-container>
                             <ng-container matColumnDef="deliveryType">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-muted table-light" scope="col">Delivery</th>
-                                <td mat-cell *matCellDef="let row">{{row.data.deliveryType}}</td>
+                                <td mat-cell *matCellDef="let row">{{row.deliveryType}}</td>
                             </ng-container>
                             <ng-container matColumnDef="quoteAmount">
-                                <th mat-header-cell *matHeaderCellDef class="text-muted table-light th-align-center" scope="col"> Quote </th>
-                                <td mat-cell *matCellDef="let row" class="td-align-right">
-                                    <span class="text-success">{{ ((row.data.quoteAmount)>0? row.data.quoteAmount : 0 )| number:'1.0-2'}}</span><i class="bx bx-rupee"></i>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-muted table-light align-right" scope="col"> Quote </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <i class="bx bx-rupee"></i> <span class=" text-success">{{ ((row.quoteAmount)>0? row.quoteAmount : 0 )| number:'1.0-2'}}</span>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="deadline">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-muted table-light" scope="col"> Deadline </th>
-                                <td mat-cell *matCellDef="let row"> {{row.data.deadline | date: 'dd-MMM-YYYY'}} </td>
+                                <td mat-cell *matCellDef="let row"> {{row.deadline | date: 'dd-MMM-YYYY'}} </td>
                             </ng-container>
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-                            <!-- Row shown when there is no matching data. -->
+                            <!-- Row shown when there is no matching  -->
                             <tr class="mat-row" *matNoDataRow>
-                                <td class="mat-cell" colspan="11">No data matching the filter "{{input.value}}"</td>
+                                <td class="mat-cell" colspan="11">No data matching the filter"{{input.value}}"</td>
                             </tr>
                         </table>
 
-                        <mat-paginator [pageSizeOptions]="[10,25,50,100]" *ngIf="dataSource.data != null"></mat-paginator>
+                        <mat-paginator [pageSizeOptions]="[10,25,50,100]"></mat-paginator>
                         <!-- </div> -->
 
                         <!-- <table class="table table-borderless table-centered align-middle table-nowrap mb-0">

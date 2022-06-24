@@ -38,7 +38,7 @@ export class PieceComponent implements OnInit {
     }else{
       
       return new FormGroup({
-        hs_code: new FormControl(''),
+        //hs_code: new FormControl(''),
         cargoType: new FormControl('',[Validators.required]),
         noOfPieces: new FormControl(null,[Validators.required]),
         length: new FormControl(null,[Validators.required]),

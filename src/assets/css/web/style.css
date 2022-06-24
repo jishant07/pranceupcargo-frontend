@@ -2335,22 +2335,22 @@ blockquote::before {
     background-color: #CE49BF !important;
 }
 
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
 
-/* .carousel-item {
-    background: rgba(0, 0, 0, 0) url("/assets/images/web/slider/slide_1.jpg") no-repeat scroll center center / cover;
-    height: 100%;
-    left: 0;
+.spinner {
     position: absolute;
-    top: 0;
-    width: 100%;
-} 
-.carousel-item ::after {
-    background: #3c4147;
-    content: "";
-    height: 100%;
-    left: 0;
-    opacity: 0.9;
-    position: absolute;
-    top: 0;
-    width: 100%;
-}*/
+    top: 50%;
+    left: 50%;
+    margin-top: -20px;
+    margin-left: -25px;
+    width: 50px;
+    height: 40px;
+    text-align: center;
+    font-size: 10px;
+}

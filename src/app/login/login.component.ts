@@ -41,8 +41,9 @@ export class LoginComponent implements OnInit {
       this.auth_service.signIn(this.loginForm.value.email,this.loginForm.value.passWord).then((user:any) =>{
         this.loader_service.isLoading.next(false)
         localStorage.setItem("token",user.user.multiFactor.user.accessToken);
-        localStorage.setItem('email',this.loginForm.value.email);
-        localStorage.setItem('password',this.loginForm.value.passWord);
+        //console.log(user.user.multiFactor.user);
+        // localStorage.setItem('email',this.loginForm.value.email);
+        // localStorage.setItem('password',this.loginForm.value.passWord);
         this.global_service.openSnackBar("Signin Successful");
         this.auth_service.passAuthData();
         this.router.navigate(["/dashboard"])
