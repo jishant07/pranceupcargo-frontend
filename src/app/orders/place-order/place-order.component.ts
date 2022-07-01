@@ -5,7 +5,6 @@ import { PieceComponent } from 'src/app/piece/piece.component';
 import { AirportModel, keyValuePairModel, PortsModel } from 'src/app/_models/model';
 import { GlobalService } from 'src/app/_services/global.service';
 import { OrderService } from 'src/app/_services/order.service';
-import { QuoteService } from 'src/app/_services/quote.service';
 import { TypeaheadService } from 'src/app/_services/typeahead.service';
 
 
