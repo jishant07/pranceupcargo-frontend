@@ -7,7 +7,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { AngularFileUploaderModule } from "angular-file-uploader";
 
 /* Angular Material Components */
 import { MaterialModule } from './material.module';
@@ -36,6 +38,7 @@ import { BlogAreaComponent } from './common/blog-area/blog-area.component';
 
 import { LoadingSpinnerComponent} from './common/loading-spinner/loading-spinner.component'
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { PlaceOrderComponent } from './orders/place-order/place-order.component';
 
 
 @NgModule({
@@ -60,7 +63,8 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
     PromoAreaComponent,
     BlogAreaComponent,
     LoadingSpinnerComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    PlaceOrderComponent
   ],
   imports: [
     BrowserModule,
@@ -69,13 +73,17 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
     HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    AngularFileUploaderModule
   ],
   providers: [AuthGuard,{
     provide:HTTP_INTERCEPTORS,
     useClass:InterceptorService,
     multi:true
-  }],
+  }
+  ,QuotationComponent
+  ,PlaceOrderComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

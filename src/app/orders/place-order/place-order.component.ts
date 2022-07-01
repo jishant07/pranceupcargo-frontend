@@ -1,21 +1,21 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators, FormBuilder, Validator, ValidatorFn } from '@angular/forms';
-import { PieceComponent } from '../piece/piece.component';
-
-import { GlobalService } from '../_services/global.service';
-import { TypeaheadService } from '../_services/typeahead.service';
-
-import { AirportModel, PortsModel, keyValuePairModel } from '../_models/model';
-
-import { QuoteService } from '../_services/quote.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PieceComponent } from 'src/app/piece/piece.component';
+import { AirportModel, keyValuePairModel, PortsModel } from 'src/app/_models/model';
+import { GlobalService } from 'src/app/_services/global.service';
+import { OrderService } from 'src/app/_services/order.service';
+import { QuoteService } from 'src/app/_services/quote.service';
+import { TypeaheadService } from 'src/app/_services/typeahead.service';
+
 
 @Component({
-  selector: 'app-quotation',
-  templateUrl: './quotation.component.html',
-  styleUrls: ['./quotation.component.css']
+  selector: 'app-place-order',
+  templateUrl: './place-order.component.html',
+  styleUrls: ['./place-order.component.css']
 })
-export class QuotationComponent implements OnInit {
+export class PlaceOrderComponent implements OnInit {
+
   @ViewChild(PieceComponent, { static: false }) childC: PieceComponent;
 
   /* Properties */
@@ -50,7 +50,6 @@ export class QuotationComponent implements OnInit {
   allDestinationPortsKeyValue: keyValuePairModel[] = [];
   allOriginPortsKeyValue: keyValuePairModel[] = [];
 
-
   indianAirportsArray: AirportModel[];
   allAirportsArray: AirportModel[];
   allDestinationAirports: string[] = [];
@@ -74,11 +73,12 @@ export class QuotationComponent implements OnInit {
     public global_service: GlobalService
     , private typeadhead_service: TypeaheadService
     , private fb: FormBuilder
-    , private quoteService: QuoteService
-    , private router: Router) {
+    //, private quoteService: QuoteService
+    , private router: Router
+    , private orderServie: OrderService) {
   }
 
-  estimateForm = this.fb.group({
+  orderForm = this.fb.group({
     modeOfTransport: new FormControl('', [Validators.required]),
     typeOfActivity: new FormControl('', [Validators.required]),
     destinationPort: [''],
@@ -113,77 +113,82 @@ export class QuotationComponent implements OnInit {
     dduAddress: new FormControl(''),
     //dduHscode: new FormControl(''),
     dduInvoiceValue: new FormControl(''),
-  });
 
+    //Upload documents
+    hblFile: new FormControl('', [Validators.required]),
+    packingListFile: new FormControl('', [Validators.required]),
+    invoiceFile: new FormControl('', [Validators.required]),
+    freightCertificateFile: new FormControl(''), // only required when inco term is 'exw' or 'fca'
+
+    hblFileSource: new FormControl('', [Validators.required]),
+    packingListFileSource: new FormControl('', [Validators.required]),
+    invoiceFileSource: new FormControl('', [Validators.required]),
+    freightCertificateFileSource: new FormControl(''), // only required when inco term is 'exw' or 'fca'
+
+  });
   ngOnInit(): void {
     this.incoTerm_removeAllValidation();
     this.autoComplete();
   }
-
   activityChanged(event: any) {
     this.getPorts();
     this.getAirports();
     this.isActivityTypeSelected = true;
     if (event.value == this.activityTypeExport) {
       this.isExport = true;
-      this.estimateForm.get('countryOfOrigin')?.removeValidators(Validators.required);
-      this.estimateForm.get('countryOfOriginId')?.removeValidators(Validators.required);
-      this.estimateForm.get('countryOfOrigin')?.reset();
-      this.estimateForm.get('countryOfOriginId')?.reset();
-      this.estimateForm.get('destCountry')?.addValidators(Validators.required)
-      this.estimateForm.get('destCountryId')?.addValidators(Validators.required)
-      if (this.estimateForm.value.modeOfTransport == 'SEA') {
-        this.estimateForm.get('destinationAirport')?.removeValidators(Validators.required)
-        this.estimateForm.get('destinationAirport')?.reset();
-        this.estimateForm.get('destinationPort')?.addValidators(Validators.required)
+      this.orderForm.get('countryOfOrigin')?.removeValidators(Validators.required);
+      this.orderForm.get('countryOfOriginId')?.removeValidators(Validators.required);
+      this.orderForm.get('countryOfOrigin')?.reset();
+      this.orderForm.get('countryOfOriginId')?.reset();
+      this.orderForm.get('destCountry')?.addValidators(Validators.required)
+      this.orderForm.get('destCountryId')?.addValidators(Validators.required)
+      if (this.orderForm.value.modeOfTransport == 'SEA') {
+        this.orderForm.get('destinationAirport')?.removeValidators(Validators.required)
+        this.orderForm.get('destinationAirport')?.reset();
+        this.orderForm.get('destinationPort')?.addValidators(Validators.required)
       } else {
-        this.estimateForm.get('destinationPort')?.removeValidators(Validators.required)
-        this.estimateForm.get('destinationPort')?.reset();
-        this.estimateForm.get('destinationAirport')?.addValidators(Validators.required)
+        this.orderForm.get('destinationPort')?.removeValidators(Validators.required)
+        this.orderForm.get('destinationPort')?.reset();
+        this.orderForm.get('destinationAirport')?.addValidators(Validators.required)
       }
-      this.estimateForm.updateValueAndValidity();
+      this.orderForm.updateValueAndValidity();
     } else {
       this.isExport = false;
-      this.estimateForm.get('destCountry')?.removeValidators(Validators.required);
-      this.estimateForm.get('destCountryId')?.removeValidators(Validators.required)
-      this.estimateForm.get('destCountry')?.reset();
-      this.estimateForm.get('destCountryId')?.reset();
-      this.estimateForm.get('countryOfOrigin')?.addValidators(Validators.required)
-      this.estimateForm.get('countryOfOriginId')?.addValidators(Validators.required)
-      if (this.estimateForm.value.modeOfTransport == 'SEA') {
-        this.estimateForm.get('airportOfOrigin')?.removeValidators(Validators.required)
-        this.estimateForm.get('airportOfOrigin')?.reset();
-        this.estimateForm.get('portOfOrigin')?.addValidators(Validators.required)
+      this.orderForm.get('destCountry')?.removeValidators(Validators.required);
+      this.orderForm.get('destCountryId')?.removeValidators(Validators.required)
+      this.orderForm.get('destCountry')?.reset();
+      this.orderForm.get('destCountryId')?.reset();
+      this.orderForm.get('countryOfOrigin')?.addValidators(Validators.required)
+      this.orderForm.get('countryOfOriginId')?.addValidators(Validators.required)
+      if (this.orderForm.value.modeOfTransport == 'SEA') {
+        this.orderForm.get('airportOfOrigin')?.removeValidators(Validators.required)
+        this.orderForm.get('airportOfOrigin')?.reset();
+        this.orderForm.get('portOfOrigin')?.addValidators(Validators.required)
       } else {
-        this.estimateForm.get('portOfOrigin')?.removeValidators(Validators.required)
-        this.estimateForm.get('portOfOrigin')?.reset();
-        this.estimateForm.get('airportOfOrigin')?.addValidators(Validators.required)
+        this.orderForm.get('portOfOrigin')?.removeValidators(Validators.required)
+        this.orderForm.get('portOfOrigin')?.reset();
+        this.orderForm.get('airportOfOrigin')?.addValidators(Validators.required)
       }
-      this.estimateForm.updateValueAndValidity();
+      this.orderForm.updateValueAndValidity();
     }
   }
-
   get pieceArray() {
-    return this.estimateForm.get('pieces') as FormArray;
+    return this.orderForm.get('pieces') as FormArray;
   }
-
   destCountryTypeAhead() {
-    let term = this.estimateForm.value.destCountry
+    let term = this.orderForm.value.destCountry
     term = term.toLowerCase();
     this.destCountryList = this.countryList.filter(function (item: any) {
       return item.countryName.toLowerCase().indexOf(term) == -1 ? false : true
     })
   }
-
   countryOfOriginTypeahead() {
-    debugger
-    let term = this.estimateForm.value.countryOfOrigin
+    let term = this.orderForm.value.countryOfOrigin
     term = term.toLowerCase();
     this.countryOfOriginList = this.countryList.filter(function (item: any) {
       return item.countryName.toLowerCase().indexOf(term) == -1 ? false : true
     })
   }
-
   calculateChargableWeight(type: string) {
     this.chargableWeight = 0;
     this.cbmWeight = 0;
@@ -199,10 +204,9 @@ export class QuotationComponent implements OnInit {
       })
     }
   }
-
   destinationCountrySelected(event: any) {
     let value = event.option.value
-    this.estimateForm.patchValue({
+    this.orderForm.patchValue({
       destCountryId: value.id,
       destCountry: value.countryName
     })
@@ -215,10 +219,9 @@ export class QuotationComponent implements OnInit {
       this.destFilterPortsList = res.message
     })
   }
-
   countryOfOriginSelected(event: any) {
     let value = event.option.value
-    this.estimateForm.patchValue({
+    this.orderForm.patchValue({
       countryOfOriginId: value.id,
       countryOfOrigin: value.countryName
     })
@@ -231,108 +234,126 @@ export class QuotationComponent implements OnInit {
       this.countryOforiginFilterPortsList = res.message
     })
   }
-
   destAirportTypeAhead() {
-    let term = this.estimateForm.value.destinationAirport
+    let term = this.orderForm.value.destinationAirport
     term = term.toLowerCase();
     this.destFilterAirportsList = this.destAirportsList.filter(function (item: any) {
       return item.airportName.toLowerCase().indexOf(term) == -1 ? false : true
     })
   }
-
   destPortTypeAhead() {
-    let term = this.estimateForm.value.destinationPort
+    let term = this.orderForm.value.destinationPort
     term = term.toLowerCase();
     this.destFilterPortsList = this.destPortsList.filter(function (item: any) {
       return item.portName.toLowerCase().indexOf(term) == -1 ? false : true
     })
   }
-
   countryOfOriginAirportTypeahead() {
-    let term = this.estimateForm.value.airportOfOrigin
+    let term = this.orderForm.value.airportOfOrigin
     term = term.toLowerCase();
     this.countryOfOriginFilterAirportsList = this.countryOfOriginAirportsList.filter((item: any) => {
       return item.airportName.toLowerCase().indexOf(term) == -1 ? false : true
     })
   }
-
   countryOfOriginPortTypeahead() {
-    let term = this.estimateForm.value.portOfOrigin
+    let term = this.orderForm.value.portOfOrigin
     term = term.toLowerCase();
     this.countryOforiginFilterPortsList = this.countryOforiginFilterPortsList.filter((item: any) => {
       return item.portName.toLowerCase().indexOf(term) == -1 ? false : true;
     })
   }
-  estimateSubmit() {
-  debugger
-    if(!this.estimateForm.valid){
+  placeOrderSubmit() {
+    if(!this.orderForm.valid){
       return;
     }
     let formData: any = {};
-    if (this.estimateForm.value.modeOfTransport == 'AIR') {
+    if (this.orderForm.value.modeOfTransport == 'AIR') {
       this.calculateChargableWeight("AIR");
-      Object.keys(this.estimateForm.value).forEach(key => {
-        if (this.estimateForm.value[key] != "" && this.estimateForm.value[key] != null) {
+      Object.keys(this.orderForm.value).forEach(key => {
+        if (this.orderForm.value[key] != "" && this.orderForm.value[key] != null) {
 
           if (key == 'portOfOrigin' || key == 'destinationPort') {
             //Do not add portOfOrigin & destinationPort if transport mode is Air
           }
           else if (key == 'airportOfOrigin') {
-            formData[key] = this.GetAirortPlaceIdByAirportName(this.originPorts, this.estimateForm.value[key]); 
-            console.log('origin airport ='+ this.estimateForm.value[key]);           
+            formData[key] = this.GetAirortPlaceIdByAirportName(this.originPorts, this.orderForm.value[key]); 
+            console.log('origin airport ='+ this.orderForm.value[key]);           
           }
           else if (key == 'destinationAirport') {
-            formData[key] = this.GetAirortPlaceIdByAirportName(this.destinationPorts, this.estimateForm.value[key]);
-            console.log('dest. airport ='+ this.estimateForm.value[key]); 
+            formData[key] = this.GetAirortPlaceIdByAirportName(this.destinationPorts, this.orderForm.value[key]);
+            console.log('dest. airport ='+ this.orderForm.value[key]); 
           }
           else {
-            formData[key] = this.estimateForm.value[key];
+            formData[key] = this.orderForm.value[key];
           }
         }
       });
     } else {
       this.calculateChargableWeight("SEA")
-      Object.keys(this.estimateForm.value).forEach(key => {
-        if (this.estimateForm.value[key] != "" && this.estimateForm.value[key] != null) {
+      Object.keys(this.orderForm.value).forEach(key => {
+        if (this.orderForm.value[key] != "" && this.orderForm.value[key] != null) {
 
           if (key == 'airportOfOrigin' || key == 'destinationAirport') {
             //Do not add airportOfOrigin & destinationAirport if transport mode is Sea
           }
           else if (key == 'portOfOrigin') {
-            formData[key] = this.GetPortPlaceIdByPortName(this.originPorts, this.estimateForm.value[key]);
-            console.log('origin port ='+ this.estimateForm.value[key]);
+            formData[key] = this.GetPortPlaceIdByPortName(this.originPorts, this.orderForm.value[key]);
+            //console.log('origin port ='+ this.orderForm.value[key]);
           }
           else if (key == 'destinationPort') {
-            formData[key] = this.GetPortPlaceIdByPortName(this.destinationPorts, this.estimateForm.value[key]);
-            console.log('Dest. port ='+ this.estimateForm.value[key]);
+            formData[key] = this.GetPortPlaceIdByPortName(this.destinationPorts, this.orderForm.value[key]);
+            //console.log('Dest. port ='+ this.orderForm.value[key]);
           }
           else {
-            formData[key] = this.estimateForm.value[key];
+            formData[key] = this.orderForm.value[key];
           }
 
         }
       });
 
     }
-    // console.log(this.estimateForm);    
+    //console.log(this.orderForm);    
     formData["sentFrom"] = "USER";
-    //console.log(formData)
+    console.log(formData); //Final object for api
 
-    this.quoteService.quoteOnHold(formData).subscribe((res: any) => {
-     //res = {status: 'success', message: 'qtyOFyP20ClbVz7Syz06'}
-     if(res != null && res.status == 'success'){
-      this.global_service.openSnackBar("Quotation submitted successful");
-      this.router.navigate(["/onholdquotation"])
-     }
-     else{
-      this.global_service.openSnackBar("There is some technical problem, try again later")
-     }
-    },error=>{
-      this.global_service.openSnackBar("Error: There is some technical problem, try again later");
-      this.global_service.openSnackBar(error);
+    this.orderServie.placeOrder(formData).subscribe((res:any)=>{
+      console.log('PlaceOrder result');
+      console.log(res);
     });
-  }
 
+    // console.log('hbl file source')
+    // console.log(this.orderForm.get('hblFileSource')?.value);
+
+    const oFormData = new FormData();
+    // oFormData.append('deliveryType', formData['deliveryType']?.value);
+    // oFormData.append('destinationPort', formData['destinationPort']?.value);
+    // oFormData.append('freightCertificateFileSource', formData['freightCertificateFileSource']?.value);
+    // oFormData.append('hblFileSource', formData['hblFileSource']?.value);
+    // oFormData.append('incoTerms', formData['incoTerms']?.value);
+    // oFormData.append('invoiceFileSource', formData['invoiceFileSource']?.value);
+    // oFormData.append('modeOfTransport', formData['modeOfTransport']?.value);
+    // oFormData.append('packingListFileSource', formData['packingListFileSource']?.value);
+    // oFormData.append('pieces', formData['pieces']?.value);
+    // oFormData.append('portOfOrigin', formData['portOfOrigin']?.value);
+    // oFormData.append('sentFrom', formData['sentFrom']?.value);
+    // oFormData.append('typeOfActivity', formData['typeOfActivity']?.value);
+    
+    // oFormData.append('pickUpAddress', formData['pickUpAddress']?.value);
+    // oFormData.append('spocName', formData['spocName']?.value);
+    // oFormData.append('spocPhone', formData['spocPhone']?.value);
+
+    oFormData.append('hblFileSource', formData['hblFileSource']);
+    oFormData.append('incoTerms', formData['incoTerms']);
+    oFormData.append('invoiceFileSource', formData['invoiceFileSource']);
+
+    console.log('final data for test api');
+    console.log(oFormData);
+    this.orderServie.placeOrder(oFormData).subscribe((res:any)=>{
+      console.log('PlaceOrder result');
+      console.log(res);
+    });
+
+  }
   transportModeChanged(event: any) {
     this.isTransportModeSelected = true;
     if (event.value.toLowerCase() == 'sea') {
@@ -348,8 +369,8 @@ export class QuotationComponent implements OnInit {
   //Begin: Inco Terms
   incoTermChanged(event: any) {
     this.incoTerm_removeAllValidation();
-    var selectedIncoTearm = this.estimateForm.value.incoTerms.toLowerCase();
-    localStorage.setItem('inco_terms', selectedIncoTearm)
+    var selectedIncoTearm = this.orderForm.value.incoTerms.toLowerCase();
+    localStorage.setItem('inco_terms', selectedIncoTearm);
     switch (selectedIncoTearm) {
       case 'exw':
         //Ex Works        
@@ -398,7 +419,6 @@ export class QuotationComponent implements OnInit {
         break;
     }
   }
-
   incoTerm_removeAllValidation() {
     this.incoTerm_exw_Validation('remove');
     this.incoTerm_fca_Validation('remove');
@@ -406,107 +426,113 @@ export class QuotationComponent implements OnInit {
     this.incoTerm_ddp_Validation('remove');
     this.incoTerm_ddu_Validation('remove');
   }
-
   incoTerm_exw_Validation(addOrRemove: string) {
     addOrRemove = addOrRemove.toLowerCase();
     if (addOrRemove == 'add') {
-      this.estimateForm.get('pickUpAddress')?.addValidators(Validators.required);
-      this.estimateForm.get('spocName')?.addValidators(Validators.required);
-      this.estimateForm.get('spocPhone')?.addValidators(Validators.required);
+      this.orderForm.get('pickUpAddress')?.addValidators(Validators.required);
+      this.orderForm.get('spocName')?.addValidators(Validators.required);
+      this.orderForm.get('spocPhone')?.addValidators(Validators.required);
+      this.orderForm.get('freightCertificateFile')?.addValidators(Validators.required);
+      //this.orderForm.get('freightCertificateFileSource')?.addValidators(Validators.required);
     }
     else {
-      // this.estimateForm.get('pickUpAddress')?.removeValidators(Validators.required);
-      // this.estimateForm.get('spocName')?.removeValidators(Validators.required);
-      // this.estimateForm.get('spocPhone')?.removeValidators(Validators.required);
+      // this.orderForm.get('pickUpAddress')?.removeValidators(Validators.required);
+      // this.orderForm.get('spocName')?.removeValidators(Validators.required);
+      // this.orderForm.get('spocPhone')?.removeValidators(Validators.required);
 
-      this.estimateForm.get('pickUpAddress')?.clearValidators();
-      this.estimateForm.get('spocName')?.clearValidators();
-      this.estimateForm.get('spocPhone')?.clearValidators();
+      this.orderForm.get('pickUpAddress')?.clearValidators();
+      this.orderForm.get('spocName')?.clearValidators();
+      this.orderForm.get('spocPhone')?.clearValidators();
+      this.orderForm.get('freightCertificateFile')?.clearValidators();
+      //this.orderForm.get('freightCertificateFileSource')?.clearValidators();
 
-      this.estimateForm.get('pickUpAddress')?.setValue('');
-      this.estimateForm.get('spocName')?.setValue('');
-      this.estimateForm.get('spocPhone')?.setValue('');
+      this.orderForm.get('pickUpAddress')?.setValue('');
+      this.orderForm.get('spocName')?.setValue('');
+      this.orderForm.get('spocPhone')?.setValue('');
+      this.orderForm.get('freightCertificateFile')?.setValue('');
+      //this.orderForm.get('freightCertificateFileSource')?.setValue('');
     }
-    this.estimateForm.updateValueAndValidity();
+    this.orderForm.updateValueAndValidity();
   }
-
   incoTerm_fca_Validation(addOrRemove: string) {
     addOrRemove = addOrRemove.toLowerCase();
     if (addOrRemove == 'add') {
-      this.estimateForm.get('shipperAddress')?.addValidators(Validators.required);
-      this.estimateForm.get('fcaLocation')?.addValidators(Validators.required);
+      this.orderForm.get('shipperAddress')?.addValidators(Validators.required);
+      this.orderForm.get('fcaLocation')?.addValidators(Validators.required);
+      this.orderForm.get('freightCertificateFile')?.addValidators(Validators.required);
+      //this.orderForm.get('freightCertificateFileSource')?.addValidators(Validators.required);
     }
     else {
-      // this.estimateForm.get('shipperAddress')?.removeValidators(Validators.required);
-      // this.estimateForm.get('fcaLocation')?.removeValidators(Validators.required);
+      // this.orderForm.get('shipperAddress')?.removeValidators(Validators.required);
+      // this.orderForm.get('fcaLocation')?.removeValidators(Validators.required);
 
-      this.estimateForm.get('shipperAddress')?.clearValidators();
-      this.estimateForm.get('fcaLocation')?.clearValidators();
+      this.orderForm.get('shipperAddress')?.clearValidators();
+      this.orderForm.get('fcaLocation')?.clearValidators();
+      this.orderForm.get('freightCertificateFile')?.clearValidators();
+      //this.orderForm.get('freightCertificateFileSource')?.clearValidators();
 
-      this.estimateForm.get('shipperAddress')?.setValue('');
-      this.estimateForm.get('fcaLocation')?.setValue('');
+      this.orderForm.get('shipperAddress')?.setValue('');
+      this.orderForm.get('fcaLocation')?.setValue('');
+      this.orderForm.get('freightCertificateFile')?.setValue('');
+      //this.orderForm.get('freightCertificateFileSource')?.setValue('');
     }
-    this.estimateForm.updateValueAndValidity();
+    this.orderForm.updateValueAndValidity();
   }
-
   incoTerm_dap_Validation(addOrRemove: string) {
     addOrRemove = addOrRemove.toLowerCase();
     if (addOrRemove == 'add') {
-      this.estimateForm.get('dapdduAddress')?.addValidators(Validators.required);
+      this.orderForm.get('dapdduAddress')?.addValidators(Validators.required);
     }
     else {
-      //this.estimateForm.get('dapdduAddress')?.removeValidators(Validators.required);      
-      this.estimateForm.get('dapdduAddress')?.clearValidators();
+      //this.orderForm.get('dapdduAddress')?.removeValidators(Validators.required);      
+      this.orderForm.get('dapdduAddress')?.clearValidators();
 
-      this.estimateForm.get('dapdduAddress')?.setValue('');
+      this.orderForm.get('dapdduAddress')?.setValue('');
     }
-    this.estimateForm.updateValueAndValidity();
+    this.orderForm.updateValueAndValidity();
   }
-
   incoTerm_ddp_Validation(addOrRemove: string) {
     addOrRemove = addOrRemove.toLowerCase();
     if (addOrRemove == 'add') {
-      this.estimateForm.get('ddpdduAddress')?.addValidators(Validators.required);
-      //this.estimateForm.get('hscode')?.addValidators(Validators.required);
-      this.estimateForm.get('invoiceValue')?.addValidators(Validators.required);
+      this.orderForm.get('ddpdduAddress')?.addValidators(Validators.required);
+      //this.orderForm.get('hscode')?.addValidators(Validators.required);
+      this.orderForm.get('invoiceValue')?.addValidators(Validators.required);
     }
     else {
-      // this.estimateForm.get('ddpdduAddress')?.removeValidators(Validators.required);
-      // this.estimateForm.get('hscode')?.removeValidators(Validators.required);
-      // this.estimateForm.get('invoiceValue')?.removeValidators(Validators.required);
+      // this.orderForm.get('ddpdduAddress')?.removeValidators(Validators.required);
+      // this.orderForm.get('hscode')?.removeValidators(Validators.required);
+      // this.orderForm.get('invoiceValue')?.removeValidators(Validators.required);
 
-      this.estimateForm.get('ddpdduAddress')?.clearValidators();
-      //this.estimateForm.get('hscode')?.clearValidators();
-      this.estimateForm.get('spocPhone')?.clearValidators();
+      this.orderForm.get('ddpdduAddress')?.clearValidators();
+      //this.orderForm.get('hscode')?.clearValidators();
+      this.orderForm.get('spocPhone')?.clearValidators();
 
-      this.estimateForm.get('ddpdduAddress')?.setValue('');
-      //this.estimateForm.get('hscode')?.setValue('');
-      this.estimateForm.get('invoiceValue')?.setValue('');
+      this.orderForm.get('ddpdduAddress')?.setValue('');
+      //this.orderForm.get('hscode')?.setValue('');
+      this.orderForm.get('invoiceValue')?.setValue('');
     }
-    this.estimateForm.updateValueAndValidity();
+    this.orderForm.updateValueAndValidity();
   }
-
   incoTerm_ddu_Validation(addOrRemove: string) {
     addOrRemove = addOrRemove.toLowerCase();
     if (addOrRemove == 'add') {
-      this.estimateForm.get('dduAddress')?.addValidators(Validators.required);
-      //this.estimateForm.get('dduHscode')?.addValidators(Validators.required);
-      this.estimateForm.get('dduInvoiceValue')?.addValidators(Validators.required);
+      this.orderForm.get('dduAddress')?.addValidators(Validators.required);
+      //this.orderForm.get('dduHscode')?.addValidators(Validators.required);
+      this.orderForm.get('dduInvoiceValue')?.addValidators(Validators.required);
     }
     else {
-      this.estimateForm.get('dduAddress')?.clearValidators();
-      //this.estimateForm.get('dduHscode')?.clearValidators();
-      this.estimateForm.get('spocPhone')?.clearValidators();
+      this.orderForm.get('dduAddress')?.clearValidators();
+      //this.orderForm.get('dduHscode')?.clearValidators();
+      this.orderForm.get('spocPhone')?.clearValidators();
 
-      this.estimateForm.get('dduAddress')?.setValue('');
-      //this.estimateForm.get('dduHscode')?.setValue('');
-      this.estimateForm.get('dduInvoiceValue')?.setValue('');
+      this.orderForm.get('dduAddress')?.setValue('');
+      //this.orderForm.get('dduHscode')?.setValue('');
+      this.orderForm.get('dduInvoiceValue')?.setValue('');
     }
-    this.estimateForm.updateValueAndValidity();
+    this.orderForm.updateValueAndValidity();
   }
-
   incoTermsExWorksFormControls() {
-    this.estimateForm = new FormGroup({
+    this.orderForm = new FormGroup({
       modeOfTransport: new FormControl('', [Validators.required]),
       typeOfActivity: new FormControl('', [Validators.required]),
       destCountry: new FormControl(''),
@@ -528,38 +554,38 @@ export class QuotationComponent implements OnInit {
     });
   }
   //End: Inco Terms
+
   //Begin: Port and Airports
   autoComplete() {
     //Ports
-    this.estimateForm.get('portOfOrigin')?.valueChanges.subscribe(value => {
+    this.orderForm.get('portOfOrigin')?.valueChanges.subscribe(value => {
       this.getFilteredPorts(this.originPorts, value);
     });
-    this.estimateForm.get('destinationPort')?.valueChanges.subscribe(value => {
+    this.orderForm.get('destinationPort')?.valueChanges.subscribe(value => {
       this.getFilteredPorts(this.destinationPorts, value);
     });
     //Airport
-    this.estimateForm.get('airportOfOrigin')?.valueChanges.subscribe(value => {
+    this.orderForm.get('airportOfOrigin')?.valueChanges.subscribe(value => {
       this.getFilteredAirports(this.originPorts, value);
     });
-    this.estimateForm.get('destinationAirport')?.valueChanges.subscribe(value => {
+    this.orderForm.get('destinationAirport')?.valueChanges.subscribe(value => {
       this.getFilteredAirports(this.destinationPorts, value);
     });
   }
-
   getPorts() {
-    this.estimateForm.controls['destinationPort'].reset();
-    this.estimateForm.controls['portOfOrigin'].reset();
+    this.orderForm.controls['destinationPort'].reset();
+    this.orderForm.controls['portOfOrigin'].reset();
 
-    if (this.estimateForm.value.typeOfActivity.toLowerCase() == this.activityTypeExport.toLowerCase()) {
+    if (this.orderForm.value.typeOfActivity.toLowerCase() == this.activityTypeExport.toLowerCase()) {
 
-      if (this.estimateForm.value.modeOfTransport.toLowerCase() == this.TransportModeSea.toLowerCase()) {
+      if (this.orderForm.value.modeOfTransport.toLowerCase() == this.TransportModeSea.toLowerCase()) {
         this.getIndianPorts(this.originPorts);
         this.getPortsExceptIndia(this.destinationPorts);
       }
     }
     else {
 
-      if (this.estimateForm.value.modeOfTransport.toLowerCase() == this.TransportModeSea.toLowerCase()) {
+      if (this.orderForm.value.modeOfTransport.toLowerCase() == this.TransportModeSea.toLowerCase()) {
         this.getPortsExceptIndia(this.originPorts);
         this.getIndianPorts(this.destinationPorts);
       }
@@ -632,7 +658,6 @@ export class QuotationComponent implements OnInit {
       });
     }
   }
-
   GetPortPlaceIdByPortName(isDestinationPorts: boolean, Port: string) {
     if (isDestinationPorts)
       return this.allDestinationPortsKeyValue.find(item => item.value === Port)?.key;
@@ -646,19 +671,19 @@ export class QuotationComponent implements OnInit {
       return this.allOriginAirportsKeyValue.find(item => item.value === Airport)?.key;
   }
   getAirports() {
-    this.estimateForm.controls['destinationAirport'].reset();
-    this.estimateForm.controls['airportOfOrigin'].reset();
+    this.orderForm.controls['destinationAirport'].reset();
+    this.orderForm.controls['airportOfOrigin'].reset();
 
-    if (this.estimateForm.value.typeOfActivity.toLowerCase() == this.activityTypeExport.toLowerCase()) {
+    if (this.orderForm.value.typeOfActivity.toLowerCase() == this.activityTypeExport.toLowerCase()) {
 
-      if (this.estimateForm.value.modeOfTransport.toLowerCase() == this.TransportModeAir.toLowerCase()) {
+      if (this.orderForm.value.modeOfTransport.toLowerCase() == this.TransportModeAir.toLowerCase()) {
         this.getIndianAirports(this.originAirports);
         this.getAirportsExceptIndia(this.destinationPorts);
       }
     }
     else {
 
-      if (this.estimateForm.value.modeOfTransport.toLowerCase() == this.TransportModeAir.toLowerCase()) {
+      if (this.orderForm.value.modeOfTransport.toLowerCase() == this.TransportModeAir.toLowerCase()) {
         this.getAirportsExceptIndia(this.originAirports);
         this.getIndianAirports(this.destinationPorts);
       }
@@ -732,6 +757,7 @@ export class QuotationComponent implements OnInit {
     }
   }
   //End: Port and Airports
+
   //Being: Cargo details
   PiecesFormGroup(): FormGroup {
 
@@ -765,14 +791,12 @@ export class QuotationComponent implements OnInit {
     }
 
   };
-
   get PicesFormArray() {
-    return (this.estimateForm.get('pieces') as FormArray);
+    return (this.orderForm.get('pieces') as FormArray);
   }
-
   addNewPackage(): void {
     this.rowNumber++;
-    var pieces = this.estimateForm.get('pieces') as FormArray;
+    var pieces = this.orderForm.get('pieces') as FormArray;
 
     this.childC.openhidehs_codediv();
     pieces.push(this.PiecesFormGroup());
@@ -781,11 +805,52 @@ export class QuotationComponent implements OnInit {
       this.removePackage(this.rowNumber);
     }
   }
-
   removePackage(i: number) {
-    var pieces = this.estimateForm.get('pieces') as FormArray;
-    pieces.removeAt(i);
+      var pieces = this.orderForm.get('pieces') as FormArray;
+      var pieceCount = (pieces.value as FormArray).length;
+      if(pieceCount>1){
+        pieces.removeAt(i+1);
+      }
   }
   //End: Cargo details
-}
 
+  //Begin: File Upload
+currentFile:File;
+fileName:string;
+
+onFileSelected(event:any,fileSelectedFor:string):void {
+    if (event.target.files && event.target.files[0]) {
+      const file: File = event.target.files[0];
+      this.currentFile = file;
+      this.fileName = this.currentFile.name;
+    } else {
+      this.fileName = 'Select File';
+    }
+    //To set file name
+    if(fileSelectedFor == 'HBL'){
+      this.orderForm.patchValue({
+        hblFile: this.fileName,
+        hblFileSource: this.currentFile
+      }); 
+    }
+    else if(fileSelectedFor == 'PackingList'){
+      this.orderForm.patchValue({
+        packingListFile: this.fileName,
+        packingListFileSource: this.currentFile
+      }); 
+    }
+    else if(fileSelectedFor == 'Invoice'){
+      this.orderForm.patchValue({
+        invoiceFile: this.fileName,
+        invoiceFileSource: this.currentFile
+      }); 
+    }
+    else if(fileSelectedFor == 'FreightCertificate'){
+      this.orderForm.patchValue({
+        freightCertificateFile: this.fileName,
+        freightCertificateFileSource: this.currentFile
+      }); 
+    }
+  }
+  //End: File Upload
+}

@@ -14,6 +14,7 @@ import { HomeContentComponent } from './home/home-content/home-content.component
 import { ContactusComponent } from './contactus/contactus.component';
 import { ServicesComponent } from './services/services.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { PlaceOrderComponent } from './orders/place-order/place-order.component';
  
 const routes: Routes = [
   //Web
@@ -38,6 +39,8 @@ const routes: Routes = [
     {path:'', component: QuotationComponent}]},
   { path:"onholdquotation",component:DashboardComponent , children:[
     {path:'', component: OnholdQuotationComponent}]},
+  { path:"placeorder",component:DashboardComponent , children:[
+    {path:'', component: PlaceOrderComponent}]},
     
   { path: '**', component: PagenotfoundComponent },
 ];

@@ -1,6 +1,7 @@
 import { FormArray, FormControl, FormGroup, Validators, FormBuilder, ControlContainer } from '@angular/forms';
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { QuotationComponent } from '../quotation/quotation.component';
+import { PlaceOrderComponent } from '../orders/place-order/place-order.component';
 
 @Component({
   selector: 'app-piece',
@@ -12,7 +13,9 @@ export class PieceComponent implements OnInit {
   hs_codediv: boolean = true;
   static hs_codediv: boolean;
 
-  constructor(private elRef: ElementRef, private quotation: QuotationComponent) { }
+  constructor(private elRef: ElementRef
+    , private quotation: QuotationComponent
+    , private placeOrder: PlaceOrderComponent) { }
 
   @Input() pieceForm:any;
   @Input() rowNumber: number = 0;
@@ -38,7 +41,7 @@ export class PieceComponent implements OnInit {
     }else{
       
       return new FormGroup({
-        //hs_code: new FormControl(''),
+        hs_code: new FormControl(''),
         cargoType: new FormControl('',[Validators.required]),
         noOfPieces: new FormControl(null,[Validators.required]),
         length: new FormControl(null,[Validators.required]),
@@ -59,7 +62,6 @@ export class PieceComponent implements OnInit {
   }
 
   getClass() {
-    //console.log(localStorage.getItem('inco_terms'));
     if(localStorage.getItem('inco_terms') == 'ddp' || localStorage.getItem('inco_terms') == 'ddu') {
       return 'showdiv';
     }else{
@@ -69,16 +71,8 @@ export class PieceComponent implements OnInit {
 
   deleteRow(event:any){
     const parentElement = this.elRef.nativeElement.closest('.pieces-class');
+    
     this.quotation.removePackage(parentElement);
+    this.placeOrder.removePackage(parentElement);
   }  
 }
-
-// export class PicesModel{     
-//   cargoType:string;  
-//   noOfPieces:number;  
-//   length:number;  
-//   breath:number;  
-//   height:number;  
-//   inchOrCm:string; 
-//   grossWeight:number;     
-// } 
