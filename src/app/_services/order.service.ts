@@ -32,11 +32,6 @@ export class OrderService {
       console.log('Service placeOrder');
       console.log(data);      
       return this.http.post(environment.devURL+"/order/placeNewOrder", data, {headers: this.httpHeader});
-      //{status: 'success', message: 'qtyOFyP20ClbVz7Syz06'}
   }
-//   getQuotes(){
-//       return this.http.get(environment.devURL+"/quote/listAllQuotes",{headers: this.httpHeader});
-//       //{status: 'success', message: Array(9)}
-//   }
   //End: Order
 }
