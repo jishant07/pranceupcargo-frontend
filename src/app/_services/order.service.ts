@@ -22,16 +22,27 @@ export class OrderService {
   setHeader(){
     this.getToken();
     this.httpHeader = {
-        'token': this.token as string,
-        
+        'token': this.token as string        
     };
   }
 
   //Begin: Order
-  placeOrder(data:FormData){
+  placeOrder(formData:FormData){
       console.log('Service placeOrder');
-      console.log(data);      
-      return this.http.post(environment.devURL+"/order/placeNewOrder", data, {headers: this.httpHeader});
+      console.log(formData);      
+      //return this.http.post(environment.devURL+"/order/placeNewOrder", data, {headers: this.httpHeader});
+
+      // return this.http.post(environment.devURL+"/order/placeNewOrder",{
+      //   method: 'POST',
+      //   body: formData      
+      // });
+
+      return this.http.post(environment.devURL+"/order/placeNewOrder",{
+        method: 'POST',
+        body: formData,
+        'token': this.token as string,
+        'Content-Type': 'multipart/form-data'       
+      });
   }
   //End: Order
 }

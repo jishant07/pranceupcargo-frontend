@@ -276,11 +276,11 @@ export class PlaceOrderComponent implements OnInit {
           }
           else if (key == 'airportOfOrigin') {
             formData[key] = this.GetAirortPlaceIdByAirportName(this.originPorts, this.orderForm.value[key]); 
-            console.log('origin airport ='+ this.orderForm.value[key]);           
+            //console.log('origin airport ='+ this.orderForm.value[key]);           
           }
           else if (key == 'destinationAirport') {
             formData[key] = this.GetAirortPlaceIdByAirportName(this.destinationPorts, this.orderForm.value[key]);
-            console.log('dest. airport ='+ this.orderForm.value[key]); 
+            //console.log('dest. airport ='+ this.orderForm.value[key]); 
           }
           else {
             formData[key] = this.orderForm.value[key];
@@ -341,9 +341,13 @@ export class PlaceOrderComponent implements OnInit {
     // oFormData.append('spocName', formData['spocName']?.value);
     // oFormData.append('spocPhone', formData['spocPhone']?.value);
 
-    oFormData.append('hblFileSource', formData['hblFileSource']);
-    oFormData.append('incoTerms', formData['incoTerms']);
-    oFormData.append('invoiceFileSource', formData['invoiceFileSource']);
+    console.log(formData['hblFileSource'])
+    console.log(formData['incoTerms'])
+    console.log(formData['hblFile'])
+
+    oFormData.append('test_file', formData['hblFileSource']);
+    oFormData.append('test', formData['incoTerms']);
+    oFormData.append('name', formData['hblFile']);
 
     console.log('final data for test api');
     console.log(oFormData);
