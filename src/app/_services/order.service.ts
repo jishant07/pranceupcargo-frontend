@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class OrderService {
-  token?:string; 
+  token?:string;
   httpHeader:any;
   isLoading:boolean = false;
 
@@ -22,26 +22,33 @@ export class OrderService {
   setHeader(){
     this.getToken();
     this.httpHeader = {
-        'token': this.token as string        
+        'token': this.token as string
     };
   }
 
   //Begin: Order
   placeOrder(formData:FormData){
       console.log('Service placeOrder');
-      console.log(formData);      
+      console.log(formData);
       //return this.http.post(environment.devURL+"/order/placeNewOrder", data, {headers: this.httpHeader});
 
       // return this.http.post(environment.devURL+"/order/placeNewOrder",{
       //   method: 'POST',
-      //   body: formData      
+      //   body: formData
+      // });
+
+      // return this.http.post(environment.devURL+"/order/placeNewOrder",{
+      //   method: 'POST',
+      //   body: formData,
+      //   'token': this.token as string,
+      //   'Content-Type': 'multipart/form-data'
       // });
 
       return this.http.post(environment.devURL+"/order/placeNewOrder",{
         method: 'POST',
         body: formData,
-        'token': this.token as string,
-        'Content-Type': 'multipart/form-data'       
+        token: this.token as string,
+        contentType: 'multipart/form-data'       
       });
   }
   //End: Order
