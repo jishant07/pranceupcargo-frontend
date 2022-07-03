@@ -313,45 +313,34 @@ export class PlaceOrderComponent implements OnInit {
     }
     //console.log(this.orderForm);    
     formData["sentFrom"] = "USER";
-    console.log(formData); //Final object for api
-
-    this.orderServie.placeOrder(formData).subscribe((res:any)=>{
-      console.log('PlaceOrder result');
-      console.log(res);
-    });
-
-    // console.log('hbl file source')
-    // console.log(this.orderForm.get('hblFileSource')?.value);
-
-    const oFormData = new FormData();
-    // oFormData.append('deliveryType', formData['deliveryType']?.value);
-    // oFormData.append('destinationPort', formData['destinationPort']?.value);
-    // oFormData.append('freightCertificateFileSource', formData['freightCertificateFileSource']?.value);
-    // oFormData.append('hblFileSource', formData['hblFileSource']?.value);
-    // oFormData.append('incoTerms', formData['incoTerms']?.value);
-    // oFormData.append('invoiceFileSource', formData['invoiceFileSource']?.value);
-    // oFormData.append('modeOfTransport', formData['modeOfTransport']?.value);
-    // oFormData.append('packingListFileSource', formData['packingListFileSource']?.value);
-    // oFormData.append('pieces', formData['pieces']?.value);
-    // oFormData.append('portOfOrigin', formData['portOfOrigin']?.value);
-    // oFormData.append('sentFrom', formData['sentFrom']?.value);
-    // oFormData.append('typeOfActivity', formData['typeOfActivity']?.value);
+    // console.log(formData); //Final object for api
     
-    // oFormData.append('pickUpAddress', formData['pickUpAddress']?.value);
-    // oFormData.append('spocName', formData['spocName']?.value);
-    // oFormData.append('spocPhone', formData['spocPhone']?.value);
+    var testFormData = new FormData();
+    
+    if(formData['hblFileSource'])
+    {
+      testFormData.append("hbl", formData['hblFileSource'])    
+      delete formData['hblFileSource']
+    }
+    if(formData['packingListFileSource'])
+    {
+      testFormData.append("packingList", formData['packingListFileSource'])
+      delete formData['packingListFileSource']
+    }
+    if(formData['invoiceFileSource'])
+    {
+      testFormData.append("invoice", formData['invoiceFileSource'])
+      delete formData['invoiceFileSource']
+    }
+    if(formData['freightCertificateFileSource'])
+    {
+      testFormData.append("freightCertificate", formData['freightCertificateFileSource'])
+      delete formData['freightCertificateFileSource']
+    }
+    testFormData.append("body", JSON.stringify(formData))
+    console.log(formData)
 
-    console.log(formData['hblFileSource'])
-    console.log(formData['incoTerms'])
-    console.log(formData['hblFile'])
-
-    oFormData.append('test_file', formData['hblFileSource']);
-    oFormData.append('test', formData['incoTerms']);
-    oFormData.append('name', formData['hblFile']);
-
-    console.log('final data for test api');
-    console.log(oFormData);
-    this.orderServie.placeOrder(oFormData).subscribe((res:any)=>{
+    this.orderServie.placeOrder(testFormData).subscribe((res:any)=>{
       console.log('PlaceOrder result');
       console.log(res);
     });
