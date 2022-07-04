@@ -264,7 +264,6 @@ export class QuotationComponent implements OnInit {
     })
   }
   estimateSubmit() {
-  debugger
     if(!this.estimateForm.valid){
       return;
     }
@@ -279,11 +278,9 @@ export class QuotationComponent implements OnInit {
           }
           else if (key == 'airportOfOrigin') {
             formData[key] = this.GetAirortPlaceIdByAirportName(this.originPorts, this.estimateForm.value[key]); 
-            console.log('origin airport ='+ this.estimateForm.value[key]);           
           }
           else if (key == 'destinationAirport') {
             formData[key] = this.GetAirortPlaceIdByAirportName(this.destinationPorts, this.estimateForm.value[key]);
-            console.log('dest. airport ='+ this.estimateForm.value[key]); 
           }
           else {
             formData[key] = this.estimateForm.value[key];
@@ -300,11 +297,9 @@ export class QuotationComponent implements OnInit {
           }
           else if (key == 'portOfOrigin') {
             formData[key] = this.GetPortPlaceIdByPortName(this.originPorts, this.estimateForm.value[key]);
-            console.log('origin port ='+ this.estimateForm.value[key]);
           }
           else if (key == 'destinationPort') {
             formData[key] = this.GetPortPlaceIdByPortName(this.destinationPorts, this.estimateForm.value[key]);
-            console.log('Dest. port ='+ this.estimateForm.value[key]);
           }
           else {
             formData[key] = this.estimateForm.value[key];

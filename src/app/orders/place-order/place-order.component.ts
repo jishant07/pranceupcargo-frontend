@@ -276,11 +276,9 @@ export class PlaceOrderComponent implements OnInit {
           }
           else if (key == 'airportOfOrigin') {
             formData[key] = this.GetAirortPlaceIdByAirportName(this.originPorts, this.orderForm.value[key]); 
-            //console.log('origin airport ='+ this.orderForm.value[key]);           
           }
           else if (key == 'destinationAirport') {
             formData[key] = this.GetAirortPlaceIdByAirportName(this.destinationPorts, this.orderForm.value[key]);
-            //console.log('dest. airport ='+ this.orderForm.value[key]); 
           }
           else {
             formData[key] = this.orderForm.value[key];
@@ -297,11 +295,9 @@ export class PlaceOrderComponent implements OnInit {
           }
           else if (key == 'portOfOrigin') {
             formData[key] = this.GetPortPlaceIdByPortName(this.originPorts, this.orderForm.value[key]);
-            //console.log('origin port ='+ this.orderForm.value[key]);
           }
           else if (key == 'destinationPort') {
             formData[key] = this.GetPortPlaceIdByPortName(this.destinationPorts, this.orderForm.value[key]);
-            //console.log('Dest. port ='+ this.orderForm.value[key]);
           }
           else {
             formData[key] = this.orderForm.value[key];
@@ -338,12 +334,22 @@ export class PlaceOrderComponent implements OnInit {
       delete formData['freightCertificateFileSource']
     }
     testFormData.append("body", JSON.stringify(formData))
-    console.log(formData)
+    // console.log(formData);
+    // console.log(testFormData);
 
     this.orderServie.placeOrder(testFormData).subscribe((res:any)=>{
-      console.log('PlaceOrder result');
-      console.log(res);
-    });
+      //{status: 'success', message: 'Order Placed Successfully'}
+      if(res != null && res.status == 'success'){
+        this.global_service.openSnackBar(res.message);
+        this.router.navigate(["/ongoingorders"])
+       }
+       else{
+        this.global_service.openSnackBar("There is some technical problem, try again later")
+       }
+      },error=>{
+        this.global_service.openSnackBar("Error: There is some technical problem, try again later");
+        this.global_service.openSnackBar(error);
+      });
 
   }
   transportModeChanged(event: any) {
@@ -406,7 +412,6 @@ export class PlaceOrderComponent implements OnInit {
         //Cost Insurance and Freight
         break;
       default:
-        //console.log("No such day exists!");
         this.incoTerm_removeAllValidation();
         break;
     }
@@ -754,7 +759,7 @@ export class PlaceOrderComponent implements OnInit {
   PiecesFormGroup(): FormGroup {
 
     if(localStorage.getItem('inco_terms') == 'ddp' || localStorage.getItem('inco_terms') == 'dpu') {
-      console.log(localStorage.getItem('inco_terms'));
+      //console.log(localStorage.getItem('inco_terms'));
       this.childC.openhidehs_codediv();
 
       return new FormGroup({ 
