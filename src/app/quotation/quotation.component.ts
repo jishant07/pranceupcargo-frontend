@@ -117,7 +117,8 @@ export class QuotationComponent implements OnInit {
 
   ngOnInit(): void {
     this.incoTerm_removeAllValidation();
-    this.autoComplete();
+    this.autoComplete();            
+    localStorage.setItem('hs', '0');
   }
 
   activityChanged(event: any) {
@@ -344,7 +345,14 @@ export class QuotationComponent implements OnInit {
   incoTermChanged(event: any) {
     this.incoTerm_removeAllValidation();
     var selectedIncoTearm = this.estimateForm.value.incoTerms.toLowerCase();
-    localStorage.setItem('inco_terms', selectedIncoTearm)
+    //localStorage.setItem('inco_terms', selectedIncoTearm)
+    if( selectedIncoTearm == 'ddp' || selectedIncoTearm == 'ddu'){         
+      localStorage.setItem('hs', '1');
+    }
+    else{         
+      localStorage.setItem('hs', '0');
+    }
+
     switch (selectedIncoTearm) {
       case 'exw':
         //Ex Works        
@@ -369,11 +377,11 @@ export class QuotationComponent implements OnInit {
         break;
       case 'ddp':
         //Delivered Duty Paid
-        this.incoTerm_ddp_Validation('add');
+        this.incoTerm_ddp_Validation('add');  
         break;
       case 'ddu':
         //Delivered Duty Unpaid
-        this.incoTerm_ddu_Validation('add');
+        this.incoTerm_ddu_Validation('add'); 
         break;
       case 'fas':
         //Free Alongside ship
@@ -730,8 +738,8 @@ export class QuotationComponent implements OnInit {
   //Being: Cargo details
   PiecesFormGroup(): FormGroup {
 
-    if(localStorage.getItem('inco_terms') == 'ddp' || localStorage.getItem('inco_terms') == 'dpu') {
-      console.log(localStorage.getItem('inco_terms'));
+    if(localStorage.getItem('hs') == '1') {
+      //console.log(localStorage.getItem('inco_terms'));
       this.childC.openhidehs_codediv();
 
       return new FormGroup({ 
@@ -772,7 +780,7 @@ export class QuotationComponent implements OnInit {
     this.childC.openhidehs_codediv();
     pieces.push(this.PiecesFormGroup());
 
-    if(localStorage.getItem('inco_terms') == 'ddp' || localStorage.getItem('inco_terms') == 'ddu') {
+    if(localStorage.getItem('hs') == '1') {
       this.removePackage(this.rowNumber);
     }
   }

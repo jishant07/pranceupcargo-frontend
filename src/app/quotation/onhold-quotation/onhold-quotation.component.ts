@@ -33,7 +33,6 @@ export class OnholdQuotationComponent implements OnInit, AfterViewInit {
       ////Response format - {status: 'success', message: Array(9)}
       if(res.status == "success"){
         this.quotesData = JSON.parse(JSON.stringify( res.message));
-        console.log(this.quotesData);      
         this.dataSource = new MatTableDataSource(this.quotesData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

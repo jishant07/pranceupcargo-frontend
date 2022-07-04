@@ -93,20 +93,61 @@ export interface QuotationModel{
     destinationState:string;
     destinationCountry:string;
 }
-// export interface PortModel{
-//     country: string;
-//     portName: string;
-//     state: string;
-// }
-// export interface DestinationAirportModel{
-//     destinationAirportName:string;
-//     destinationAirportTag:string;
-//     destinationState:string;
-//     destinationCountry:string;
-// }
-// export interface OriginAirportModel{
-//     originAirportName:string;
-//     originAirportTag:string;
-//     originState:string;
-//     originCountry:string;
-// }
+export interface OrderModel{
+    id: string;
+    modeOfTransport: string;
+    typeOfActivity: string;
+    incoTerms: string;
+    pieces: PiecesModel[];
+
+    deliveryType: string;
+
+    //Inco Tearm - Ex Works(exw)
+    pickUpAddress?: string;
+    spocName?: string;
+    spocPhone?: string;
+
+    //Inco Tearm - Free Carrier(fca)
+    shipperAddress?: string;
+    fcaLocation?: string;
+
+    //Inco Tearm - Delivered at Place(dap)
+    dapdduAddress?: string;
+
+    //Inco Tearm - Delivered Duty Paid(ddp)
+    ddpdduAddress?: string;
+    //hscode: new FormControl(''),
+    invoiceValue?: string;
+
+    //Inco Tearm - Delivered Duty Unpaid(ddu)
+    dduAddress?: string;
+    dduInvoiceValue?: string;
+
+    //Extra properties
+    quoteAmount: string;
+    deadline: string;
+    status: string;
+    uid: string;
+    sentFrom: string;
+
+    
+    portOfOrigin: string;
+    originPortName:string;
+
+    airportOfOrigin: string;
+    originAirportName:string;
+    originAirportTag:string;
+    
+    originState:string;
+    originCountry:string;
+
+    destinationPort: string;
+    destinationPortName:string;
+
+    destinationAirport: string;
+    destinationAirportName:string;
+    destinationAirportTag:string;
+
+    destinationState:string;
+    destinationCountry:string;
+}

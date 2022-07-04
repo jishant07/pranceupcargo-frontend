@@ -21,282 +21,102 @@
         <!-- strat card -->
         <div class="col-xl-12">
             <div class="card">
-                <!-- <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Recent Orders</h4>
-                    <div class="flex-shrink-0">
-                        <button type="button" class="btn btn-soft-info btn-sm">
-                            <i class="ri-file-list-3-line align-middle"></i> Generate Report
-                        </button>
-                    </div>
-                </div> -->
-                <!-- end card header -->
 
-                <div class="card-body">
+                <div class="loading" *ngIf="isLoading">
+                    <div class="spinner">
+                        <mat-spinner></mat-spinner>
+                    </div>
+                </div>
+
+                <div class="card-body" [hidden]="isLoading">
+                    <div class="d-flex">
+                        <div class="row card-title mb-0 flex-grow-1">
+                            <mat-form-field class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <mat-label>Filter</mat-label>
+                                <input matInput (keyup)="applyFilter($event)" placeholder="search..." #input>
+                            </mat-form-field>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-end">
+                                <button type="button" class="btn btn-bg-dark" routerLink="/placeorder"><i class="ri-add-circle-line align-middle me-1"></i> New Order</button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="table-responsive table-card">
-                        <table class="table table-borderless table-centered align-middle table-nowrap mb-0">
-                            <thead class="text-muted table-light">
-                                <tr>
-                                    <th scope="col">Order ID</th>
-                                    <th scope="col">Mode</th>
-                                    <th scope="col">Activity Type</th>
-                                    <th scope="col">Destination</th>
-                                    <th scope="col">Dest. Port</th>
-                                    <th scope="col">Dest. Airport</th>
-                                    <th scope="col">Origin</th>
-                                    <th scope="col">Origin Port</th>
-                                    <th scope="col">Origin Airport</th>
-                                    <th scope="col">Inco Terms</th>
-                                    <th scope="col">Delivery</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2112</a>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0 me-2">
-                                                <img src="assets/images/ship-icon.jpg" alt="" class="avatar-xs rounded-circle" />
-                                            </div>
-                                            <!-- <div class="flex-grow-1">Alex Smith</div> -->
+                        <table mat-table [dataSource]="dataSource" matSort class="table table-borderless table-centered align-middle table-nowrap mb-0">
+
+                            <ng-container matColumnDef="id">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-muted table-light" scope="col"> Order Id </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <a class="fw-medium link-primary">#{{row.id}}</a> </td>
+                            </ng-container>
+                            <ng-container matColumnDef="modeOfTransport">
+                                <th mat-header-cell *matHeaderCellDef class="text-muted table-light" scope="col"> Mode </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <div class="d-flex align-items-center" style="margin-right:25px;">
+                                        <div class="flex-shrink-0 me-2">
+                                            <img *ngIf="row.modeOfTransport=='SEA'" src="assets/images/ship-icon.jpg" alt="SEA" class="avatar-xs rounded-circle" />
+                                            <img *ngIf="row.modeOfTransport=='AIR'" src="assets/images/airplain.jpg" alt="AIR" class="avatar-xs rounded-circle" />
                                         </div>
-                                    </td>
-                                    <td>Import</td>
-                                    <td>India</td>
-                                    <td>Dest. Port Name</td>
-                                    <td>Dest. Airport</td>
-                                    <td>India</td>
-                                    <td>IGI</td>
-                                    <td>IGI</td>
-                                    <td>Test</td>
-                                    <td>Normal</td>
-                                </tr>
-                                <!-- end tr -->
-                                <tr>
-                                    <td>
-                                        <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2111</a>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0 me-2">
-                                                <img src="assets/images/airplain.jpg" alt="" class="avatar-xs rounded-circle" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Export</td>
-                                    <td>India</td>
-                                    <td>Dest. Port Name</td>
-                                    <td>Dest. Airport</td>
-                                    <td>India</td>
-                                    <td>IGI</td>
-                                    <td>IGI</td>
-                                    <td>Test</td>
-                                    <td>Express</td>
-                                </tr>
-                                <!-- end tr -->
-                                <tr>
-                                    <td>
-                                        <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2109</a>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0 me-2">
-                                                <img src="assets/images/airplain.jpg" alt="" class="avatar-xs rounded-circle" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Import</td>
-                                    <td>India</td>
-                                    <td>Dest. Port Name</td>
-                                    <td>Dest. Airport</td>
-                                    <td>India</td>
-                                    <td>IGI</td>
-                                    <td>IGI</td>
-                                    <td>Test</td>
-                                    <td>Normal</td>
-                                </tr>
-                                <!-- end tr -->
-                                <tr>
-                                    <td>
-                                        <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2108</a>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0 me-2">
-                                                <img src="assets/images/ship-icon.jpg" alt="" class="avatar-xs rounded-circle" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Export</td>
-                                    <td>India</td>
-                                    <td>Dest. Port Name</td>
-                                    <td>Dest. Airport</td>
-                                    <td>India</td>
-                                    <td>IGI</td>
-                                    <td>IGI</td>
-                                    <td>Test</td>
-                                    <td>Normal</td>
-                                </tr>
-                                <!-- end tr -->
-                                <tr>
-                                    <td>
-                                        <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2109</a>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0 me-2">
-                                                <img src="assets/images/airplain.jpg" alt="" class="avatar-xs rounded-circle" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Export</td>
-                                    <td>India</td>
-                                    <td>Dest. Port Name</td>
-                                    <td>Dest. Airport</td>
-                                    <td>India</td>
-                                    <td>IGI</td>
-                                    <td>IGI</td>
-                                    <td>Test</td>
-                                    <td>Express</td>
-                                </tr>
-                                <!-- end tr -->
-                                <tr>
-                                    <td>
-                                        <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2108</a>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0 me-2">
-                                                <img src="assets/images/ship-icon.jpg" alt="" class="avatar-xs rounded-circle" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Import</td>
-                                    <td>India</td>
-                                    <td>Dest. Port Name</td>
-                                    <td>Dest. Airport</td>
-                                    <td>India</td>
-                                    <td>IGI</td>
-                                    <td>IGI</td>
-                                    <td>Test</td>
-                                    <td>Express</td>
-                                </tr>
-                                <!-- end tr -->
-                                <tr>
-                                    <td>
-                                        <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2109</a>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0 me-2">
-                                                <img src="assets/images/airplain.jpg" alt="" class="avatar-xs rounded-circle" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Export</td>
-                                    <td>India</td>
-                                    <td>Dest. Port Name</td>
-                                    <td>Dest. Airport</td>
-                                    <td>India</td>
-                                    <td>IGI</td>
-                                    <td>IGI</td>
-                                    <td>Test</td>
-                                    <td>Express</td>
-                                </tr>
-                                <!-- end tr -->
-                                <tr>
-                                    <td>
-                                        <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2108</a>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0 me-2">
-                                                <img src="assets/images/ship-icon.jpg" alt="" class="avatar-xs rounded-circle" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Import</td>
-                                    <td>India</td>
-                                    <td>Dest. Port Name</td>
-                                    <td>Dest. Airport</td>
-                                    <td>India</td>
-                                    <td>IGI</td>
-                                    <td>IGI</td>
-                                    <td>Test</td>
-                                    <td>Express</td>
-                                </tr>
-                                <!-- end tr -->
-                                <tr>
-                                    <td>
-                                        <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2109</a>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0 me-2">
-                                                <img src="assets/images/airplain.jpg" alt="" class="avatar-xs rounded-circle" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Export</td>
-                                    <td>India</td>
-                                    <td>Dest. Port Name</td>
-                                    <td>Dest. Airport</td>
-                                    <td>India</td>
-                                    <td>IGI</td>
-                                    <td>IGI</td>
-                                    <td>Test</td>
-                                    <td>Normal</td>
-                                </tr>
-                                <!-- end tr -->
-                                <tr>
-                                    <td>
-                                        <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2108</a>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0 me-2">
-                                                <img src="assets/images/ship-icon.jpg" alt="" class="avatar-xs rounded-circle" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Import</td>
-                                    <td>India</td>
-                                    <td>Dest. Port Name</td>
-                                    <td>Dest. Airport</td>
-                                    <td>India</td>
-                                    <td>IGI</td>
-                                    <td>IGI</td>
-                                    <td>Test</td>
-                                    <td>Normal</td>
-                                </tr>
-                                <!-- end tr -->
-                                <tr>
-                                    <td>
-                                        <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2107</a>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-shrink-0 me-2">
-                                                <img src="assets/images/airplain.jpg" alt="" class="avatar-xs rounded-circle" />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Import</td>
-                                    <td>India</td>
-                                    <td>Dest. Port Name</td>
-                                    <td>Dest. Airport</td>
-                                    <td>India</td>
-                                    <td>IGI</td>
-                                    <td>IGI</td>
-                                    <td>Test</td>
-                                    <td>Express</td>
-                                </tr>
-                                <!-- end tr -->
-                            </tbody>
-                            <!-- end tbody -->
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="typeOfActivity">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-muted table-light" scope="col"> Activity Type </th>
+                                <td mat-cell *matCellDef="let row"> {{row.typeOfActivity}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="destinationPort">
+                                <th mat-header-cell *matHeaderCellDef class="text-muted table-light" scope="col"> Dest. Port </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <span *ngIf="row.modeOfTransport=='SEA'">
+                                        {{row.destinationPortName}}, {{row.destinationState}}, {{row.destinationCountry}}
+                                    </span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="destinationAirport">
+                                <th mat-header-cell *matHeaderCellDef class="text-muted table-light" scope="col"> Dest. Airport </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <span *ngIf="row.modeOfTransport=='AIR'">
+                                        {{row.destinationAirportTag}}, {{row.destinationAirportName}}, {{row.destinationState}}, {{row.destinationCountry}}
+                                    </span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="portOfOrigin">
+                                <th mat-header-cell *matHeaderCellDef class="text-muted table-light" scope="col"> Origin Port </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <span *ngIf="row.modeOfTransport=='SEA'">
+                                        {{row.originPortName}}, {{row.state}}, {{row.originCountry}}
+                                    </span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="airportOfOrigin">
+                                <th mat-header-cell *matHeaderCellDef class="text-muted table-light" scope="col"> Origin Airport </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <span *ngIf="row.modeOfTransport=='AIR'">
+                                        {{row.originAirportTag}}, {{row.originAirportName}}, {{row.originState}}, {{row.originCountry}}
+                                    </span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="incoTerms">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-muted table-light" scope="col"> Inco Terms </th>
+                                <td mat-cell *matCellDef="let row"> {{row.incoTerms}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="deliveryType">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-muted table-light" scope="col">Delivery</th>
+                                <td mat-cell *matCellDef="let row">{{row.deliveryType}}</td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                            <!-- Row shown when there is no matching  -->
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell" colspan="19">No data matching the filter"{{input.value}}"</td>
+                            </tr>
                         </table>
-                        <!-- end table -->
+
+                        <mat-paginator [pageSizeOptions]="[10,25,50,100]"></mat-paginator>
+                        <!-- </div> -->
                     </div>
                 </div>
                 <!-- .card-body -->

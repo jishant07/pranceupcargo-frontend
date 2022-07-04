@@ -30,5 +30,12 @@ export class OrderService {
   placeOrder(formData:FormData){
       return this.http.post(environment.devURL+"/order/placeNewOrder",formData);
   }
+  getOrders(){
+    return this.http.get(environment.devURL+"/order/listOrders",{headers: this.httpHeader});
+    //{status: 'success', message: Array(9)}
+  }
+  getOrder(id:string){
+    return this.http.get(environment.devURL+"/order/getOrderById?orderId="+id,{headers: this.httpHeader});
+  }
   //End: Order
 }

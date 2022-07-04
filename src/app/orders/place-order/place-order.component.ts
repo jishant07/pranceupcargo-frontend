@@ -128,6 +128,7 @@ export class PlaceOrderComponent implements OnInit {
   ngOnInit(): void {
     this.incoTerm_removeAllValidation();
     this.autoComplete();
+    localStorage.setItem('hs', '0');
   }
   activityChanged(event: any) {
     this.getPorts();
@@ -368,7 +369,14 @@ export class PlaceOrderComponent implements OnInit {
   incoTermChanged(event: any) {
     this.incoTerm_removeAllValidation();
     var selectedIncoTearm = this.orderForm.value.incoTerms.toLowerCase();
-    localStorage.setItem('inco_terms', selectedIncoTearm);
+    // localStorage.setItem('inco_terms', selectedIncoTearm);
+    if( selectedIncoTearm == 'ddp' || selectedIncoTearm == 'ddu'){         
+      localStorage.setItem('hs', '1');
+    }
+    else{         
+      localStorage.setItem('hs', '0');
+    }
+
     switch (selectedIncoTearm) {
       case 'exw':
         //Ex Works        
@@ -393,11 +401,11 @@ export class PlaceOrderComponent implements OnInit {
         break;
       case 'ddp':
         //Delivered Duty Paid
-        this.incoTerm_ddp_Validation('add');
+        this.incoTerm_ddp_Validation('add'); 
         break;
       case 'ddu':
         //Delivered Duty Unpaid
-        this.incoTerm_ddu_Validation('add');
+        this.incoTerm_ddu_Validation('add'); 
         break;
       case 'fas':
         //Free Alongside ship
@@ -758,7 +766,7 @@ export class PlaceOrderComponent implements OnInit {
   //Being: Cargo details
   PiecesFormGroup(): FormGroup {
 
-    if(localStorage.getItem('inco_terms') == 'ddp' || localStorage.getItem('inco_terms') == 'dpu') {
+    if(localStorage.getItem('hs') == '1') {
       //console.log(localStorage.getItem('inco_terms'));
       this.childC.openhidehs_codediv();
 
@@ -798,7 +806,7 @@ export class PlaceOrderComponent implements OnInit {
     this.childC.openhidehs_codediv();
     pieces.push(this.PiecesFormGroup());
 
-    if(localStorage.getItem('inco_terms') == 'ddp' || localStorage.getItem('inco_terms') == 'ddu') {
+    if(localStorage.getItem('hs') == '1') {
       this.removePackage(this.rowNumber);
     }
   }

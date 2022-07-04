@@ -1,0 +1,28 @@
+.mat-row {
+    height: auto;
+}
+
+.mat-cell {
+    padding: 2px 8px 2px 8px;
+}
+
+.mat-header-cell {
+    font-size: 14px !important;
+}
+
+.align-right {
+    text-align: right !important;
+    justify-content: flex-end !important;
+}
+
+.align-center {
+    text-align: center !important;
+    justify-content: center !important;
+}
+
+th.mat-header-cell,
+td.mat-cell {
+    text-align: left;
+    margin-left: 1.5rem !important;
+    margin-right: 1.5rem !important;
+}

@@ -24,7 +24,7 @@ export class PieceComponent implements OnInit {
 
   static makePieceItem(){
 
-    if(localStorage.getItem('inco_terms') == 'ddp' || localStorage.getItem('inco_terms') == 'ddu') {
+    if(localStorage.getItem('hs') == '1' ) {
       this.hs_codediv = false;
 
       return new FormGroup({
@@ -54,7 +54,8 @@ export class PieceComponent implements OnInit {
   }
   
   openhidehs_codediv() {
-    if(localStorage.getItem('inco_terms') == 'ddp' || localStorage.getItem('inco_terms') == 'ddu') {
+    //if(localStorage.getItem('inco_terms') == 'ddp' || localStorage.getItem('inco_terms') == 'ddu') {
+    if(localStorage.getItem('hs') == '1'){
       this.hs_codediv = false;
     }else{
       this.hs_codediv = true;
@@ -62,7 +63,7 @@ export class PieceComponent implements OnInit {
   }
 
   getClass() {
-    if(localStorage.getItem('inco_terms') == 'ddp' || localStorage.getItem('inco_terms') == 'ddu') {
+    if(localStorage.getItem('hs') == '1') {
       return 'showdiv';
     }else{
       return 'hidediv';
