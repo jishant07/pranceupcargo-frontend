@@ -62,7 +62,7 @@
                     </div>
                 </div>
 
-                <div class="card-body" [hidden]="isLoading" *ngIf="dataSource != undefined && dataSource.data.length">
+                <div class="card-body" [hidden]="isLoading && (dataSource != undefined && dataSource.data.length)">
                     <div class="d-flex">
                         <div class="row card-title mb-0 flex-grow-1">
                             <mat-form-field class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
