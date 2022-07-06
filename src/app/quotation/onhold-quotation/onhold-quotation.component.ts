@@ -13,10 +13,20 @@ import { QuoteService } from 'src/app/_services/quote.service';
 })
 export class OnholdQuotationComponent implements OnInit, AfterViewInit {
   quotesData: QuotationModel[];
-  isLoading = true;
-  
+  isLoading = true;  
+  mode:string = 'Air';
+
   displayedColumns: string[] = ['id','modeOfTransport','typeOfActivity','destinationPort','destinationAirport'
-  ,'portOfOrigin','airportOfOrigin','incoTerms','deliveryType','quoteAmount','deadline'];
+  ,'portOfOrigin','airportOfOrigin','incoTerms','deliveryType'];
+
+  displayAirModeColumns: string[] = ['id','modeOfTransport','typeOfActivity','destinationAirport'
+      ,'airportOfOrigin','incoTerms','deliveryType'];
+
+  displaySeaModeColumns: string[] = ['id','modeOfTransport','typeOfActivity','destinationPort'
+      ,'portOfOrigin','incoTerms','deliveryType'];
+
+  displayAll: string[] = ['id','modeOfTransport','typeOfActivity','destinationPort','destinationAirport'
+  ,'portOfOrigin','airportOfOrigin','incoTerms','deliveryType'];
 
   dataSource: MatTableDataSource<QuotationModel>;
 
@@ -28,6 +38,10 @@ export class OnholdQuotationComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.getData();
+  }
+
+  getData(){    
     const quoteState = 'EXPIRED';
     this.quoteService.getQuotes(quoteState)
     .subscribe((res: any) =>{
@@ -38,6 +52,7 @@ export class OnholdQuotationComponent implements OnInit, AfterViewInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.isLoading = false;
+        this.changeMode(this.mode);
       }
       else if(res.status == "failure"){
         this.dataSource = new MatTableDataSource(this.quotesData);
@@ -62,33 +77,25 @@ export class OnholdQuotationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getDataBasedonMode(mode:string){
-    const filterValue = mode;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  changeMode(value:string){
+    this.mode = value.toLocaleLowerCase();
+    this.displayTableBasedOnMode();
+    this.dataSource.filter = value.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
 
-  changeMode(value:string){
-    if(value.toLowerCase() == 'air'){
-      this.displayedColumns = ['id','modeOfTransport','typeOfActivity','destinationAirport'
-      ,'airportOfOrigin','incoTerms','deliveryType'];
+  displayTableBasedOnMode(){
+    if(this.mode == 'air'){
+      this.displayedColumns = this.displayAirModeColumns;
     }
-    else if(value.toLowerCase() == 'sea'){
-      this.displayedColumns = ['id','modeOfTransport','typeOfActivity','destinationPort'
-      ,'portOfOrigin','incoTerms','deliveryType'];
+    else if(this.mode == 'sea'){
+      this.displayedColumns = this.displaySeaModeColumns
     }
     else{
-      this.displayedColumns = ['id','modeOfTransport','typeOfActivity','destinationPort','destinationAirport'
-    ,'portOfOrigin','airportOfOrigin','incoTerms','deliveryType'];
-    
-    }
-    this.dataSource.filter = value.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+      this.displayedColumns = this.displayAll; 
     }
   }
 }

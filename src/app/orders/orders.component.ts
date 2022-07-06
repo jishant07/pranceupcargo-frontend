@@ -13,8 +13,18 @@ import { OrderService } from 'src/app/_services/order.service';
 export class OrdersComponent implements OnInit {
   ordersData: OrderModel[];
   isLoading = true;
-  
+  mode:string = 'Air';
+
   displayedColumns: string[] = ['id','modeOfTransport','typeOfActivity','destinationPort','destinationAirport'
+  ,'portOfOrigin','airportOfOrigin','incoTerms','deliveryType'];
+
+  displayAirModeColumns: string[] = ['id','modeOfTransport','typeOfActivity','destinationAirport'
+      ,'airportOfOrigin','incoTerms','deliveryType'];
+
+  displaySeaModeColumns: string[] = ['id','modeOfTransport','typeOfActivity','destinationPort'
+      ,'portOfOrigin','incoTerms','deliveryType'];
+
+  displayAll: string[] = ['id','modeOfTransport','typeOfActivity','destinationPort','destinationAirport'
   ,'portOfOrigin','airportOfOrigin','incoTerms','deliveryType'];
 
   dataSource: MatTableDataSource<OrderModel>;
@@ -27,16 +37,22 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getData();
+  }
+  
+  getData(){    
     const orderState = 'COMPLETED';
     this.orderService.getOrders(orderState)
     .subscribe((res: any) =>{
+      console.log(res);
       ////Response format - {status: 'success', message: Array(9)}
       if(res.status == "success"){
         this.ordersData = JSON.parse(JSON.stringify( res.message));
         this.dataSource = new MatTableDataSource(this.ordersData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        this.isLoading = false;
+        this.isLoading = false;     
+        this.changeMode(this.mode);
       }
       else if(res.status == "failure"){
         this.dataSource = new MatTableDataSource(this.ordersData);
@@ -44,7 +60,7 @@ export class OrdersComponent implements OnInit {
       }
     });
   }
-  
+
   ngAfterViewInit() {
     if(this.dataSource != null){
       this.dataSource.paginator = this.paginator;
@@ -62,23 +78,24 @@ export class OrdersComponent implements OnInit {
   }
 
   changeMode(value:string){
-    if(value.toLowerCase() == 'air'){
-      this.displayedColumns = ['id','modeOfTransport','typeOfActivity','destinationAirport'
-      ,'airportOfOrigin','incoTerms','deliveryType'];
-    }
-    else if(value.toLowerCase() == 'sea'){
-      this.displayedColumns = ['id','modeOfTransport','typeOfActivity','destinationPort'
-      ,'portOfOrigin','incoTerms','deliveryType'];
-    }
-    else{
-      this.displayedColumns = ['id','modeOfTransport','typeOfActivity','destinationPort','destinationAirport'
-    ,'portOfOrigin','airportOfOrigin','incoTerms','deliveryType'];
-    
-    }
+    this.mode = value.toLocaleLowerCase();
+    this.displayTableBasedOnMode();
     this.dataSource.filter = value.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
+    }
+  }
+
+  displayTableBasedOnMode(){
+    if(this.mode == 'air'){
+      this.displayedColumns = this.displayAirModeColumns;
+    }
+    else if(this.mode == 'sea'){
+      this.displayedColumns = this.displaySeaModeColumns
+    }
+    else{
+      this.displayedColumns = this.displayAll; 
     }
   }
 

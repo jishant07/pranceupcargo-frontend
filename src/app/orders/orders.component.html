@@ -57,10 +57,9 @@
                         <div class="row card-title mb-0 flex-grow-1">
                             <mat-form-field class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                                 <mat-label>Mode</mat-label>
-                                <mat-select (selectionChange)="changeMode($event.value)">
-                                    <mat-option value=''>All</mat-option>
-                                    <mat-option value='Air'>Air</mat-option>
-                                    <mat-option value="Sea">Sea</mat-option>
+                                <mat-select (selectionChange)="changeMode($event.value)" [(value)]="mode">
+                                    <mat-option value='air'>Air</mat-option>
+                                    <mat-option value="sea">Sea</mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
