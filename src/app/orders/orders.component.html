@@ -28,14 +28,46 @@
                     </div>
                 </div>
 
-                <div class="card-body" [hidden]="isLoading">
+                <div class="card-body" [hidden]="isLoading" *ngIf="dataSource != undefined && !dataSource.data.length">
+
                     <div class="d-flex">
                         <div class="row card-title mb-0 flex-grow-1">
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-end">
+                                <button type="button" class="btn btn-bg-dark" routerLink="/placeorder"><i class="ri-add-circle-line align-middle me-1"></i> New Order</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive table-card">
+                        <table class="table table-borderless table-centered align-middle table-nowrap mb-0">
+                            <tr>
+                                <td>
+                                    <h5>No record found!</h5>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card-body" [hidden]="isLoading" *ngIf="dataSource != undefined && dataSource.data.length">
+
+                    <div class="d-flex">
+                        <div class="row card-title mb-0 flex-grow-1">
+                            <mat-form-field class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
+                                <mat-label>Mode</mat-label>
+                                <mat-select (selectionChange)="changeMode($event.value)">
+                                    <mat-option value=''>All</mat-option>
+                                    <mat-option value='Air'>Air</mat-option>
+                                    <mat-option value="Sea">Sea</mat-option>
+                                </mat-select>
+                            </mat-form-field>
                             <mat-form-field class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <mat-label>Filter</mat-label>
                                 <input matInput (keyup)="applyFilter($event)" placeholder="search..." #input>
                             </mat-form-field>
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"></div>
+                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6"></div>
                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-end">
                                 <button type="button" class="btn btn-bg-dark" routerLink="/placeorder"><i class="ri-add-circle-line align-middle me-1"></i> New Order</button>
                             </div>

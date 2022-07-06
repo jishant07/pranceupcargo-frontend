@@ -25,13 +25,14 @@ export class QuoteService {
   }
 
   //Begin: Quote
-  quoteOnHold(data:any){
-      console.log(data);      
+  quoteOnHold(data:any){  
       return this.http.post(environment.devURL+"/quote/placeOnHold", data, {headers: this.httpHeader});
       //{status: 'success', message: 'qtyOFyP20ClbVz7Syz06'}
   }
-  getQuotes(){
-      return this.http.get(environment.devURL+"/quote/listAllQuotes",{headers: this.httpHeader});
+  getQuotes(quoteState:string){
+    //quoteState = ACTIVE / EXPIRED
+    if(quoteState.length==0){ quoteState = 'ACTIVE';}
+      return this.http.get(environment.devURL+"/quote/listAllQuotes?quoteState="+quoteState,{headers: this.httpHeader});
       //{status: 'success', message: Array(9)}
   }
   //End: Quote

@@ -41,6 +41,8 @@ const routes: Routes = [
     {path:'', component: OnholdQuotationComponent}]},
   { path:"placeorder",component:DashboardComponent , children:[
     {path:'', component: PlaceOrderComponent}]},
+  { path:"placeorder/:orderId",component:DashboardComponent , children:[
+      {path:'', component: PlaceOrderComponent}]},
     
   { path: '**', component: PagenotfoundComponent },
 ];

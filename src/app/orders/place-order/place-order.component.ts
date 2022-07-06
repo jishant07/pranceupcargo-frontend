@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ActivationStart, Router, RouterOutlet } from '@angular/router';
 import { PieceComponent } from 'src/app/piece/piece.component';
 import { AirportModel, keyValuePairModel, PortsModel } from 'src/app/_models/model';
 import { GlobalService } from 'src/app/_services/global.service';
@@ -16,6 +16,7 @@ import { TypeaheadService } from 'src/app/_services/typeahead.service';
 export class PlaceOrderComponent implements OnInit {
 
   @ViewChild(PieceComponent, { static: false }) childC: PieceComponent;
+  @ViewChild(RouterOutlet) outlet: RouterOutlet;
 
   /* Properties */
   isActivityTypeSelected: boolean = false;
@@ -67,6 +68,7 @@ export class PlaceOrderComponent implements OnInit {
 
   rowNumber: number = 0;
   hs_codediv: boolean = true;
+  isEditMode = false;
 
   constructor(
     public global_service: GlobalService
@@ -74,7 +76,9 @@ export class PlaceOrderComponent implements OnInit {
     , private fb: FormBuilder
     //, private quoteService: QuoteService
     , private router: Router
-    , private orderServie: OrderService) {
+    , private orderServie: OrderService
+    , private activatedRoute: ActivatedRoute) {
+     
   }
 
   orderForm = this.fb.group({
@@ -128,8 +132,90 @@ export class PlaceOrderComponent implements OnInit {
   ngOnInit(): void {
     this.incoTerm_removeAllValidation();
     this.autoComplete();
-    localStorage.setItem('hs', '0');
+    localStorage.setItem('hs', '0'); 
+    this.checkModeThenGetData();  
   }
+
+  //Begin: Edit Order
+  checkModeThenGetData(){
+    this.router.events.subscribe(e => {
+      if (e instanceof ActivationStart && e.snapshot.outlet === "administration")
+        this.outlet.deactivate();
+    });
+
+    const orderId = this.activatedRoute.snapshot.queryParamMap.get('orderId');
+    if(orderId != null && orderId.length>0){
+      this.isEditMode = true;
+      this.getOrder(orderId);
+    }
+    else{
+      this.isEditMode = false;
+    }
+  }
+
+  getOrder(orderId:string){
+    console.log('order id = '+orderId);
+    this.orderServie.getOrder(orderId).subscribe((res:any)=>{
+      console.log('Get Order');
+      console.log(res);
+      if(res.status == 'success'){
+        const order = res.message;
+        console.log(order);
+        this.orderForm.setValue({
+          modeOfTransport: order.modeOfTransport,
+          typeOfActivity: order.typeOfActivity,
+          destinationPort: order.destinationPort,
+          destinationAirport: order.destinationAirport,
+          portOfOrigin: order.portOfOrigin,
+          airportOfOrigin: order.airportOfOrigin,
+          incoTerms: order.incoTerms,
+          pieces: new FormArray([
+            PieceComponent.makePieceItem()
+          ]),
+      
+          deliveryType: order.deliveryType,
+      
+          //Inco Tearm - Ex Works(exw)
+          pickUpAddress: order.pickUpAddress,
+          spocName: order.spocName,
+          spocPhone: order.spocPhone,
+      
+          //Inco Tearm - Free Carrier(fca)
+          shipperAddress: order.shipperAddress,
+          fcaLocation: order.fcaLocation,
+      
+          //Inco Tearm - Delivered at Place(dap)
+          dapdduAddress: order.dapdduAddress,
+      
+          //Inco Tearm - Delivered Duty Paid(ddp)
+          ddpdduAddress: order.ddpdduAddress,
+          //hscode: new FormControl(''),
+          invoiceValue: order.invoiceValue,
+      
+          //Inco Tearm - Delivered Duty Unpaid(ddu)
+          dduAddress: order.dduAddress,
+          //dduHscode: new FormControl(''),
+          dduInvoiceValue: order.dduInvoiceValue,
+      
+          //Upload documents
+          hblFile: order.hblFile,
+          packingListFile: order.packingListFile,
+          invoiceFile: order.invoiceFile,
+          freightCertificateFile: order.freightCertificateFile, // only required when inco term is 'exw' or 'fca'
+      
+          hblFileSource: new FormControl('', [Validators.required]),
+          packingListFileSource: new FormControl('', [Validators.required]),
+          invoiceFileSource: new FormControl('', [Validators.required]),
+          freightCertificateFileSource: new FormControl(''), // only required when inco term is 'exw' or 'fca'
+        });
+      }
+      else{
+        this.global_service.openSnackBar("No record found!");
+      }
+    });
+  }
+  //End: Edit Order
+
   activityChanged(event: any) {
     this.getPorts();
     this.getAirports();

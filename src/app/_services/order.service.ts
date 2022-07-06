@@ -30,12 +30,14 @@ export class OrderService {
   placeOrder(formData:FormData){
       return this.http.post(environment.devURL+"/order/placeNewOrder",formData);
   }
-  getOrders(){
-    return this.http.get(environment.devURL+"/order/listOrders",{headers: this.httpHeader});
+  getOrders(orderState:string){
+    //orderState = ACTIVE / COMPLETED
+    if(orderState.length==0){ orderState = 'ACTIVE';}
+    return this.http.get(environment.devURL+"/order/listOrders?orderState="+ orderState,{headers: this.httpHeader});
     //{status: 'success', message: Array(9)}
   }
-  getOrder(id:string){
-    return this.http.get(environment.devURL+"/order/getOrderById?orderId="+id,{headers: this.httpHeader});
+  getOrder(orderId:string){
+    return this.http.post(environment.devURL+"/order/getOrderById",orderId,{headers: this.httpHeader});
   }
   //End: Order
 }

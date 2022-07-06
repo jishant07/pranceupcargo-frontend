@@ -27,15 +27,19 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.orderService.getOrders()
+    const orderState = 'COMPLETED';
+    this.orderService.getOrders(orderState)
     .subscribe((res: any) =>{
       ////Response format - {status: 'success', message: Array(9)}
       if(res.status == "success"){
         this.ordersData = JSON.parse(JSON.stringify( res.message));
-        console.log(this.ordersData);      
         this.dataSource = new MatTableDataSource(this.ordersData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.isLoading = false;
+      }
+      else if(res.status == "failure"){
+        this.dataSource = new MatTableDataSource(this.ordersData);
         this.isLoading = false;
       }
     });
@@ -51,6 +55,27 @@ export class OrdersComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  changeMode(value:string){
+    if(value.toLowerCase() == 'air'){
+      this.displayedColumns = ['id','modeOfTransport','typeOfActivity','destinationAirport'
+      ,'airportOfOrigin','incoTerms','deliveryType'];
+    }
+    else if(value.toLowerCase() == 'sea'){
+      this.displayedColumns = ['id','modeOfTransport','typeOfActivity','destinationPort'
+      ,'portOfOrigin','incoTerms','deliveryType'];
+    }
+    else{
+      this.displayedColumns = ['id','modeOfTransport','typeOfActivity','destinationPort','destinationAirport'
+    ,'portOfOrigin','airportOfOrigin','incoTerms','deliveryType'];
+    
+    }
+    this.dataSource.filter = value.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
