@@ -14,6 +14,7 @@ export class OngoingOrdersComponent implements OnInit {
   ordersData: OrderModel[];
   isLoading = true;
   mode:string = 'Air';
+  hasData:boolean;
 
   displayedColumns: string[] = ['id','modeOfTransport','typeOfActivity','destinationPort','destinationAirport'
   ,'portOfOrigin','airportOfOrigin','incoTerms','deliveryType'];
@@ -50,12 +51,15 @@ export class OngoingOrdersComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.ordersData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        this.isLoading = false;        
+        this.isLoading = false;  
+        if(this.dataSource.data.length>0){this.hasData = true;}
+        else{this.hasData = false;}      
         this.changeMode(this.mode);
       }
       else if(res.status == "failure"){
         this.dataSource = new MatTableDataSource(this.ordersData);
         this.isLoading = false;
+        this.hasData = false;
       }
     });
   }
@@ -67,6 +71,8 @@ export class OngoingOrdersComponent implements OnInit {
   }
 
   applyFilter(event: Event) {
+    this.mode = 'all';
+    this.displayTableBasedOnMode();
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
