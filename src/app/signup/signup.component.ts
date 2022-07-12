@@ -40,6 +40,10 @@ export class SignupComponent implements OnInit {
     if(this.signupForm.valid && (this.signupForm.value.passWord == this.signupForm.value.rePassWord)){
       this.loader_service.isLoading.next(true);
       this.authService.signUp(this.signupForm.value).then((user:any) =>{
+
+        //API call - api/auth/signup
+        this.authService.afterSignup(this.signupForm.value).subscribe();
+
         this.loader_service.isLoading.next(false)
         localStorage.setItem("token",user.user.multiFactor.user.accessToken);
         this.global_service.openSnackBar("User Signed Up Successfully")

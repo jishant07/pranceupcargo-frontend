@@ -5,11 +5,28 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/compat/auth"
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  token?:string;
+  httpHeader:any;
+  httpHeaderUrlencoded:any;
+  getToken(){
+    this.token = localStorage.getItem('token')!;
+  }
+  setHeader(){
+    this.getToken();
+    this.httpHeader = {
+        'token': this.token as string
+    };
+    this.httpHeaderUrlencoded = {
+      'token': this.token as string,
+      'Content-Type': 'application/x-www-form-urlencoded'      
+    };
+  }
 
   constructor(private http:HttpClient,
     private global_service:GlobalService,
@@ -25,6 +42,11 @@ export class AuthService {
 
   signUp(data:any){
     return this.afAuth.createUserWithEmailAndPassword(data.email,data.passWord)
+  }
+
+  afterSignup(data:any){    
+    const body = {email: ''+data.email+''} 
+    return this.http.post(environment.devURL+'/auth/signup',body,{headers: this.httpHeaderUrlencoded})    
   }
 
   signOut(){
